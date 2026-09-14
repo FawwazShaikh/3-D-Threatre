@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinemaView 3D — Premium Red Multiplex Seat Inspector</title>
+  
+  <!-- Three.js r128 Loader (Local File + CDN Fallbacks) -->
+  <script src="three.min.js"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+    }
+  </script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"><\/script>');
+    }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       MODERN MULTIPLEX DARK THEME STYLING
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #050508;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #e2e8f0;
+    }
+
+    #webgl-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      display: block;
+      cursor: grab;
+    }
+
+    #webgl-canvas:active {
+      cursor: grabbing;
+    }
+
+    #error-alert {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(231, 76, 60, 0.95);
+      color: white;
+      padding: 24px 32px;
+      border-radius: 12px;
+      z-index: 100;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      max-width: 450px;
+    }
+
+    .ui-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .interactive {
+      pointer-events: auto;
+    }
+
+    header {
+      background: rgba(10, 10, 15, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      border-radius: 12px;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.85);
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 18px;
+      box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+    }
+
+    h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #f8fafc;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #94a3b8;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    .header-stats {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-value {
+      font-weight: 700;
+      color: #ef4444;
+    }
+
+    #mode-indicator {
+      position: absolute;
+      top: 90px;
+      left: 24px;
+      background: rgba(10, 10, 15, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(220, 38, 38, 0.35);
+      border-radius: 30px;
+      padding: 8px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #ef4444;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    #seat-panel {
+      position: absolute;
+      top: 90px;
+      right: 24px;
+      width: 360px;
+      background: rgba(10, 10, 15, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(220, 38, 38, 0.35);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(220, 38, 38, 0.15);
+      transform: translateX(420px);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+      z-index: 20;
+    }
+
+    #seat-panel.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 14px;
+    }
+
+    .seat-code {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .seat-row-name {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    .score-badge {
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0d0f16;
+      text-align: center;
+      min-width: 75px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .score-badge.tier-green { background: linear-gradient(135deg, #2ecc71, #27ae60); color: #052411; }
+    .score-badge.tier-yellow { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #332600; }
+    .score-badge.tier-red { background: linear-gradient(135deg, #e74c3c, #c0392b); color: #ffffff; }
+
+    .score-label {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 1px;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      margin: 14px 0 8px 0;
+    }
+
+    .factor-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .factor-name { color: #cbd5e1; }
+    .factor-val { font-weight: 600; color: #ef4444; }
+
+    .progress-bar-bg {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    .obstruction-banner {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .obstruction-banner.clear {
+      background: rgba(46, 204, 113, 0.12);
+      border: 1px solid rgba(46, 204, 113, 0.3);
+      color: #2ecc71;
+    }
+
+    .obstruction-banner.obstructed {
+      background: rgba(231, 76, 60, 0.15);
+      border: 1px solid rgba(231, 76, 60, 0.4);
+      color: #ff6b6b;
+    }
+
+    .price-box {
+      background: rgba(220, 38, 38, 0.08);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .price-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .price-title {
+      font-size: 12px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .price-value {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #ef4444;
+    }
+
+    .price-formula {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 6px;
+      font-family: monospace;
+    }
+
+    .btn-back {
+      width: 100%;
+      margin-top: 18px;
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-back:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+    }
+
+    .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .legend-card {
+      background: rgba(10, 10, 15, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 10px 18px;
+      display: flex;
+      gap: 18px;
+      font-size: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-green { background: #2ecc71; box-shadow: 0 0 8px rgba(46, 204, 113, 0.6); }
+    .dot-yellow { background: #f1c40f; box-shadow: 0 0 8px rgba(241, 196, 15, 0.6); }
+    .dot-red { background: #e74c3c; box-shadow: 0 0 8px rgba(231, 76, 60, 0.6); }
+
+    #hint-pill {
+      background: rgba(10, 10, 15, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 12px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hint-close {
+      cursor: pointer;
+      color: #64748b;
+      font-weight: 700;
+    }
+
+    .hint-close:hover { color: #f8fafc; }
+
+    #tooltip {
+      position: absolute;
+      pointer-events: none;
+      background: rgba(10, 10, 15, 0.94);
+      border: 1px solid #ef4444;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 50;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+      transform: translate(-50%, -120%);
+    }
+
+    #tooltip.visible {
+      opacity: 1;
+    }
+
+    .tooltip-code { color: #ef4444; font-weight: 700; }
+    .tooltip-score { color: #2ecc71; }
+  </style>
+</head>
+<body>
+
+  <!-- WebGL Canvas -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Error Alert Fallback -->
+  <div id="error-alert">
+    <h3>WebGL Error</h3>
+    <p style="margin-top:8px; font-size:13px;">Unable to load Three.js library. Please check your internet connection or local files.</p>
+  </div>
+
+  <!-- UI Overlay Layer -->
+  <div class="ui-layer">
+    <!-- Header -->
+    <header class="interactive">
+      <div class="brand">
+        <div class="brand-icon">3D</div>
+        <div>
+          <h1>CinemaView 3D</h1>
+          <div class="subtitle">Plush Red Multiplex Seat & View Quality Engine</div>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="stat-pill">
+          <span>Capacity:</span>
+          <span class="stat-value">72 Seats</span>
+        </div>
+        <div class="stat-pill">
+          <span>Base Ticket:</span>
+          <span class="stat-value">₹300</span>
+        </div>
+        <div class="stat-pill">
+          <span>Obstruction Pillared:</span>
+          <span class="stat-value" style="color:#ff6b6b">Raycasted</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mode Indicator Badge -->
+    <div id="mode-indicator" class="interactive">
+      <div class="pulse-dot"></div>
+      <span id="mode-text">Overview Mode (Orbit View)</span>
+    </div>
+
+    <!-- Hover Seat Tooltip -->
+    <div id="tooltip">
+      <span class="tooltip-code" id="tt-code">Row A, Seat 1</span> — Score:
+      <span class="tooltip-score" id="tt-score">92</span>
+    </div>
+
+    <!-- Seat Preview Slide-In Panel -->
+    <div id="seat-panel" class="interactive">
+      <div class="panel-header">
+        <div>
+          <div class="seat-code" id="panel-seat-code">Row C · Seat 6</div>
+          <div class="seat-row-name" id="panel-seat-desc">Center Block (Prime Tier)</div>
+        </div>
+        <div class="score-badge tier-green" id="panel-score-badge">
+          <span id="panel-score-num">87</span>
+          <span class="score-label">QUALITY</span>
+        </div>
+      </div>
+
+      <div class="section-title">View Quality Factors</div>
+
+      <div class="factor-row">
+        <span class="factor-name">Distance Score (12.5m ideal)</span>
+        <span class="factor-val" id="panel-dist-val">95%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="bar-dist" style="width: 95%; background: #2ecc71;"></div>
+      </div>
+
+      <div class="factor-row">
+        <span class="factor-name">Angle Score (0° center)</span>
+        <span class="factor-val" id="panel-angle-val">92%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="bar-angle" style="width: 92%; background: #2ecc71;"></div>
+      </div>
+
+      <!-- Obstruction Status Banner -->
+      <div class="obstruction-banner clear" id="panel-obstruction-banner">
+        <span id="obstruction-icon">✓</span>
+        <span id="obstruction-text">Clear Line of Sight to Screen</span>
+      </div>
+
+      <!-- Dynamic Price Breakdown -->
+      <div class="price-box">
+        <div class="price-main">
+          <span class="price-title">Calculated Ticket Price</span>
+          <span class="price-value" id="panel-price">₹438</span>
+        </div>
+        <div class="price-formula" id="panel-price-breakdown">
+          Base ₹300 × (0.7 + 87% × 0.6) = ₹438
+        </div>
+      </div>
+
+      <!-- Back to Overview Action -->
+      <button class="btn-back" id="btn-back-overview">
+        <span>← Back to Overview</span>
+      </button>
+    </div>
+
+    <!-- Bottom Controls & Legend Bar -->
+    <div class="bottom-bar">
+      <!-- Legend Card -->
+      <div class="legend-card interactive">
+        <div class="legend-item">
+          <div class="legend-dot dot-green"></div>
+          <span>Prime (80-100)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot dot-yellow"></div>
+          <span>Standard (55-79)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot dot-red"></div>
+          <span>Obstructed (<55)</span>
+        </div>
+      </div>
+
+      <!-- Instruction Hint Bar -->
+      <div id="hint-pill" class="interactive">
+        <span>🖱️ Click a seat to preview view · Drag to look around · Scroll to zoom</span>
+        <span class="hint-close" id="hint-close-btn">&times;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       THREE.JS AUDITORIUM & CAMERA ENGINE (PLUSH RED MULTIPLEX SEATS)
+       ========================================================================== -->
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.getElementById('error-alert').style.display = 'block';
+    }
+
+    // ============================================================================
+    // 1. CONFIGURATION & LAYOUT
+    // ============================================================================
+    const CONFIG = {
+      // Screen Position & Size (x=0, y=3.6, z=-12.0, tilted 5° back)
+      screenCenter: new THREE.Vector3(0, 3.6, -12.0),
+      screenWidth: 16.0,
+      screenHeight: 7.5,
+      screenTilt: -0.087,
+
+      // Stage Platform (x=0, y=0.15, z=-9.5, size 14x3x0.3)
+      stageCenter: new THREE.Vector3(0, 0.15, -9.5),
+      stageWidth: 14.0,
+      stageDepth: 3.0,
+      stageHeight: 0.3,
+
+      // Auditorium Layout (6 Rows x 12 Seats = 72 Seats total)
+      rows: 6,
+      seatsPerRow: 12,
+      seatWidth: 0.55,
+      rowDepth: 0.9,
+      rowRise: 0.14,
+      aisleAfter: 6,
+      rowZStart: -2.0,
+
+      // Structural Support Pillars
+      pillars: [],
+
+      // Scoring Formula Constants
+      scoring: {
+        idealDistance: 12.5,
+        distancePenaltyFactor: 4.5,
+        anglePenaltyFactor: 1.4,
+        pillarPenalty: 35
+      },
+
+      // Dynamic Pricing Formula Constants
+      pricing: {
+        basePrice: 300,
+        minMultiplier: 0.7,
+        scoreMultiplier: 0.6
+      }
+    };
+
+    // ============================================================================
+    // 2. SCENE & RENDERER INITIALIZATION
+    // ============================================================================
+    const canvas = document.getElementById('webgl-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x050508);
+    scene.fog = new THREE.FogExp2(0x050508, 0.007);
+
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 120.0);
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2(-1000, -1000);
+    const seatMeshes = [];
+    const seatDataMap = new Map();
+    const pillarMeshes = [];
+
+    let currentMode = 'OVERVIEW'; // 'OVERVIEW' | 'SEAT_PREVIEW'
+    let selectedSeatData = null;
+    let hoveredSeatMesh = null;
+
+    // ============================================================================
+    // 3. ATMOSPHERIC CINEMA LIGHTING & ARCHITECTURE
+    // ============================================================================
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x111118, 0.85);
+    scene.add(hemiLight);
+
+    const ambientLight = new THREE.AmbientLight(0x282430, 0.65);
+    scene.add(ambientLight);
+
+    const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.85);
+    dirLight.position.set(8, 18, 10);
+    dirLight.castShadow = true;
+    dirLight.shadow.mapSize.width = 2048;
+    dirLight.shadow.mapSize.height = 2048;
+    scene.add(dirLight);
+
+    // Warm red/amber wall-wash light strips flanking screen
+    const stripL = new THREE.SpotLight(0xdc2626, 3.0);
+    stripL.position.set(-CONFIG.screenWidth / 2 - 0.5, 7.0, -11.5);
+    stripL.target.position.set(-CONFIG.screenWidth / 2 - 0.5, 0, -11.5);
+    scene.add(stripL);
+    scene.add(stripL.target);
+
+    const stripR = new THREE.SpotLight(0xdc2626, 3.0);
+    stripR.position.set(CONFIG.screenWidth / 2 + 0.5, 7.0, -11.5);
+    stripR.target.position.set(CONFIG.screenWidth / 2 + 0.5, 0, -11.5);
+    scene.add(stripR);
+    scene.add(stripR.target);
+
+    // Stage spotlights
+    const stageSpot1 = new THREE.SpotLight(0xfffaee, 1.8);
+    stageSpot1.position.set(-3.0, 9.0, -5.0);
+    stageSpot1.target.position.copy(CONFIG.stageCenter);
+    scene.add(stageSpot1);
+    scene.add(stageSpot1.target);
+
+    const stageSpot2 = new THREE.SpotLight(0xfffaee, 1.8);
+    stageSpot2.position.set(3.0, 9.0, -5.0);
+    stageSpot2.target.position.copy(CONFIG.stageCenter);
+    scene.add(stageSpot2);
+    scene.add(stageSpot2.target);
+
+    // Ceiling Downlight Grid
+    const ceilingGeo = new THREE.PlaneGeometry(24, 30);
+    const ceilingMat = new THREE.MeshStandardMaterial({ color: 0x121012, roughness: 0.9 });
+    const ceilingMesh = new THREE.Mesh(ceilingGeo, ceilingMat);
+    ceilingMesh.rotation.x = Math.PI / 2;
+    ceilingMesh.position.set(0, 9.5, 0);
+    scene.add(ceilingMesh);
+
+    const downlightHousingGeo = new THREE.CylinderGeometry(0.18, 0.22, 0.08, 16);
+    const housingMat = new THREE.MeshStandardMaterial({ color: 0x1a1a22, roughness: 0.4 });
+    const emissiveDiscGeo = new THREE.CircleGeometry(0.14, 16);
+    const emissiveDiscMat = new THREE.MeshStandardMaterial({ color: 0xfffaed, emissive: 0xffeaad, emissiveIntensity: 1.2 });
+
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 6; c++) {
+        const x = -9 + c * 3.6;
+        const z = -10 + r * 6.0;
+
+        const housing = new THREE.Mesh(downlightHousingGeo, housingMat);
+        housing.position.set(x, 9.46, z);
+        scene.add(housing);
+
+        const disc = new THREE.Mesh(emissiveDiscGeo, emissiveDiscMat);
+        disc.rotation.x = Math.PI / 2;
+        disc.position.set(x, 9.41, z);
+        scene.add(disc);
+
+        const downLight = new THREE.PointLight(0xfffaee, 0.45, 12);
+        downLight.position.set(x, 9.1, z);
+        scene.add(downLight);
+      }
+    }
+
+    // Flat Architectural Walls (Flat dark charcoal)
+    const wallMat = new THREE.MeshStandardMaterial({ color: 0x151315, roughness: 0.85 });
+
+    const leftWallGeo = new THREE.PlaneGeometry(30, 10);
+    const leftWall = new THREE.Mesh(leftWallGeo, wallMat);
+    leftWall.rotation.y = Math.PI / 2;
+    leftWall.position.set(-12, 5.0, 0);
+    scene.add(leftWall);
+
+    const rightWallGeo = new THREE.PlaneGeometry(30, 10);
+    const rightWall = new THREE.Mesh(rightWallGeo, wallMat);
+    rightWall.rotation.y = -Math.PI / 2;
+    rightWall.position.set(12, 5.0, 0);
+    scene.add(rightWall);
+
+    const backWallGeo = new THREE.PlaneGeometry(24, 10);
+    const backWall = new THREE.Mesh(backWallGeo, wallMat);
+    backWall.position.set(0, 5.0, 15);
+    scene.add(backWall);
+
+    // Grounded Wall Speakers
+    const speakerPositions = [
+      { x: -11.6, y: 5.5, z: -8 }, { x: -11.6, y: 5.8, z: -2 }, { x: -11.6, y: 6.0, z: 4 },
+      { x: 11.6, y: 5.5, z: -8 },  { x: 11.6, y: 5.8, z: -2 },  { x: 11.6, y: 6.0, z: 4 }
+    ];
+
+    const speakerBoxGeo = new THREE.BoxGeometry(0.45, 0.75, 0.38);
+    const speakerBoxMat = new THREE.MeshStandardMaterial({ color: 0x1c1c22, roughness: 0.5 });
+    const coneGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.05, 16);
+    const coneMat = new THREE.MeshStandardMaterial({ color: 0x2e2e36, roughness: 0.3 });
+
+    speakerPositions.forEach(sp => {
+      const spGroup = new THREE.Group();
+      spGroup.position.set(sp.x, sp.y, sp.z);
+      spGroup.rotation.y = sp.x < 0 ? Math.PI / 6 : -Math.PI / 6;
+
+      const box = new THREE.Mesh(speakerBoxGeo, speakerBoxMat);
+      spGroup.add(box);
+
+      const cone1 = new THREE.Mesh(coneGeo, coneMat);
+      cone1.rotation.x = Math.PI / 2;
+      cone1.position.set(0, 0.18, 0.18);
+      spGroup.add(cone1);
+
+      const cone2 = new THREE.Mesh(coneGeo, coneMat);
+      cone2.rotation.x = Math.PI / 2;
+      cone2.position.set(0, -0.18, 0.18);
+      spGroup.add(cone2);
+
+      scene.add(spGroup);
+    });
+
+    // Floor Carpet with Red Aisle Runners
+    const floorCanvas = document.createElement('canvas');
+    floorCanvas.width = 512;
+    floorCanvas.height = 512;
+    const fCtx = floorCanvas.getContext('2d');
+    fCtx.fillStyle = '#0f0e13';
+    fCtx.fillRect(0, 0, 512, 512);
+
+    for (let i = 0; i < 4000; i++) {
+      const x = Math.random() * 512;
+      const y = Math.random() * 512;
+      const r = Math.random() * 1.4;
+      const val = Math.random();
+      fCtx.fillStyle = val > 0.6 ? '#201622' : (val > 0.3 ? '#161822' : '#281d26');
+      fCtx.beginPath();
+      fCtx.arc(x, y, r, 0, Math.PI * 2);
+      fCtx.fill();
+    }
+
+    const carpetTexture = new THREE.CanvasTexture(floorCanvas);
+    carpetTexture.wrapS = THREE.RepeatWrapping;
+    carpetTexture.wrapT = THREE.RepeatWrapping;
+    carpetTexture.repeat.set(8, 10);
+
+    const floorGeo = new THREE.PlaneGeometry(24, 30);
+    const floorMat = new THREE.MeshStandardMaterial({ map: carpetTexture, roughness: 0.85 });
+    const floorMesh = new THREE.Mesh(floorGeo, floorMat);
+    floorMesh.rotation.x = -Math.PI / 2;
+    floorMesh.position.set(0, 0, 0);
+    floorMesh.receiveShadow = true;
+    scene.add(floorMesh);
+
+    // Muted Dark Maroon Aisle Runners
+    const aisleCarpetMat = new THREE.MeshStandardMaterial({ color: 0x3a1416, roughness: 0.7 });
+
+    const centerAisleGeo = new THREE.PlaneGeometry(1.1, 10.0);
+    const centerAisle = new THREE.Mesh(centerAisleGeo, aisleCarpetMat);
+    centerAisle.rotation.x = -Math.PI / 2;
+    centerAisle.position.set(0, 0.01, 0.5);
+    scene.add(centerAisle);
+
+    // ============================================================================
+    // 4. SCREEN & STAGE PLATFORM
+    // ============================================================================
+    const screenCanvas = document.createElement('canvas');
+    screenCanvas.width = 1024;
+    screenCanvas.height = 512;
+    const ctx = screenCanvas.getContext('2d');
+
+    const screenTexture = new THREE.CanvasTexture(screenCanvas);
+
+    function updateScreenCanvasTexture(time) {
+      const t = time * 0.001;
+      const w = screenCanvas.width;
+      const h = screenCanvas.height;
+
+      const grad = ctx.createLinearGradient(
+        w * 0.5 + Math.sin(t * 0.5) * w * 0.4,
+        0,
+        w * 0.5 + Math.cos(t * 0.7) * w * 0.4,
+        h
+      );
+      grad.addColorStop(0, '#0a0d1a');
+      grad.addColorStop(0.3, '#1e1b4b');
+      grad.addColorStop(0.7, '#581c87');
+      grad.addColorStop(1, '#0f172a');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.save();
+      ctx.globalCompositeOperation = 'screen';
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        const waveY = h * 0.5 + Math.sin(t * 1.2 + i * 2) * h * 0.25;
+        const waveGrad = ctx.createRadialGradient(
+          w * (0.3 + i * 0.2), waveY, 10,
+          w * (0.3 + i * 0.2), waveY, 280
+        );
+        waveGrad.addColorStop(0, i === 0 ? 'rgba(239, 68, 68, 0.6)' : (i === 1 ? 'rgba(99, 102, 241, 0.5)' : 'rgba(236, 72, 153, 0.45)'));
+        waveGrad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = waveGrad;
+        ctx.arc(w * (0.3 + i * 0.2), waveY, 280, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      ctx.save();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      
+      ctx.font = '600 24px -apple-system, sans-serif';
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.95)';
+      ctx.fillText('FEATURE PRESENTATION · PREMIERE NIGHT', w / 2, h / 2 - 45);
+
+      ctx.font = '900 64px Georgia, serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = 'rgba(239, 68, 68, 0.8)';
+      ctx.shadowBlur = 20;
+      ctx.fillText('CINEMAVIEW 3D', w / 2, h / 2 + 15);
+      ctx.restore();
+
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
+      ctx.lineWidth = 12;
+      ctx.strokeRect(6, 6, w - 12, h - 12);
+
+      screenTexture.needsUpdate = true;
+    }
+
+    // Screen Plane
+    const screenGeo = new THREE.PlaneGeometry(CONFIG.screenWidth, CONFIG.screenHeight);
+    const screenMat = new THREE.MeshStandardMaterial({
+      map: screenTexture,
+      roughness: 0.15,
+      metalness: 0.1,
+      emissive: 0xffffff,
+      emissiveMap: screenTexture,
+      emissiveIntensity: 0.5
+    });
+    const screenMesh = new THREE.Mesh(screenGeo, screenMat);
+    screenMesh.position.copy(CONFIG.screenCenter);
+    screenMesh.rotation.x = CONFIG.screenTilt;
+    scene.add(screenMesh);
+
+    // Screen Frame Bezel
+    const frameGeo = new THREE.BoxGeometry(CONFIG.screenWidth + 0.5, CONFIG.screenHeight + 0.5, 0.25);
+    const frameMat = new THREE.MeshStandardMaterial({ color: 0x08080a, roughness: 0.4, metalness: 0.8 });
+    const frameMesh = new THREE.Mesh(frameGeo, frameMat);
+    frameMesh.position.set(CONFIG.screenCenter.x, CONFIG.screenCenter.y, CONFIG.screenCenter.z - 0.15);
+    frameMesh.rotation.x = CONFIG.screenTilt;
+    scene.add(frameMesh);
+
+    // Muted Dark Warm Gray Stage Platform (0x2a2018)
+    const stageGeo = new THREE.BoxGeometry(CONFIG.stageWidth, CONFIG.stageHeight, CONFIG.stageDepth);
+    const stageMat = new THREE.MeshStandardMaterial({ color: 0x2a2018, roughness: 0.75, metalness: 0.1 });
+    const stageMesh = new THREE.Mesh(stageGeo, stageMat);
+    stageMesh.position.copy(CONFIG.stageCenter);
+    stageMesh.receiveShadow = true;
+    scene.add(stageMesh);
+
+    // Support Pillars (Pillar A & Pillar B)
+    CONFIG.pillars.forEach(p => {
+      const pillarGeo = new THREE.CylinderGeometry(p.radius, p.radius, p.height, 24);
+      const pillarMat = new THREE.MeshStandardMaterial({ color: 0x222430, roughness: 0.6, metalness: 0.2 });
+      const pillar = new THREE.Mesh(pillarGeo, pillarMat);
+      pillar.position.set(p.x, p.y, p.z);
+      pillar.castShadow = true;
+      pillar.receiveShadow = true;
+      pillar.userData = { isPillar: true, name: p.name };
+      scene.add(pillar);
+      pillarMeshes.push(pillar);
+    });
+
+    // ============================================================================
+    // 5. RAKED STEP RISER PLATFORMS
+    // ============================================================================
+    for (let r = 0; r < CONFIG.rows; r++) {
+      const rowZ = CONFIG.rowZStart + r * CONFIG.rowDepth;
+      const rowY = r * CONFIG.rowRise;
+      const platformHeight = rowY + 0.12;
+
+      const platGeo = new THREE.BoxGeometry(10.2, platformHeight, CONFIG.rowDepth - 0.05);
+      const platMat = new THREE.MeshStandardMaterial({ color: 0x1a1920, roughness: 0.8 });
+      const platMesh = new THREE.Mesh(platGeo, platMat);
+      platMesh.position.set(0, platformHeight / 2, rowZ);
+      platMesh.receiveShadow = true;
+      scene.add(platMesh);
+
+      // LED Step Edge Light Strip
+      const stripGeo = new THREE.BoxGeometry(10.2, 0.03, 0.04);
+      const stripMat = new THREE.MeshStandardMaterial({ color: 0xffaa33, emissive: 0xff9900, emissiveIntensity: 1.4 });
+      const stripMesh = new THREE.Mesh(stripGeo, stripMat);
+      stripMesh.position.set(0, platformHeight, rowZ - (CONFIG.rowDepth - 0.05) / 2);
+      scene.add(stripMesh);
+    }
+
+    // ============================================================================
+    // 6. FORMULA-BASED VIEW QUALITY & RAYCAST OBSTRUCTION SCORER
+    // ============================================================================
+    function calculateSeatViewScore(eyePos) {
+      const screenCenter = CONFIG.screenCenter.clone();
+
+      const distanceToScreenCenter = eyePos.distanceTo(screenCenter);
+      const distanceDiff = Math.abs(distanceToScreenCenter - CONFIG.scoring.idealDistance);
+      const distanceScore = Math.max(0, Math.min(100, 100 - distanceDiff * CONFIG.scoring.distancePenaltyFactor));
+
+      const dirToSeat = eyePos.clone().sub(screenCenter);
+      const horizontalAngleRad = Math.atan2(dirToSeat.x, dirToSeat.z);
+      const horizontalAngleFromCenterLine = Math.abs(horizontalAngleRad * (180 / Math.PI));
+      const angleScore = Math.max(0, Math.min(100, 100 - horizontalAngleFromCenterLine * CONFIG.scoring.anglePenaltyFactor));
+
+      // Raycast check to Pillar A & Pillar B
+      const rayDirection = screenCenter.clone().sub(eyePos).normalize();
+      const ray = new THREE.Raycaster(eyePos, rayDirection, 0.1, distanceToScreenCenter);
+      const intersections = ray.intersectObjects(pillarMeshes, false);
+
+      let obstructionPenalty = 0;
+      let isObstructed = false;
+      let hitPillarName = null;
+
+      if (intersections.length > 0 && intersections[0].distance < (distanceToScreenCenter - 0.5)) {
+        isObstructed = true;
+        obstructionPenalty = CONFIG.scoring.pillarPenalty;
+        hitPillarName = intersections[0].object.userData.name || "Support Column";
+      }
+
+      const rawScore = (distanceScore * 0.5 + angleScore * 0.5) - obstructionPenalty;
+      const finalScore = Math.max(0, Math.min(100, Math.round(rawScore)));
+
+      const finalPrice = Math.round(CONFIG.pricing.basePrice * (CONFIG.pricing.minMultiplier + (finalScore / 100) * CONFIG.pricing.scoreMultiplier));
+
+      let tierHex, tierName;
+      if (finalScore >= 80) {
+        tierHex = 0x2ecc71; // Green
+        tierName = "Prime View";
+      } else if (finalScore >= 55) {
+        tierHex = 0xf1c40f; // Yellow
+        tierName = "Standard View";
+      } else {
+        tierHex = 0xe74c3c; // Red
+        tierName = "Obstructed / Side View";
+      }
+
+      return {
+        distanceScore: Math.round(distanceScore),
+        angleScore: Math.round(angleScore),
+        horizontalAngleDeg: Math.round(horizontalAngleFromCenterLine * 10) / 10,
+        distanceToScreenCenter: Math.round(distanceToScreenCenter * 10) / 10,
+        isObstructed,
+        hitPillarName,
+        obstructionPenalty,
+        finalScore,
+        finalPrice,
+        tierName,
+        tierHex
+      };
+    }
+
+    // ============================================================================
+    // 7. PLUSH RED CINEMA SEAT ASSEMBLY (SCREEN-FACING GEOMETRY LOCK)
+    // ============================================================================
+    const pedestalGeo = new THREE.CylinderGeometry(0.05, 0.07, 0.12, 12);
+    pedestalGeo.translate(0, 0.06, 0);
+
+    // Cushion: Open front edge facing local -Z (toward screen), back edge toward local +Z
+    const cushionGeo = new THREE.BoxGeometry(0.55, 0.18, 0.48);
+    cushionGeo.translate(0, 0.18, -0.05);
+
+    // Backrest: Positioned at local +Z (facing AWAY from screen / toward back of auditorium)
+    // Tilted backward (+Y tilts toward +Z, away from screen) using rotateX(+0.14)
+    const backGeo = new THREE.BoxGeometry(0.55, 0.62, 0.12);
+    backGeo.rotateX(0.14);
+    backGeo.translate(0, 0.58, 0.19);
+
+    // Headrest: Top of backrest at local +Z
+    const headrestGeo = new THREE.BoxGeometry(0.46, 0.18, 0.10);
+    headrestGeo.translate(0, 0.94, 0.23);
+
+    // L-Shaped Armrests
+    // Horizontal rest bar running along Z
+    const armBarGeo = new THREE.BoxGeometry(0.05, 0.05, 0.45);
+    armBarGeo.translate(0, 0.46, -0.05);
+
+    // Front vertical support post at local -Z side (where knees/cushion front extend, facing screen)
+    const armPostGeo = new THREE.BoxGeometry(0.05, 0.25, 0.05);
+    armPostGeo.translate(0, 0.30, -0.22);
+
+    // Cupholder at local -Z side (front of armrest near knees, facing screen)
+    const cupholderGeo = new THREE.CylinderGeometry(0.035, 0.035, 0.08, 12);
+    cupholderGeo.translate(0, 0.46, -0.22);
+
+    // Tier LED indicator dot facing overview camera on back of headrest/backrest (+Z)
+    const tierDotGeo = new THREE.SphereGeometry(0.04, 12, 12);
+    tierDotGeo.translate(0, 0.94, 0.29);
+
+    const armCapMat = new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.65, metalness: 0.15 });
+    const cupholderMat = new THREE.MeshStandardMaterial({ color: 0x141418, roughness: 0.3 });
+
+    // Rich Velvet Red Multiplex Seat Fabric Material Base (Deep Crimson Cinema Red)
+    const baseRedSeatMat = new THREE.MeshStandardMaterial({
+      color: 0xb91c1c,        // Vibrant plush cinema red velvet fabric
+      roughness: 0.45,
+      metalness: 0.1,
+      emissive: 0x7f1d1d,
+      emissiveIntensity: 0.15
+    });
+
+    const seatBoundingBox = new THREE.Box3();
+    const seatDataArray = [];
+
+    function generateAuditoriumSeats() {
+      const rowNames = ["Row A", "Row B", "Row C", "Row D", "Row E", "Row F"];
+
+      for (let r = 0; r < CONFIG.rows; r++) {
+        const rowZ = CONFIG.rowZStart + r * CONFIG.rowDepth;
+        const rowY = r * CONFIG.rowRise;
+        const platformHeight = rowY + 0.12;
+
+        for (let s = 0; s < CONFIG.seatsPerRow; s++) {
+          const seatNum = s + 1;
+          const seatCode = `${rowNames[r].split(' ')[1]}${seatNum}`;
+
+          let xOffset = (s - (CONFIG.seatsPerRow - 1) / 2) * (CONFIG.seatWidth + 0.12);
+          if (s >= CONFIG.aisleAfter) xOffset += 0.5; // aisle gap
+
+          const curveFactor = Math.pow(xOffset / 4.0, 2) * 0.18; // Subtle concave curve
+          const posX = xOffset;
+          const posY = platformHeight;
+          const posZ = rowZ + curveFactor;
+
+          const eyePosition = new THREE.Vector3(posX, posY + 1.15, posZ);
+          const viewStats = calculateSeatViewScore(eyePosition);
+
+          const seatGroup = new THREE.Group();
+          seatGroup.position.set(posX, posY, posZ);
+
+          // Seat rotation stays 0 (facing -Z directly at screen by construction)
+          seatGroup.rotation.set(0, 0, 0);
+
+          // Seat Fabric: Rich Crimson Cinema Red Velvet
+          const seatMat = baseRedSeatMat.clone();
+
+          // Tier LED Badge Indicator (Green for Prime, Yellow for Standard, Red for Obstructed)
+          const dotMat = new THREE.MeshStandardMaterial({
+            color: viewStats.tierHex,
+            emissive: viewStats.tierHex,
+            emissiveIntensity: 1.6
+          });
+
+          const pedMesh = new THREE.Mesh(pedestalGeo, armCapMat);
+          const cushionMesh = new THREE.Mesh(cushionGeo, seatMat);
+          const backMesh = new THREE.Mesh(backGeo, seatMat);
+          const headrestMesh = new THREE.Mesh(headrestGeo, seatMat);
+
+          const armBarL = new THREE.Mesh(armBarGeo, armCapMat);
+          armBarL.position.set(-0.29, 0, 0);
+          const armPostL = new THREE.Mesh(armPostGeo, armCapMat);
+          armPostL.position.set(-0.29, 0, 0);
+
+          const armBarR = new THREE.Mesh(armBarGeo, armCapMat);
+          armBarR.position.set(0.29, 0, 0);
+          const armPostR = new THREE.Mesh(armPostGeo, armCapMat);
+          armPostR.position.set(0.29, 0, 0);
+
+          const cupLMesh = new THREE.Mesh(cupholderGeo, cupholderMat);
+          cupLMesh.position.set(-0.29, 0, 0);
+          const cupRMesh = new THREE.Mesh(cupholderGeo, cupholderMat);
+          cupRMesh.position.set(0.29, 0, 0);
+
+          const dotMesh = new THREE.Mesh(tierDotGeo, dotMat);
+
+          cushionMesh.castShadow = true;
+          cushionMesh.receiveShadow = true;
+          backMesh.castShadow = true;
+
+          seatGroup.add(pedMesh);
+          seatGroup.add(cushionMesh);
+          seatGroup.add(backMesh);
+          seatGroup.add(headrestMesh);
+          seatGroup.add(armBarL);
+          seatGroup.add(armPostL);
+          seatGroup.add(armBarR);
+          seatGroup.add(armPostR);
+          seatGroup.add(cupLMesh);
+          seatGroup.add(cupRMesh);
+          seatGroup.add(dotMesh);
+
+          scene.add(seatGroup);
+
+          const clickBoxGeo = new THREE.BoxGeometry(0.65, 1.1, 0.65);
+          clickBoxGeo.translate(0, 0.55, 0);
+          const clickMesh = new THREE.Mesh(clickBoxGeo, new THREE.MeshBasicMaterial({ visible: false }));
+          seatGroup.add(clickMesh);
+
+          const seatData = {
+            rowName: rowNames[r],
+            rowIndex: r + 1,
+            seatNum: seatNum,
+            seatCode: seatCode,
+            worldPos: new THREE.Vector3(posX, posY, posZ),
+            eyePosition: eyePosition,
+            rotationY: seatGroup.rotation.y,
+            meshGroup: seatGroup,
+            cushionMat: seatMat,
+            baseColorHex: 0xb91c1c,
+            stats: viewStats
+          };
+
+          seatMeshes.push(clickMesh);
+          seatDataMap.set(clickMesh.uuid, seatData);
+          seatDataMap.set(seatGroup.uuid, seatData);
+          seatDataArray.push(seatData);
+
+          seatBoundingBox.expandByObject(seatGroup);
+        }
+      }
+    }
+
+    generateAuditoriumSeats();
+
+    // ============================================================================
+    // 8. DYNAMIC CAMERA OVERVIEW FRAMING
+    // ============================================================================
+    const seatsCenter = seatBoundingBox.getCenter(new THREE.Vector3());
+    const seatsSize = seatBoundingBox.getSize(new THREE.Vector3());
+
+    const overviewOrbit = {
+      pivot: new THREE.Vector3(seatsCenter.x, seatsCenter.y + 0.6, seatsCenter.z - 2.2),
+      radius: Math.max(seatsSize.x, seatsSize.z) * 1.55,
+      minRadius: 6.0,
+      maxRadius: 30.0,
+      theta: 0.0,
+      phi: 0.85,
+      minPhi: 0.15,
+      maxPhi: 1.35
+    };
+
+    function updateOverviewCameraPos() {
+      camera.position.x = overviewOrbit.pivot.x + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.sin(overviewOrbit.theta);
+      camera.position.y = overviewOrbit.pivot.y + overviewOrbit.radius * Math.cos(overviewOrbit.phi);
+      camera.position.z = overviewOrbit.pivot.z + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.cos(overviewOrbit.theta);
+      camera.lookAt(overviewOrbit.pivot);
+    }
+    updateOverviewCameraPos();
+
+    const seatLook = {
+      baseQuaternion: new THREE.Quaternion(),
+      yaw: 0.0,
+      pitch: 0.0,
+      maxYaw: 70 * (Math.PI / 180),
+      maxPitch: 25 * (Math.PI / 180)
+    };
+
+    function updateSeatCameraRotation() {
+      const euler = new THREE.Euler(seatLook.pitch, seatLook.yaw, 0, 'YXZ');
+      const offsetQuat = new THREE.Quaternion().setFromEuler(euler);
+      camera.quaternion.copy(seatLook.baseQuaternion).multiply(offsetQuat);
+    }
+
+    let isCameraAnimating = false;
+    let animStartTime = 0;
+    const animDuration = 800;
+    const animStartPos = new THREE.Vector3();
+    const animEndPos = new THREE.Vector3();
+    const animStartQuat = new THREE.Quaternion();
+    const animEndQuat = new THREE.Quaternion();
+    let onAnimCompleteCallback = null;
+
+    function animateCameraTo(targetPos, targetQuat, onComplete) {
+      isCameraAnimating = true;
+      animStartTime = performance.now();
+      animStartPos.copy(camera.position);
+      animEndPos.copy(targetPos);
+      animStartQuat.copy(camera.quaternion);
+      animEndQuat.copy(targetQuat);
+      onAnimCompleteCallback = onComplete || null;
+    }
+
+    function stepCameraAnimation(now) {
+      if (!isCameraAnimating) return;
+      const elapsed = now - animStartTime;
+      let progress = Math.min(1.0, elapsed / animDuration);
+      
+      const ease = progress < 0.5 
+        ? 4 * progress * progress * progress 
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      camera.position.lerpVectors(animStartPos, animEndPos, ease);
+      camera.quaternion.slerpQuaternions(animStartQuat, animEndQuat, ease);
+
+      if (progress >= 1.0) {
+        isCameraAnimating = false;
+        if (onAnimCompleteCallback) onAnimCompleteCallback();
+      }
+    }
+
+    function findParentSeatData(hitObject) {
+      let curr = hitObject;
+      while (curr) {
+        if (seatDataMap.has(curr.uuid)) {
+          return seatDataMap.get(curr.uuid);
+        }
+        if (curr.parent && seatDataMap.has(curr.parent.uuid)) {
+          return seatDataMap.get(curr.parent.uuid);
+        }
+        curr = curr.parent;
+      }
+      return null;
+    }
+
+    // ============================================================================
+    // 9. UI ENGINE & INTERACTION
+    // ============================================================================
+    const panel = document.getElementById('seat-panel');
+    const panelSeatCode = document.getElementById('panel-seat-code');
+    const panelSeatDesc = document.getElementById('panel-seat-desc');
+    const panelScoreBadge = document.getElementById('panel-score-badge');
+    const panelScoreNum = document.getElementById('panel-score-num');
+    const panelDistVal = document.getElementById('panel-dist-val');
+    const barDist = document.getElementById('bar-dist');
+    const panelAngleVal = document.getElementById('panel-angle-val');
+    const barAngle = document.getElementById('bar-angle');
+    const panelObstructionBanner = document.getElementById('panel-obstruction-banner');
+    const obstructionIcon = document.getElementById('obstruction-icon');
+    const obstructionText = document.getElementById('obstruction-text');
+    const panelPrice = document.getElementById('panel-price');
+    const panelPriceBreakdown = document.getElementById('panel-price-breakdown');
+    const modeText = document.getElementById('mode-text');
+    const tooltip = document.getElementById('tooltip');
+    const ttCode = document.getElementById('tt-code');
+    const ttScore = document.getElementById('tt-score');
+
+    function populateSeatPanel(data) {
+      const s = data.stats;
+      panelSeatCode.textContent = `${data.rowName} · Seat ${data.seatNum} (${data.seatCode})`;
+      panelSeatDesc.textContent = `${s.tierName} — Elevation +${(data.rowIndex * 0.14).toFixed(2)}m`;
+      panelScoreNum.textContent = s.finalScore;
+
+      panelScoreBadge.className = 'score-badge ' + (s.finalScore >= 80 ? 'tier-green' : (s.finalScore >= 55 ? 'tier-yellow' : 'tier-red'));
+
+      panelDistVal.textContent = `${s.distanceScore}%`;
+      barDist.style.width = `${s.distanceScore}%`;
+      barDist.style.background = s.distanceScore >= 80 ? '#2ecc71' : (s.distanceScore >= 55 ? '#f1c40f' : '#e74c3c');
+
+      panelAngleVal.textContent = `${s.angleScore}%`;
+      barAngle.style.width = `${s.angleScore}%`;
+      barAngle.style.background = s.angleScore >= 80 ? '#2ecc71' : (s.angleScore >= 55 ? '#f1c40f' : '#e74c3c');
+
+      if (s.isObstructed) {
+        panelObstructionBanner.className = 'obstruction-banner obstructed';
+        obstructionIcon.textContent = '⚠';
+        obstructionText.textContent = `Obstructed by ${s.hitPillarName} (-${s.obstructionPenalty} pts)`;
+      } else {
+        panelObstructionBanner.className = 'obstruction-banner clear';
+        obstructionIcon.textContent = '✓';
+        obstructionText.textContent = 'Clear Line of Sight to Screen';
+      }
+
+      panelPrice.textContent = `₹${s.finalPrice}`;
+      panelPriceBreakdown.textContent = `Base ₹300 × (0.7 + ${s.finalScore}% × 0.6) = ₹${s.finalPrice}`;
+
+      panel.classList.add('visible');
+    }
+
+    function hideSeatPanel() {
+      panel.classList.remove('visible');
+    }
+
+    function switchToOverviewMode() {
+      currentMode = 'OVERVIEW';
+      selectedSeatData = null;
+      hideSeatPanel();
+      modeText.textContent = 'Overview Mode (Orbit View)';
+
+      const dummyCam = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 120.0);
+      dummyCam.position.x = overviewOrbit.pivot.x + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.sin(overviewOrbit.theta);
+      dummyCam.position.y = overviewOrbit.pivot.y + overviewOrbit.radius * Math.cos(overviewOrbit.phi);
+      dummyCam.position.z = overviewOrbit.pivot.z + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.cos(overviewOrbit.theta);
+      dummyCam.lookAt(overviewOrbit.pivot);
+
+      animateCameraTo(dummyCam.position, dummyCam.quaternion);
+    }
+
+    function switchToSeatPreviewMode(seatData) {
+      currentMode = 'SEAT_PREVIEW';
+      selectedSeatData = seatData;
+      populateSeatPanel(seatData);
+      modeText.textContent = `Seat POV Preview — ${seatData.seatCode}`;
+
+      const targetPos = seatData.eyePosition.clone();
+      const dummyCam = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 120.0);
+      dummyCam.position.copy(targetPos);
+      dummyCam.lookAt(CONFIG.screenCenter);
+
+      seatLook.baseQuaternion.copy(dummyCam.quaternion);
+      seatLook.yaw = 0.0;
+      seatLook.pitch = 0.0;
+
+      animateCameraTo(targetPos, dummyCam.quaternion);
+    }
+
+    document.getElementById('btn-back-overview').addEventListener('click', switchToOverviewMode);
+    document.getElementById('hint-close-btn').addEventListener('click', () => {
+      document.getElementById('hint-pill').style.display = 'none';
+    });
+
+    // Mouse & Touch Controls
+    let isMouseDown = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    let dragDistance = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+      tooltip.style.left = `${e.clientX}px`;
+      tooltip.style.top = `${e.clientY}px`;
+
+      if (isMouseDown && !isCameraAnimating) {
+        const deltaX = e.clientX - previousMousePosition.x;
+        const deltaY = e.clientY - previousMousePosition.y;
+        dragDistance += Math.abs(deltaX) + Math.abs(deltaY);
+
+        if (currentMode === 'OVERVIEW') {
+          overviewOrbit.theta -= deltaX * 0.006;
+          overviewOrbit.phi = THREE.MathUtils.clamp(overviewOrbit.phi - deltaY * 0.006, overviewOrbit.minPhi, overviewOrbit.maxPhi);
+          updateOverviewCameraPos();
+        } else if (currentMode === 'SEAT_PREVIEW') {
+          seatLook.yaw = THREE.MathUtils.clamp(seatLook.yaw - deltaX * 0.004, -seatLook.maxYaw, seatLook.maxYaw);
+          seatLook.pitch = THREE.MathUtils.clamp(seatLook.pitch - deltaY * 0.004, -seatLook.maxPitch, seatLook.maxPitch);
+          updateSeatCameraRotation();
+        }
+      }
+
+      previousMousePosition = { x: e.clientX, y: e.clientY };
+    });
+
+    window.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.interactive')) return;
+      isMouseDown = true;
+      dragDistance = 0;
+      previousMousePosition = { x: e.clientX, y: e.clientY };
+    });
+
+    window.addEventListener('mouseup', (e) => {
+      if (e.target.closest('.interactive')) return;
+      isMouseDown = false;
+
+      if (dragDistance < 5 && !isCameraAnimating) {
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(seatMeshes, true);
+
+        if (intersects.length > 0) {
+          const seatData = findParentSeatData(intersects[0].object);
+          if (seatData) {
+            switchToSeatPreviewMode(seatData);
+          }
+        }
+      }
+    });
+
+    window.addEventListener('wheel', (e) => {
+      if (currentMode === 'OVERVIEW' && !isCameraAnimating) {
+        overviewOrbit.radius = THREE.MathUtils.clamp(overviewOrbit.radius + e.deltaY * 0.015, overviewOrbit.minRadius, overviewOrbit.maxRadius);
+        updateOverviewCameraPos();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Hover Raycasting for tooltip & plush highlight
+    function handleHoverRaycast() {
+      if (isMouseDown || isCameraAnimating) {
+        tooltip.classList.remove('visible');
+        return;
+      }
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(seatMeshes, true);
+
+      if (intersects.length > 0) {
+        const seatData = findParentSeatData(intersects[0].object);
+        if (seatData) {
+          if (hoveredSeatMesh && hoveredSeatMesh !== seatData.meshGroup) {
+            hoveredSeatMesh.traverse(child => {
+              if (child.material && child.material.emissive && child.material !== baseRedSeatMat) {
+                child.material.emissiveIntensity = 1.6;
+              }
+            });
+          }
+          hoveredSeatMesh = seatData.meshGroup;
+          hoveredSeatMesh.traverse(child => {
+            if (child.material && child.material.emissive && child.material !== baseRedSeatMat) {
+              child.material.emissiveIntensity = 2.5;
+            }
+          });
+
+          ttCode.textContent = `${seatData.rowName} · Seat ${seatData.seatNum}`;
+          ttScore.textContent = seatData.stats.finalScore;
+          tooltip.classList.add('visible');
+          return;
+        }
+      }
+
+      if (hoveredSeatMesh) {
+        hoveredSeatMesh.traverse(child => {
+          if (child.material && child.material.emissive && child.material !== baseRedSeatMat) {
+            child.material.emissiveIntensity = 1.6;
+          }
+        });
+        hoveredSeatMesh = null;
+      }
+      tooltip.classList.remove('visible');
+    }
+
+    // ============================================================================
+    // 10. ANIMATION & RENDER LOOP
+    // ============================================================================
+    function animate(time) {
+      requestAnimationFrame(animate);
+
+      updateScreenCanvasTexture(time);
+      stepCameraAnimation(time);
+      handleHoverRaycast();
+
+      renderer.render(scene, camera);
+    }
+
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
