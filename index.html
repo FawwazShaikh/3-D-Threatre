@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CinemaView 3D — Premium Red Multiplex Seat Inspector</title>
+  <title>CinemaView 3D — Grand Luxury Multiplex Auditorium</title>
 
   <!-- Three.js r128 Loader (Local File + CDN Fallbacks) -->
   <script src="three.min.js"></script>
@@ -36,7 +36,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #050508;
+      background-color: #030304;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color: #e2e8f0;
     }
@@ -50,6 +50,31 @@
       z-index: 1;
       display: block;
       cursor: grab;
+    }
+
+    /* Film Grain & Lens Vignette Micro-Details Overlay */
+    #vignette-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.45) 85%, rgba(0, 0, 0, 0.75) 100%);
+    }
+
+    #grain-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.032;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
     #webgl-canvas:active {
@@ -91,17 +116,17 @@
     }
 
     header {
-      background: rgba(10, 10, 15, 0.88);
+      background: rgba(6, 6, 8, 0.88);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(220, 38, 38, 0.3);
       border-radius: 12px;
-      padding: 14px 24px;
+      padding: 12px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.85);
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
       width: 100%;
     }
@@ -115,7 +140,7 @@
     .brand-icon {
       width: 38px;
       height: 38px;
-      background: linear-gradient(135deg, #dc2626, #991b1b);
+      background: linear-gradient(135deg, #c81818, #880e0e);
       border-radius: 8px;
       display: flex;
       align-items: center;
@@ -123,7 +148,7 @@
       color: #ffffff;
       font-weight: 900;
       font-size: 18px;
-      box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+      box-shadow: 0 0 15px rgba(200, 24, 24, 0.5);
     }
 
     h1 {
@@ -144,7 +169,7 @@
 
     .header-stats {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       font-size: 13px;
     }
 
@@ -160,21 +185,21 @@
 
     .stat-value {
       font-weight: 700;
-      color: #ef4444;
+      color: #dc2626;
     }
 
     #mode-indicator {
       position: absolute;
-      top: 90px;
+      top: 88px;
       left: 24px;
-      background: rgba(10, 10, 15, 0.88);
+      background: rgba(6, 6, 8, 0.88);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(220, 38, 38, 0.35);
       border-radius: 30px;
       padding: 8px 18px;
       font-size: 12px;
       font-weight: 600;
-      color: #ef4444;
+      color: #dc2626;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -184,7 +209,7 @@
     .pulse-dot {
       width: 8px;
       height: 8px;
-      background: #ef4444;
+      background: #dc2626;
       border-radius: 50%;
       animation: pulse 1.5s infinite;
     }
@@ -192,26 +217,26 @@
     @keyframes pulse {
       0% {
         transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
       }
 
       70% {
         transform: scale(1);
-        box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+        box-shadow: 0 0 0 8px rgba(220, 38, 38, 0);
       }
 
       100% {
         transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
       }
     }
 
     #seat-panel {
       position: absolute;
-      top: 90px;
+      top: 88px;
       right: 24px;
       width: 360px;
-      background: rgba(10, 10, 15, 0.94);
+      background: rgba(6, 6, 8, 0.94);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(220, 38, 38, 0.35);
@@ -306,7 +331,7 @@
 
     .factor-val {
       font-weight: 600;
-      color: #ef4444;
+      color: #dc2626;
     }
 
     .progress-bar-bg {
@@ -340,12 +365,6 @@
       color: #2ecc71;
     }
 
-    .obstruction-banner.obstructed {
-      background: rgba(231, 76, 60, 0.15);
-      border: 1px solid rgba(231, 76, 60, 0.4);
-      color: #ff6b6b;
-    }
-
     .price-box {
       background: rgba(220, 38, 38, 0.08);
       border: 1px solid rgba(220, 38, 38, 0.3);
@@ -371,7 +390,7 @@
       font-family: Georgia, 'Times New Roman', serif;
       font-size: 28px;
       font-weight: 800;
-      color: #ef4444;
+      color: #dc2626;
     }
 
     .price-formula {
@@ -384,7 +403,7 @@
     .btn-back {
       width: 100%;
       margin-top: 18px;
-      background: linear-gradient(135deg, #dc2626, #991b1b);
+      background: linear-gradient(135deg, #c81818, #880e0e);
       color: #ffffff;
       border: none;
       padding: 12px;
@@ -392,7 +411,7 @@
       font-weight: 700;
       font-size: 14px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+      box-shadow: 0 4px 15px rgba(200, 24, 24, 0.4);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       align-items: center;
@@ -402,7 +421,7 @@
 
     .btn-back:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+      box-shadow: 0 6px 20px rgba(200, 24, 24, 0.6);
     }
 
     .bottom-bar {
@@ -410,12 +429,12 @@
       justify-content: space-between;
       align-items: flex-end;
       width: 100%;
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
     }
 
     .legend-card {
-      background: rgba(10, 10, 15, 0.88);
+      background: rgba(6, 6, 8, 0.88);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
@@ -454,7 +473,7 @@
     }
 
     #hint-pill {
-      background: rgba(10, 10, 15, 0.88);
+      background: rgba(6, 6, 8, 0.88);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
@@ -479,8 +498,8 @@
     #tooltip {
       position: absolute;
       pointer-events: none;
-      background: rgba(10, 10, 15, 0.94);
-      border: 1px solid #ef4444;
+      background: rgba(6, 6, 8, 0.94);
+      border: 1px solid #dc2626;
       color: white;
       padding: 6px 12px;
       border-radius: 8px;
@@ -498,7 +517,7 @@
     }
 
     .tooltip-code {
-      color: #ef4444;
+      color: #dc2626;
       font-weight: 700;
     }
 
@@ -512,42 +531,53 @@
 
   <!-- WebGL Canvas -->
   <canvas id="webgl-canvas"></canvas>
+  <div id="vignette-overlay"></div>
+  <div id="grain-overlay"></div>
 
   <!-- Error Alert Fallback -->
   <div id="error-alert">
     <h3>WebGL Error</h3>
-    <p style="margin-top:8px; font-size:13px;">Unable to load Three.js library. Please check your internet connection or
-      local files.</p>
+    <p style="margin-top:8px; font-size:13px;">Unable to load Three.js library. Please check your local script files or
+      internet connection.</p>
   </div>
 
   <!-- UI Overlay Layer -->
   <div class="ui-layer">
     <!-- Header -->
-    <!-- <header class="interactive">
+    <header class="interactive">
       <div class="brand">
         <div class="brand-icon">3D</div>
         <div>
           <h1>CinemaView 3D</h1>
-          <div class="subtitle">Plush Red Multiplex Seat & View Quality Engine</div>
+          <div class="subtitle">Grand Luxury Auditorium · Premiere Night Experience</div>
         </div>
       </div>
       <div class="header-stats">
         <div class="stat-pill">
-          <span>Capacity:</span>
-          <span class="stat-value">72 Seats</span>
+          <span style="color: #2ecc71;">⚡ Performance:</span>
+          <span class="stat-value" style="color: #2ecc71;">THREE.InstancedMesh (176 Seats | ~36 Draw Calls | 60
+            FPS)</span>
+        </div>
+        <div class="stat-pill">
+          <span>Screen Format:</span>
+          <span class="stat-value" style="color: #f59e0b;">2.35:1 Anamorphic</span>
+        </div>
+        <div class="stat-pill">
+          <span>Auditorium Capacity:</span>
+          <span class="stat-value">176 Seats (11 Rows)</span>
         </div>
         <div class="stat-pill">
           <span>Base Ticket:</span>
-          <span class="stat-value">₹300</span>
+          <span class="stat-value">₹350</span>
         </div>
       </div>
-    </header> -->
+    </header>
 
     <!-- Mode Indicator Badge -->
-    <!-- <div id="mode-indicator" class="interactive">
+    <div id="mode-indicator" class="interactive">
       <div class="pulse-dot"></div>
-      <span id="mode-text">Overview Mode (Orbit View)</span>
-    </div> -->
+      <span id="mode-text">Front-Center Wide View (Entrance Perspective)</span>
+    </div>
 
     <!-- Hover Seat Tooltip -->
     <div id="tooltip">
@@ -571,7 +601,7 @@
       <div class="section-title">View Quality Factors</div>
 
       <div class="factor-row">
-        <span class="factor-name">Distance Score (12.5m ideal)</span>
+        <span class="factor-name">Distance Score (13.0m ideal)</span>
         <span class="factor-val" id="panel-dist-val">95%</span>
       </div>
       <div class="progress-bar-bg">
@@ -589,951 +619,1588 @@
       <!-- Obstruction Status Banner -->
       <div class="obstruction-banner clear" id="panel-obstruction-banner">
         <span id="obstruction-icon">✓</span>
-        <span id="obstruction-text">Clear Line of Sight to Screen</span>
+        <span id="obstruction-text">Unobstructed Line of Sight</span>
       </div>
 
       <!-- Dynamic Price Breakdown -->
       <div class="price-box">
         <div class="price-main">
           <span class="price-title">Calculated Ticket Price</span>
-          <span class="price-value" id="panel-price">₹438</span>
+          <span class="price-value" id="panel-price">₹482</span>
         </div>
         <div class="price-formula" id="panel-price-breakdown">
-          Base ₹300 × (0.7 + 87% × 0.6) = ₹438
+          Base ₹350 × (0.7 + 87% × 0.6) = ₹482
         </div>
       </div>
 
       <!-- Back to Overview Action -->
       <button class="btn-back" id="btn-back-overview">
-        <span>← Back to Overview</span>
+        <span>← Back to Grand Overview</span>
       </button>
-      <!-- Bottom Controls & Legend Bar -->
     </div>
 
-    <!-- ==========================================================================
-       THREE.JS AUDITORIUM & CAMERA ENGINE (PLUSH RED MULTIPLEX SEATS)
-       ========================================================================== -->
-    <script>
-      if (typeof THREE === 'undefined') {
-        document.getElementById('error-alert').style.display = 'block';
+    <!-- Bottom Controls & Legend Bar -->
+    <div class="bottom-bar interactive">
+      <div class="legend-card">
+        <div class="legend-item">
+          <div class="legend-dot dot-green"></div>
+          <span>Prime View (80-100)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot dot-yellow"></div>
+          <span>Standard View (55-79)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot dot-red"></div>
+          <span>Side View (0-54)</span>
+        </div>
+      </div>
+
+      <div id="hint-pill">
+        <span>💡 Click any seat for POV preview | Drag to Orbit Camera</span>
+        <span class="hint-close" id="hint-close-btn">✕</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+     THREE.JS AUDITORIUM & CAMERA ENGINE (EXACT REFERENCE SCALE & MOOD)
+     ========================================================================== -->
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.getElementById('error-alert').style.display = 'block';
+    }
+
+    // ============================================================================
+    // 1. CONFIGURATION & LAYOUT (176 SEATS: 11 ROWS x 16 SEATS, MASSIVE SCREEN SCALE)
+    // ============================================================================
+    const CONFIG = {
+      // Screen Position & Size (Enlarged to fill 75-80% of wall width, 2.35:1 aspect ratio)
+      screenCenter: new THREE.Vector3(0, 5.8, -13.0),
+      screenWidth: 32.0,
+      screenHeight: 13.6,
+      screenCurveRadius: 45.0,
+      screenTilt: -0.03,
+
+      // Thin Low Stage Strip Directly Under Screen
+      stageCenter: new THREE.Vector3(0, 0.08, -12.5),
+      stageWidth: 32.5,
+      stageDepth: 1.0,
+      stageHeight: 0.15,
+
+      // Auditorium Layout (11 Rows x 16 Seats = 176 Seats total, Tightly Packed Rows)
+      rows: 11,
+      seatsPerRow: 16,
+      seatWidth: 0.58,
+      rowDepth: 0.88, // Tight row spacing for dense luxury multiplex layout
+      rowRise: 0.22,
+      rowZStart: -9.8, // Reduced gap between screen and front row by >60%!
+
+      // Scoring Formula Constants
+      scoring: {
+        idealDistance: 13.0,
+        distancePenaltyFactor: 3.2,
+        anglePenaltyFactor: 1.1,
+      },
+
+      // Dynamic Pricing Formula Constants
+      pricing: {
+        basePrice: 350,
+        minMultiplier: 0.7,
+        scoreMultiplier: 0.6
       }
+    };
 
-      // ============================================================================
-      // 1. CONFIGURATION & LAYOUT
-      // ============================================================================
-      const CONFIG = {
-        // Screen Position & Size (x=0, y=3.6, z=-12.0, tilted 5° back)
-        screenCenter: new THREE.Vector3(0, 3.6, -12.0),
-        screenWidth: 16.0,
-        screenHeight: 7.5,
-        screenTilt: -0.087,
+    // ============================================================================
+    // 2. SCENE & RENDERER INITIALIZATION (HIGH-CONTRAST CINEMATIC PHOTOREAL)
+    // ============================================================================
+    const canvas = document.getElementById('webgl-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.10;
 
-        // Stage Platform (x=0, y=0.15, z=-9.5, size 14x3x0.3)
-        stageCenter: new THREE.Vector3(0, 0.15, -9.5),
-        stageWidth: 14.0,
-        stageDepth: 3.0,
-        stageHeight: 0.3,
+    const scene = new THREE.Scene();
+    // Neutral dark charcoal-black ceiling and background, zero brown/violet tint
+    scene.background = new THREE.Color(0x060608);
+    scene.fog = new THREE.FogExp2(0x060608, 0.006);
 
-        // Auditorium Layout (6 Rows x 12 Seats = 72 Seats total)
-        rows: 6,
-        seatsPerRow: 12,
-        seatWidth: 0.55,
-        rowDepth: 0.9,
-        rowRise: 0.14,
-        aisleAfter: 6,
-        rowZStart: -2.0,
+    // Wide-Angle Front-Center Perspective Camera (FOV 68° positioned near entrance)
+    const camera = new THREE.PerspectiveCamera(68, window.innerWidth / window.innerHeight, 0.1, 140.0);
 
-        // Structural Support Pillars
-        pillars: [],
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2(-1000, -1000);
+    const seatMeshes = [];
+    const seatDataMap = new Map();
 
-        // Scoring Formula Constants
-        scoring: {
-          idealDistance: 12.5,
-          distancePenaltyFactor: 4.5,
-          anglePenaltyFactor: 1.4,
-          pillarPenalty: 35
-        },
+    let currentMode = 'OVERVIEW'; // 'OVERVIEW' | 'SEAT_PREVIEW'
+    let selectedSeatData = null;
+    let hoveredSeatMesh = null;
 
-        // Dynamic Pricing Formula Constants
-        pricing: {
-          basePrice: 300,
-          minMultiplier: 0.7,
-          scoreMultiplier: 0.6
-        }
-      };
+    // ============================================================================
+    // 3. ATMOSPHERIC CINEMA LIGHTING (WARM AMBER WALL POOLS, NO PURPLE/MAUVE)
+    // ============================================================================
+    const hemiLight = new THREE.HemisphereLight(0xfff5ea, 0x060608, 0.50);
+    scene.add(hemiLight);
 
-      // ============================================================================
-      // 2. SCENE & RENDERER INITIALIZATION
-      // ============================================================================
-      const canvas = document.getElementById('webgl-canvas');
-      const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.15;
+    const ambientLight = new THREE.AmbientLight(0x121216, 0.35);
+    scene.add(ambientLight);
 
-      const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x050508);
-      scene.fog = new THREE.FogExp2(0x050508, 0.007);
+    // Main Warm-White Directional Key Light
+    const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.70);
+    dirLight.position.set(10, 20, 12);
+    dirLight.castShadow = true;
+    dirLight.shadow.mapSize.width = 2048;
+    dirLight.shadow.mapSize.height = 2048;
+    scene.add(dirLight);
 
-      const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 120.0);
+    // Warm Rim-Lighting on Seat Edges
+    const rimLight = new THREE.DirectionalLight(0xff6655, 0.40);
+    rimLight.position.set(0, 9, -18);
+    scene.add(rimLight);
 
-      const raycaster = new THREE.Raycaster();
-      const mouse = new THREE.Vector2(-1000, -1000);
-      const seatMeshes = [];
-      const seatDataMap = new Map();
-      const pillarMeshes = [];
+    // Subtly Lit Minimal Amber Spotlights (Background near-black and out of focus)
+    const wallLightL1 = new THREE.SpotLight(0xffaa33, 0.4, 28, Math.PI / 2.8, 0.85, 1.5);
+    wallLightL1.position.set(-18.0, 7.5, -9.0);
+    wallLightL1.target.position.set(-18.5, 1.5, -4.0);
+    scene.add(wallLightL1);
+    scene.add(wallLightL1.target);
 
-      let currentMode = 'OVERVIEW'; // 'OVERVIEW' | 'SEAT_PREVIEW'
-      let selectedSeatData = null;
-      let hoveredSeatMesh = null;
+    const wallLightR1 = new THREE.SpotLight(0xffaa33, 0.4, 28, Math.PI / 2.8, 0.85, 1.5);
+    wallLightR1.position.set(18.0, 7.5, -9.0);
+    wallLightR1.target.position.set(18.5, 1.5, -4.0);
+    scene.add(wallLightR1);
+    scene.add(wallLightR1.target);
 
-      // ============================================================================
-      // 3. ATMOSPHERIC CINEMA LIGHTING & ARCHITECTURE
-      // ============================================================================
-      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x111118, 0.85);
-      scene.add(hemiLight);
+    // Screen Fiery Light Spill onto Stage & Front Rows
+    const screenSpillLight = new THREE.SpotLight(0xff5500, 2.2, 30, Math.PI / 2.2, 0.6, 1.2);
+    screenSpillLight.position.set(0, 6.5, -12.5);
+    screenSpillLight.target.position.set(0, 0.2, -5.0);
+    scene.add(screenSpillLight);
+    scene.add(screenSpillLight.target);
 
-      const ambientLight = new THREE.AmbientLight(0x282430, 0.65);
-      scene.add(ambientLight);
+    // Secondary soft screen fill spill on front aisle
+    const screenSpillLight2 = new THREE.SpotLight(0xff3300, 1.2, 22, Math.PI / 1.8, 0.7, 1.0);
+    screenSpillLight2.position.set(0, 4.0, -12.0);
+    screenSpillLight2.target.position.set(0, 0.0, -8.0);
+    scene.add(screenSpillLight2);
+    scene.add(screenSpillLight2.target);
 
-      const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.85);
-      dirLight.position.set(8, 18, 10);
-      dirLight.castShadow = true;
-      dirLight.shadow.mapSize.width = 2048;
-      dirLight.shadow.mapSize.height = 2048;
-      scene.add(dirLight);
+    // Stage Soft Warm Spotlights
+    const stageSpot1 = new THREE.SpotLight(0xfffaee, 1.4);
+    stageSpot1.position.set(-8.0, 10.5, -6.0);
+    stageSpot1.target.position.copy(CONFIG.stageCenter);
+    scene.add(stageSpot1);
+    scene.add(stageSpot1.target);
 
-      // Warm red/amber wall-wash light strips flanking screen
-      const stripL = new THREE.SpotLight(0xdc2626, 3.0);
-      stripL.position.set(-CONFIG.screenWidth / 2 - 0.5, 7.0, -11.5);
-      stripL.target.position.set(-CONFIG.screenWidth / 2 - 0.5, 0, -11.5);
-      scene.add(stripL);
-      scene.add(stripL.target);
+    const stageSpot2 = new THREE.SpotLight(0xfffaee, 1.4);
+    stageSpot2.position.set(8.0, 10.5, -6.0);
+    stageSpot2.target.position.copy(CONFIG.stageCenter);
+    scene.add(stageSpot2);
+    scene.add(stageSpot2.target);
 
-      const stripR = new THREE.SpotLight(0xdc2626, 3.0);
-      stripR.position.set(CONFIG.screenWidth / 2 + 0.5, 7.0, -11.5);
-      stripR.target.position.set(CONFIG.screenWidth / 2 + 0.5, 0, -11.5);
-      scene.add(stripR);
-      scene.add(stripR.target);
+    // Dynamic Ceiling Panel Texture with Fine Seam Joints (Neutral Dark Charcoal-Black)
+    const ceilingCanvas = document.createElement('canvas');
+    ceilingCanvas.width = 256;
+    ceilingCanvas.height = 256;
+    const cCtx = ceilingCanvas.getContext('2d');
+    cCtx.fillStyle = '#040406';
+    cCtx.fillRect(0, 0, 256, 256);
+    cCtx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+    cCtx.lineWidth = 1.2;
+    for (let p = 0; p <= 256; p += 64) {
+      cCtx.beginPath(); cCtx.moveTo(p, 0); cCtx.lineTo(p, 256); cCtx.stroke();
+      cCtx.beginPath(); cCtx.moveTo(0, p); cCtx.lineTo(256, p); cCtx.stroke();
+    }
+    const ceilingTexture = new THREE.CanvasTexture(ceilingCanvas);
+    ceilingTexture.wrapS = THREE.RepeatWrapping;
+    ceilingTexture.wrapT = THREE.RepeatWrapping;
+    ceilingTexture.repeat.set(8, 8);
 
-      // Stage spotlights
-      const stageSpot1 = new THREE.SpotLight(0xfffaee, 1.8);
-      stageSpot1.position.set(-3.0, 9.0, -5.0);
-      stageSpot1.target.position.copy(CONFIG.stageCenter);
-      scene.add(stageSpot1);
-      scene.add(stageSpot1.target);
+    // Pure Neutral Dark Charcoal-Black Ceiling Base Surface (Zero warm tint/gradient wash)
+    const ceilingGeo = new THREE.PlaneGeometry(42, 44);
+    const ceilingMat = new THREE.MeshStandardMaterial({ map: ceilingTexture, color: 0x040406, roughness: 0.98 });
+    const ceilingMesh = new THREE.Mesh(ceilingGeo, ceilingMat);
+    ceilingMesh.rotation.x = Math.PI / 2;
+    ceilingMesh.position.set(0, 12.0, 0);
+    scene.add(ceilingMesh);
 
-      const stageSpot2 = new THREE.SpotLight(0xfffaee, 1.8);
-      stageSpot2.position.set(3.0, 9.0, -5.0);
-      stageSpot2.target.position.copy(CONFIG.stageCenter);
-      scene.add(stageSpot2);
-      scene.add(stageSpot2.target);
+    // Distinct Small Circular Recessed Spotlight Fixtures (Dark Metal Housing + Warm-White Bulb Center)
+    const housingMat = new THREE.MeshStandardMaterial({ color: 0x141419, roughness: 0.35, metalness: 0.85 });
+    const innerBezelMat = new THREE.MeshStandardMaterial({ color: 0x060609, roughness: 0.8 });
+    const bulbMat = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      emissive: 0xfffaee, // Warm-white 3000K real-world bulb light
+      emissiveIntensity: 3.8
+    });
 
-      // Ceiling Downlight Grid
-      const ceilingGeo = new THREE.PlaneGeometry(24, 30);
-      const ceilingMat = new THREE.MeshStandardMaterial({ color: 0x121012, roughness: 0.9 });
-      const ceilingMesh = new THREE.Mesh(ceilingGeo, ceilingMat);
-      ceilingMesh.rotation.x = Math.PI / 2;
-      ceilingMesh.position.set(0, 9.5, 0);
-      scene.add(ceilingMesh);
+    // Contained Soft Localized Glow Ring around Fixture (Does not bleed across ceiling)
+    const localGlowCanvas = document.createElement('canvas');
+    localGlowCanvas.width = 128;
+    localGlowCanvas.height = 128;
+    const lgCtx = localGlowCanvas.getContext('2d');
+    const lgGrad = lgCtx.createRadialGradient(64, 64, 12, 64, 64, 60);
+    lgGrad.addColorStop(0, 'rgba(255, 250, 238, 0.70)');
+    lgGrad.addColorStop(0.35, 'rgba(255, 235, 200, 0.30)');
+    lgGrad.addColorStop(1.0, 'rgba(0, 0, 0, 0)');
+    lgCtx.fillStyle = lgGrad;
+    lgCtx.beginPath(); lgCtx.arc(64, 64, 60, 0, Math.PI * 2); lgCtx.fill();
 
-      const downlightHousingGeo = new THREE.CylinderGeometry(0.18, 0.22, 0.08, 16);
-      const housingMat = new THREE.MeshStandardMaterial({ color: 0x1a1a22, roughness: 0.4 });
-      const emissiveDiscGeo = new THREE.CircleGeometry(0.14, 16);
-      const emissiveDiscMat = new THREE.MeshStandardMaterial({ color: 0xfffaed, emissive: 0xffeaad, emissiveIntensity: 1.2 });
+    const localGlowTexture = new THREE.CanvasTexture(localGlowCanvas);
+    const localGlowMat = new THREE.MeshBasicMaterial({
+      map: localGlowTexture,
+      transparent: true,
+      opacity: 0.45,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const localGlowGeo = new THREE.PlaneGeometry(0.65, 0.65);
 
-      for (let r = 0; r < 4; r++) {
-        for (let c = 0; c < 6; c++) {
-          const x = -9 + c * 3.6;
-          const z = -10 + r * 6.0;
+    const downlightHousingGeo = new THREE.CylinderGeometry(0.16, 0.20, 0.05, 16);
+    const innerBezelGeo = new THREE.CylinderGeometry(0.12, 0.15, 0.04, 16);
+    const emissiveDiscGeo = new THREE.CircleGeometry(0.09, 16);
+    emissiveDiscGeo.rotateX(Math.PI / 2);
+    const haloGeoRotated = localGlowGeo.clone();
+    haloGeoRotated.rotateX(Math.PI / 2);
 
-          const housing = new THREE.Mesh(downlightHousingGeo, housingMat);
-          housing.position.set(x, 9.46, z);
-          scene.add(housing);
+    const CEILING_LIGHTS = 6 * 8; // 48
+    const instHousing = new THREE.InstancedMesh(downlightHousingGeo, housingMat, CEILING_LIGHTS);
+    const instBezel = new THREE.InstancedMesh(innerBezelGeo, innerBezelMat, CEILING_LIGHTS);
+    const instDisc = new THREE.InstancedMesh(emissiveDiscGeo, bulbMat, CEILING_LIGHTS);
+    const instHalo = new THREE.InstancedMesh(haloGeoRotated, localGlowMat, CEILING_LIGHTS);
 
-          const disc = new THREE.Mesh(emissiveDiscGeo, emissiveDiscMat);
-          disc.rotation.x = Math.PI / 2;
-          disc.position.set(x, 9.41, z);
-          scene.add(disc);
+    const dummyFixture = new THREE.Object3D();
+    let fixtureIdx = 0;
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 8; c++) {
+        const x = -14.5 + c * 4.15;
+        const z = -12.0 + r * 5.2;
 
-          const downLight = new THREE.PointLight(0xfffaee, 0.45, 12);
-          downLight.position.set(x, 9.1, z);
-          scene.add(downLight);
-        }
+        dummyFixture.position.set(x, 11.97, z);
+        dummyFixture.rotation.set(0, 0, 0);
+        dummyFixture.updateMatrix();
+        instHousing.setMatrixAt(fixtureIdx, dummyFixture.matrix);
+
+        dummyFixture.position.set(x, 11.96, z);
+        dummyFixture.updateMatrix();
+        instBezel.setMatrixAt(fixtureIdx, dummyFixture.matrix);
+
+        dummyFixture.position.set(x, 11.93, z);
+        dummyFixture.updateMatrix();
+        instDisc.setMatrixAt(fixtureIdx, dummyFixture.matrix);
+
+        dummyFixture.position.set(x, 11.92, z);
+        dummyFixture.updateMatrix();
+        instHalo.setMatrixAt(fixtureIdx, dummyFixture.matrix);
+
+        fixtureIdx++;
       }
+    }
+    instHousing.instanceMatrix.needsUpdate = true;
+    instBezel.instanceMatrix.needsUpdate = true;
+    instDisc.instanceMatrix.needsUpdate = true;
+    instHalo.instanceMatrix.needsUpdate = true;
+    scene.add(instHousing);
+    scene.add(instBezel);
+    scene.add(instDisc);
+    scene.add(instHalo);
 
-      // Flat Architectural Walls (Flat dark charcoal)
-      const wallMat = new THREE.MeshStandardMaterial({ color: 0x151315, roughness: 0.85 });
+    // Two Aggregate Overhead PointLights to simulate ceiling downlight array
+    const ceilingFillL = new THREE.PointLight(0xfffaee, 1.2, 35);
+    ceilingFillL.position.set(-7, 10.5, -2);
+    scene.add(ceilingFillL);
+    const ceilingFillR = new THREE.PointLight(0xfffaee, 1.2, 35);
+    ceilingFillR.position.set(7, 10.5, -2);
+    scene.add(ceilingFillR);
 
-      const leftWallGeo = new THREE.PlaneGeometry(30, 10);
-      const leftWall = new THREE.Mesh(leftWallGeo, wallMat);
-      leftWall.rotation.y = Math.PI / 2;
-      leftWall.position.set(-12, 5.0, 0);
-      scene.add(leftWall);
+    // Vertical Acoustic Slat Panel Canvas Texture (High-End Multiplex Paneling)
+    const wallCanvas = document.createElement('canvas');
+    wallCanvas.width = 256;
+    wallCanvas.height = 256;
+    const wCtx = wallCanvas.getContext('2d');
+    wCtx.fillStyle = '#1e1e24';
+    wCtx.fillRect(0, 0, 256, 256);
 
-      const rightWallGeo = new THREE.PlaneGeometry(30, 10);
-      const rightWall = new THREE.Mesh(rightWallGeo, wallMat);
-      rightWall.rotation.y = -Math.PI / 2;
-      rightWall.position.set(12, 5.0, 0);
-      scene.add(rightWall);
+    for (let x = 0; x < 256; x += 16) {
+      wCtx.fillStyle = 'rgba(0, 0, 0, 0.40)';
+      wCtx.fillRect(x, 0, 2, 256);
+      wCtx.fillStyle = 'rgba(255, 255, 255, 0.02)';
+      wCtx.fillRect(x + 2, 0, 14, 256);
+    }
+    const wallTexture = new THREE.CanvasTexture(wallCanvas);
+    wallTexture.wrapS = THREE.RepeatWrapping;
+    wallTexture.wrapT = THREE.RepeatWrapping;
+    wallTexture.repeat.set(16, 4);
 
-      const backWallGeo = new THREE.PlaneGeometry(24, 10);
-      const backWall = new THREE.Mesh(backWallGeo, wallMat);
-      backWall.position.set(0, 5.0, 15);
-      scene.add(backWall);
+    // Dark Charcoal Finished Panel Material (#1f1f24, roughness 0.82)
+    const wallMat = new THREE.MeshStandardMaterial({ map: wallTexture, color: 0x1f1f24, roughness: 0.82, metalness: 0.05 });
 
-      // Grounded Wall Speakers
-      const speakerPositions = [
-        { x: -11.6, y: 5.5, z: -8 }, { x: -11.6, y: 5.8, z: -2 }, { x: -11.6, y: 6.0, z: 4 },
-        { x: 11.6, y: 5.5, z: -8 }, { x: 11.6, y: 5.8, z: -2 }, { x: 11.6, y: 6.0, z: 4 }
-      ];
+    // Architectural Side Walls Base Enclosure Planes (Width 37m, Depth 42m)
+    const leftWallGeo = new THREE.PlaneGeometry(42, 12.5);
+    const leftWall = new THREE.Mesh(leftWallGeo, wallMat);
+    leftWall.rotation.y = Math.PI / 2;
+    leftWall.position.set(-18.5, 6.25, 0);
+    leftWall.receiveShadow = true;
+    scene.add(leftWall);
 
-      const speakerBoxGeo = new THREE.BoxGeometry(0.45, 0.75, 0.38);
-      const speakerBoxMat = new THREE.MeshStandardMaterial({ color: 0x1c1c22, roughness: 0.5 });
-      const coneGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.05, 16);
-      const coneMat = new THREE.MeshStandardMaterial({ color: 0x2e2e36, roughness: 0.3 });
+    const rightWallGeo = new THREE.PlaneGeometry(42, 12.5);
+    const rightWall = new THREE.Mesh(rightWallGeo, wallMat);
+    rightWall.rotation.y = -Math.PI / 2;
+    rightWall.position.set(18.5, 6.25, 0);
+    rightWall.receiveShadow = true;
+    scene.add(rightWall);
 
-      speakerPositions.forEach(sp => {
-        const spGroup = new THREE.Group();
-        spGroup.position.set(sp.x, sp.y, sp.z);
-        spGroup.rotation.y = sp.x < 0 ? Math.PI / 6 : -Math.PI / 6;
+    // 3D Vertical Instanced Panel Meshes (Edge-to-Edge with 2-3cm Gap Seams)
+    const panelBoxGeo = new THREE.BoxGeometry(0.06, 12.0, 3.8);
+    const numPanels = 10;
+    const TOTAL_WALL_PANELS = numPanels * 2; // 20 Panels total across Left & Right walls
+    const instancedWallPanels = new THREE.InstancedMesh(panelBoxGeo, wallMat, TOTAL_WALL_PANELS);
+    instancedWallPanels.receiveShadow = true;
 
-        const box = new THREE.Mesh(speakerBoxGeo, speakerBoxMat);
-        spGroup.add(box);
+    const panelZStart = -17.1;
+    const panelZStep = 3.83; // 3cm gap seam
+    const dummyWallPanel = new THREE.Object3D();
 
-        const cone1 = new THREE.Mesh(coneGeo, coneMat);
-        cone1.rotation.x = Math.PI / 2;
-        cone1.position.set(0, 0.18, 0.18);
-        spGroup.add(cone1);
+    for (let i = 0; i < numPanels; i++) {
+      const pz = panelZStart + i * panelZStep;
 
-        const cone2 = new THREE.Mesh(coneGeo, coneMat);
-        cone2.rotation.x = Math.PI / 2;
-        cone2.position.set(0, -0.18, 0.18);
-        spGroup.add(cone2);
+      // Left Wall Panel
+      dummyWallPanel.position.set(-18.44, 6.25, pz);
+      dummyWallPanel.updateMatrix();
+      instancedWallPanels.setMatrixAt(i, dummyWallPanel.matrix);
 
-        scene.add(spGroup);
-      });
+      // Right Wall Panel
+      dummyWallPanel.position.set(18.44, 6.25, pz);
+      dummyWallPanel.updateMatrix();
+      instancedWallPanels.setMatrixAt(numPanels + i, dummyWallPanel.matrix);
+    }
+    instancedWallPanels.instanceMatrix.needsUpdate = true;
+    scene.add(instancedWallPanels);
 
-      // Floor Carpet with Red Aisle Runners
-      const floorCanvas = document.createElement('canvas');
-      floorCanvas.width = 512;
-      floorCanvas.height = 512;
-      const fCtx = floorCanvas.getContext('2d');
-      fCtx.fillStyle = '#0f0e13';
-      fCtx.fillRect(0, 0, 512, 512);
+    // Horizontal Skirting Baseboards & Ceiling Cove Trim (#2c2c2c)
+    const trimMat = new THREE.MeshStandardMaterial({ color: 0x2c2c2c, roughness: 0.6, metalness: 0.4 });
 
-      for (let i = 0; i < 4000; i++) {
-        const x = Math.random() * 512;
-        const y = Math.random() * 512;
-        const r = Math.random() * 1.4;
-        const val = Math.random();
-        fCtx.fillStyle = val > 0.6 ? '#201622' : (val > 0.3 ? '#161822' : '#281d26');
-        fCtx.beginPath();
-        fCtx.arc(x, y, r, 0, Math.PI * 2);
-        fCtx.fill();
-      }
+    // Wall-to-Floor Skirting Baseboards
+    const leftSkirting = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.18, 42), trimMat);
+    leftSkirting.position.set(-18.45, 0.09, 0);
+    scene.add(leftSkirting);
 
-      const carpetTexture = new THREE.CanvasTexture(floorCanvas);
-      carpetTexture.wrapS = THREE.RepeatWrapping;
-      carpetTexture.wrapT = THREE.RepeatWrapping;
-      carpetTexture.repeat.set(8, 10);
+    const rightSkirting = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.18, 42), trimMat);
+    rightSkirting.position.set(18.45, 0.09, 0);
+    scene.add(rightSkirting);
 
-      const floorGeo = new THREE.PlaneGeometry(24, 30);
-      const floorMat = new THREE.MeshStandardMaterial({ map: carpetTexture, roughness: 0.85 });
-      const floorMesh = new THREE.Mesh(floorGeo, floorMat);
-      floorMesh.rotation.x = -Math.PI / 2;
-      floorMesh.position.set(0, 0, 0);
-      floorMesh.receiveShadow = true;
-      scene.add(floorMesh);
+    const backSkirting = new THREE.Mesh(new THREE.BoxGeometry(37, 0.18, 0.08), trimMat);
+    backSkirting.position.set(0, 0.09, 17.96);
+    scene.add(backSkirting);
 
-      // Muted Dark Maroon Aisle Runners
-      const aisleCarpetMat = new THREE.MeshStandardMaterial({ color: 0x3a1416, roughness: 0.7 });
+    const frontSkirting = new THREE.Mesh(new THREE.BoxGeometry(37, 0.18, 0.08), trimMat);
+    frontSkirting.position.set(0, 0.09, -20.96);
+    scene.add(frontSkirting);
 
-      const centerAisleGeo = new THREE.PlaneGeometry(1.1, 10.0);
-      const centerAisle = new THREE.Mesh(centerAisleGeo, aisleCarpetMat);
-      centerAisle.rotation.x = -Math.PI / 2;
-      centerAisle.position.set(0, 0.01, 0.5);
-      scene.add(centerAisle);
+    // Wall-to-Ceiling Crown Molding Cove Trim
+    const leftCrown = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.18, 42), trimMat);
+    leftCrown.position.set(-18.44, 11.91, 0);
+    scene.add(leftCrown);
 
-      // ============================================================================
-      // 4. SCREEN & STAGE PLATFORM
-      // ============================================================================
-      const screenCanvas = document.createElement('canvas');
-      screenCanvas.width = 1024;
-      screenCanvas.height = 512;
-      const ctx = screenCanvas.getContext('2d');
+    const rightCrown = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.18, 42), trimMat);
+    rightCrown.position.set(18.44, 11.91, 0);
+    scene.add(rightCrown);
 
-      const screenTexture = new THREE.CanvasTexture(screenCanvas);
+    const backCrown = new THREE.Mesh(new THREE.BoxGeometry(37, 0.18, 0.12), trimMat);
+    backCrown.position.set(0, 11.91, 17.94);
+    scene.add(backCrown);
 
-      function updateScreenCanvasTexture(time) {
-        const t = time * 0.001;
+    const frontCrown = new THREE.Mesh(new THREE.BoxGeometry(37, 0.18, 0.12), trimMat);
+    frontCrown.position.set(0, 11.91, -20.94);
+    scene.add(frontCrown);
+
+    // Closed Back Wall Mesh behind Camera / Entrance
+    const backWallGeo = new THREE.PlaneGeometry(37, 12.5);
+    const backWall = new THREE.Mesh(backWallGeo, wallMat);
+    backWall.position.set(0, 6.25, 18.0);
+    scene.add(backWall);
+
+    // Architectural Double Entrance Doors on Back Wall
+    const doorGroup = new THREE.Group();
+    doorGroup.position.set(0, 1.4, 17.92);
+
+    const doorFrameMesh = new THREE.Mesh(
+      new THREE.BoxGeometry(2.6, 2.85, 0.10),
+      new THREE.MeshStandardMaterial({ color: 0x121218, roughness: 0.4, metalness: 0.4 })
+    );
+    doorGroup.add(doorFrameMesh);
+
+    const doorPanelMat = new THREE.MeshStandardMaterial({ color: 0x09090d, roughness: 0.6 });
+    const doorLeft = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.7, 0.06), doorPanelMat);
+    doorLeft.position.set(-0.62, 0, 0.03);
+    doorGroup.add(doorLeft);
+
+    const doorRight = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.7, 0.06), doorPanelMat);
+    doorRight.position.set(0.62, 0, 0.03);
+    doorGroup.add(doorRight);
+
+    // Gold Brass Door Handles
+    const handleMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.9, roughness: 0.2 });
+    const hL = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.35, 0.05), handleMat); hL.position.set(-0.08, 0, 0.07); doorGroup.add(hL);
+    const hR = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.35, 0.05), handleMat); hR.position.set(0.08, 0, 0.07); doorGroup.add(hR);
+
+    scene.add(doorGroup);
+
+    // Low Emissive Green Exit Sign Safety Markers (4 Fixtures low on side walls near floor)
+    const exitMarkerMat = new THREE.MeshStandardMaterial({
+      color: 0x00ff44,
+      emissive: 0x00ff44,
+      emissiveIntensity: 1.8
+    });
+    const exitMarkerGeo = new THREE.BoxGeometry(0.04, 0.16, 0.32);
+
+    const exitLocations = [
+      { x: -18.42, y: 0.6, z: -10.0 },
+      { x: -18.42, y: 0.6, z: 10.0 },
+      { x: 18.42, y: 0.6, z: -10.0 },
+      { x: 18.42, y: 0.6, z: 10.0 }
+    ];
+
+    exitLocations.forEach(loc => {
+      const exitMesh = new THREE.Mesh(exitMarkerGeo, exitMarkerMat);
+      exitMesh.position.set(loc.x, loc.y, loc.z);
+      scene.add(exitMesh);
+    });
+
+    // Wall-Mounted Emergency Light Fixtures
+    const emGeo = new THREE.BoxGeometry(0.28, 0.18, 0.12);
+    const emSpotGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.06, 12);
+    emSpotGeo.rotateX(Math.PI / 2);
+    const emMat = new THREE.MeshStandardMaterial({ color: 0xd0d0d5, roughness: 0.4 });
+
+    const emLocations = [
+      { x: -18.3, y: 4.5, z: 14.0, rotY: Math.PI / 2 },
+      { x: 18.3, y: 4.5, z: 14.0, rotY: -Math.PI / 2 }
+    ];
+    emLocations.forEach(loc => {
+      const emGroup = new THREE.Group();
+      emGroup.position.set(loc.x, loc.y, loc.z);
+      emGroup.rotation.y = loc.rotY;
+
+      const body = new THREE.Mesh(emGeo, emMat);
+      emGroup.add(body);
+
+      const s1 = new THREE.Mesh(emSpotGeo, emMat); s1.position.set(-0.08, -0.02, 0.08); emGroup.add(s1);
+      const s2 = new THREE.Mesh(emSpotGeo, emMat); s2.position.set(0.08, -0.02, 0.08); emGroup.add(s2);
+
+      scene.add(emGroup);
+    });
+
+    // Flush-Mounted Black Speaker Boxes
+    const speakerPositions = [
+      { x: -18.3, y: 7.5, z: -10 }, { x: -18.3, y: 7.7, z: -3 }, { x: -18.3, y: 7.9, z: 4 }, { x: -18.3, y: 8.1, z: 11 },
+      { x: 18.3, y: 7.5, z: -10 }, { x: 18.3, y: 7.7, z: -3 }, { x: 18.3, y: 7.9, z: 4 }, { x: 18.3, y: 8.1, z: 11 }
+    ];
+
+    const speakerBoxGeo = new THREE.BoxGeometry(0.25, 0.70, 0.35);
+    const speakerBoxMat = new THREE.MeshStandardMaterial({ color: 0x0a0a0d, roughness: 0.5 });
+    const coneGeo = new THREE.CylinderGeometry(0.10, 0.10, 0.04, 16);
+    const coneMat = new THREE.MeshStandardMaterial({ color: 0x1a1a20, roughness: 0.4 });
+
+    speakerPositions.forEach(sp => {
+      const spGroup = new THREE.Group();
+      spGroup.position.set(sp.x, sp.y, sp.z);
+      spGroup.rotation.y = sp.x < 0 ? Math.PI / 2 : -Math.PI / 2;
+
+      const box = new THREE.Mesh(speakerBoxGeo, speakerBoxMat);
+      spGroup.add(box);
+
+      const cone1 = new THREE.Mesh(coneGeo, coneMat);
+      cone1.rotation.x = Math.PI / 2;
+      cone1.position.set(0, 0.18, 0.13);
+      spGroup.add(cone1);
+
+      const cone2 = new THREE.Mesh(coneGeo, coneMat);
+      cone2.rotation.x = Math.PI / 2;
+      cone2.position.set(0, -0.18, 0.13);
+      spGroup.add(cone2);
+
+      scene.add(spGroup);
+    });
+
+    // Dark Carpet Floor Base (#14141a, roughness 0.72, metalness 0.0)
+    const floorCanvas = document.createElement('canvas');
+    floorCanvas.width = 512;
+    floorCanvas.height = 512;
+    const fCtx = floorCanvas.getContext('2d');
+    fCtx.fillStyle = '#14141a';
+    fCtx.fillRect(0, 0, 512, 512);
+
+    for (let i = 0; i < 5000; i++) {
+      const x = Math.random() * 512;
+      const y = Math.random() * 512;
+      const r = Math.random() * 1.4;
+      const val = Math.random();
+      fCtx.fillStyle = val > 0.6 ? '#1e1e28' : (val > 0.3 ? '#161620' : '#22202c');
+      fCtx.beginPath();
+      fCtx.arc(x, y, r, 0, Math.PI * 2);
+      fCtx.fill();
+    }
+
+    const carpetTexture = new THREE.CanvasTexture(floorCanvas);
+    carpetTexture.wrapS = THREE.RepeatWrapping;
+    carpetTexture.wrapT = THREE.RepeatWrapping;
+    carpetTexture.repeat.set(12, 15);
+
+    const floorGeo = new THREE.PlaneGeometry(37, 42);
+    const floorMat = new THREE.MeshStandardMaterial({ map: carpetTexture, color: 0x14141a, roughness: 0.72, metalness: 0.0 });
+    const floorMesh = new THREE.Mesh(floorGeo, floorMat);
+    floorMesh.rotation.x = -Math.PI / 2;
+    floorMesh.position.set(0, 0, -1.0);
+    floorMesh.receiveShadow = true;
+    scene.add(floorMesh);
+
+    // Wall-to-Floor & Platform-to-Floor Ambient Occlusion / Contact Shadows
+    const wallFloorAoCanvas = document.createElement('canvas');
+    wallFloorAoCanvas.width = 256;
+    wallFloorAoCanvas.height = 64;
+    const waoCtx = wallFloorAoCanvas.getContext('2d');
+    const waoGrad = waoCtx.createLinearGradient(0, 0, 0, 64);
+    waoGrad.addColorStop(0, 'rgba(0, 0, 0, 0.75)');
+    waoGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    waoCtx.fillStyle = waoGrad;
+    waoCtx.fillRect(0, 0, 256, 64);
+
+    const wallFloorAoMat = new THREE.MeshBasicMaterial({
+      map: new THREE.CanvasTexture(wallFloorAoCanvas),
+      transparent: true,
+      opacity: 0.65,
+      depthWrite: false
+    });
+
+    const leftAoMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.2, 42), wallFloorAoMat);
+    leftAoMesh.rotation.x = -Math.PI / 2;
+    leftAoMesh.rotation.z = -Math.PI / 2;
+    leftAoMesh.position.set(-17.9, 0.005, 0);
+    scene.add(leftAoMesh);
+
+    const rightAoMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.2, 42), wallFloorAoMat);
+    rightAoMesh.rotation.x = -Math.PI / 2;
+    rightAoMesh.rotation.z = Math.PI / 2;
+    rightAoMesh.position.set(17.9, 0.005, 0);
+    scene.add(rightAoMesh);
+
+    // Saturated Bright Red Aisle Carpet Material (Exact match to reference image #ff1010)
+    const aisleCarpetMat = new THREE.MeshStandardMaterial({
+      color: 0xff1010,
+      roughness: 0.38,
+      emissive: 0xaa0000,
+      emissiveIntensity: 0.65
+    });
+
+    // ============================================================================
+    // 4. MASSIVE SCREEN (NEAR EDGE-TO-EDGE, THIN CLEAN BLACK BEZEL, NO DECORATIVE FRAME)
+    // ============================================================================
+    const screenCanvas = document.createElement('canvas');
+    screenCanvas.width = 1024;
+    screenCanvas.height = 512;
+    const ctx = screenCanvas.getContext('2d');
+
+    const screenTexture = new THREE.CanvasTexture(screenCanvas);
+
+    function updateScreenCanvasTexture(time) {
+      try {
+        const t = (time || 0) * 0.001;
         const w = screenCanvas.width;
         const h = screenCanvas.height;
 
-        const grad = ctx.createLinearGradient(
-          w * 0.5 + Math.sin(t * 0.5) * w * 0.4,
-          0,
-          w * 0.5 + Math.cos(t * 0.7) * w * 0.4,
-          h
-        );
-        grad.addColorStop(0, '#0a0d1a');
-        grad.addColorStop(0.3, '#1e1b4b');
-        grad.addColorStop(0.7, '#581c87');
-        grad.addColorStop(1, '#0f172a');
-        ctx.fillStyle = grad;
+        ctx.save();
+        ctx.globalCompositeOperation = 'source-over';
+
+        // Rich dark fiery background gradient
+        const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+        bgGrad.addColorStop(0, '#0a0202');
+        bgGrad.addColorStop(0.5, '#2b0606');
+        bgGrad.addColorStop(1, '#080101');
+        ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, w, h);
 
-        ctx.save();
+        const cx = w * 0.5;
+        const cy = h * 0.48;
+        const radius = 235 + Math.sin(t * 1.6) * 7;
+
+        // Massive Glowing Fiery Explosion Sphere (Oppenheimer Visual)
+        const fireGrad = ctx.createRadialGradient(cx, cy, 8, cx, cy, Math.max(10, radius));
+        fireGrad.addColorStop(0, '#ffffff');
+        fireGrad.addColorStop(0.12, '#fff066');
+        fireGrad.addColorStop(0.35, '#ff6600');
+        fireGrad.addColorStop(0.68, '#dc2626');
+        fireGrad.addColorStop(0.88, '#7f1d1d');
+        fireGrad.addColorStop(1.0, 'rgba(20, 0, 0, 0)');
+
+        ctx.fillStyle = fireGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, Math.max(10, radius), 0, Math.PI * 2);
+        ctx.fill();
+
+        // Orbital Plasma Rings
         ctx.globalCompositeOperation = 'screen';
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 5; i++) {
+          const ringRad = radius * (0.35 + i * 0.20);
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(t * 0.35 + i * 0.7);
+          ctx.scale(1.0, 0.48);
           ctx.beginPath();
-          const waveY = h * 0.5 + Math.sin(t * 1.2 + i * 2) * h * 0.25;
-          const waveGrad = ctx.createRadialGradient(
-            w * (0.3 + i * 0.2), waveY, 10,
-            w * (0.3 + i * 0.2), waveY, 280
-          );
-          waveGrad.addColorStop(0, i === 0 ? 'rgba(239, 68, 68, 0.6)' : (i === 1 ? 'rgba(99, 102, 241, 0.5)' : 'rgba(236, 72, 153, 0.45)'));
-          waveGrad.addColorStop(1, 'rgba(0,0,0,0)');
-          ctx.fillStyle = waveGrad;
-          ctx.arc(w * (0.3 + i * 0.2), waveY, 280, 0, Math.PI * 2);
+          ctx.strokeStyle = i % 2 === 0 ? 'rgba(255, 235, 160, 0.5)' : 'rgba(255, 110, 30, 0.45)';
+          ctx.lineWidth = 3 + i * 1.5;
+          ctx.arc(0, 0, Math.max(5, ringRad), 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // Drifting Sparkle Particles
+        for (let p = 0; p < 50; p++) {
+          const pAngle = (p * 137.5 + t * 45) * (Math.PI / 180);
+          const pDist = 20 + ((p * 19 + t * 55) % (radius * 1.15));
+          const px = cx + Math.cos(pAngle) * pDist;
+          const py = cy + Math.sin(pAngle) * pDist * 0.55;
+          const pr = 1.5 + (p % 3);
+
+          ctx.fillStyle = p % 2 === 0 ? '#ffeaad' : '#ff3300';
+          ctx.beginPath();
+          ctx.arc(px, py, pr, 0, Math.PI * 2);
           ctx.fill();
         }
-        ctx.restore();
 
+        // Central Silhouette Figure (Hat & Suit Profile)
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = '#0d0404';
         ctx.save();
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-
-        ctx.font = '600 24px -apple-system, sans-serif';
-        ctx.fillStyle = 'rgba(239, 68, 68, 0.95)';
-        ctx.fillText('FEATURE PRESENTATION · PREMIERE NIGHT', w / 2, h / 2 - 45);
-
-        ctx.font = '900 64px Georgia, serif';
-        ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = 'rgba(239, 68, 68, 0.8)';
-        ctx.shadowBlur = 20;
-        ctx.fillText('CINEMAVIEW 3D', w / 2, h / 2 + 15);
+        ctx.translate(cx, cy - 42);
+        ctx.scale(1.0, 13 / 44);
+        ctx.beginPath();
+        ctx.arc(0, 0, 44, 0, Math.PI * 2);
+        ctx.fill();
         ctx.restore();
 
-        ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
-        ctx.lineWidth = 12;
-        ctx.strokeRect(6, 6, w - 12, h - 12);
+        ctx.fillRect(cx - 25, cy - 88, 50, 50);
+        ctx.beginPath();
+        ctx.arc(cx, cy - 20, 23, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(cx - 55, cy + 130);
+        ctx.lineTo(cx - 26, cy + 10);
+        ctx.lineTo(cx + 26, cy + 10);
+        ctx.lineTo(cx + 55, cy + 130);
+        ctx.closePath();
+        ctx.fill();
 
-        screenTexture.needsUpdate = true;
+        // Subtle Screen Acoustic Perforation Micro-Texture
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+        for (let px = 0; px < w; px += 8) {
+          for (let py = 0; py < h; py += 8) {
+            ctx.fillRect(px, py, 1.2, 1.2);
+          }
+        }
+
+        // Organic Screen Edge Light Falloff (Slightly brighter center vs edges)
+        const edgeGrad = ctx.createRadialGradient(cx, cy, w * 0.28, cx, cy, w * 0.58);
+        edgeGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        edgeGrad.addColorStop(1, 'rgba(0, 0, 0, 0.38)');
+        ctx.fillStyle = edgeGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.restore();
+      } catch (err) {
+        console.error("Screen canvas update error:", err);
       }
 
-      // Screen Plane
-      const screenGeo = new THREE.PlaneGeometry(CONFIG.screenWidth, CONFIG.screenHeight);
-      const screenMat = new THREE.MeshStandardMaterial({
-        map: screenTexture,
-        roughness: 0.15,
-        metalness: 0.1,
-        emissive: 0xffffff,
-        emissiveMap: screenTexture,
-        emissiveIntensity: 0.5
+      screenTexture.needsUpdate = true;
+    }
+
+    // Massive Curved Cinema Screen (2.35:1 aspect ratio, filling 75-80% of auditorium wall width)
+    const screenSegs = 32;
+    const screenGeo = new THREE.PlaneGeometry(CONFIG.screenWidth, CONFIG.screenHeight, screenSegs, 1);
+    const posAttr = screenGeo.attributes.position;
+    for (let i = 0; i < posAttr.count; i++) {
+      const x = posAttr.getX(i);
+      const zOffset = - (x * x) / (2 * CONFIG.screenCurveRadius);
+      posAttr.setZ(i, zOffset);
+    }
+    screenGeo.computeVertexNormals();
+
+    const screenMat = new THREE.MeshBasicMaterial({
+      map: screenTexture,
+      side: THREE.DoubleSide
+    });
+
+    const screenMesh = new THREE.Mesh(screenGeo, screenMat);
+    screenMesh.position.copy(CONFIG.screenCenter);
+    screenMesh.rotation.x = CONFIG.screenTilt;
+    scene.add(screenMesh);
+
+    // Screen Atmospheric Halo Bloom Mesh (Hero Presentation Polish)
+    const screenBloomCanvas = document.createElement('canvas');
+    screenBloomCanvas.width = 512;
+    screenBloomCanvas.height = 256;
+    const sbCtx = screenBloomCanvas.getContext('2d');
+    const sbGrad = sbCtx.createRadialGradient(256, 128, 40, 256, 128, 240);
+    sbGrad.addColorStop(0, 'rgba(255, 90, 0, 0.65)');
+    sbGrad.addColorStop(0.35, 'rgba(220, 38, 38, 0.35)');
+    sbGrad.addColorStop(0.75, 'rgba(120, 10, 10, 0.12)');
+    sbGrad.addColorStop(1.0, 'rgba(0, 0, 0, 0)');
+    sbCtx.fillStyle = sbGrad;
+    sbCtx.fillRect(0, 0, 512, 256);
+
+    const screenBloomGeo = new THREE.PlaneGeometry(CONFIG.screenWidth + 1.2, CONFIG.screenHeight + 0.8);
+    const screenBloomMat = new THREE.MeshBasicMaterial({
+      map: new THREE.CanvasTexture(screenBloomCanvas),
+      transparent: true,
+      opacity: 0.50,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const screenBloomMesh = new THREE.Mesh(screenBloomGeo, screenBloomMat);
+    screenBloomMesh.position.set(CONFIG.screenCenter.x, CONFIG.screenCenter.y, CONFIG.screenCenter.z - 0.08);
+    screenBloomMesh.rotation.x = CONFIG.screenTilt;
+    scene.add(screenBloomMesh);
+
+    // Thin Clean Black Bezel (No Pink/Gold Decorative Frame!)
+    const bezelMat = new THREE.MeshStandardMaterial({ color: 0x050507, roughness: 0.5, metalness: 0.8 });
+    const screenBezelGroup = new THREE.Group();
+    screenBezelGroup.position.copy(CONFIG.screenCenter);
+    screenBezelGroup.rotation.x = CONFIG.screenTilt;
+
+    const topBezel = new THREE.Mesh(new THREE.BoxGeometry(CONFIG.screenWidth + 0.5, 0.25, 0.1), bezelMat);
+    topBezel.position.set(0, CONFIG.screenHeight / 2 + 0.12, -0.1);
+    screenBezelGroup.add(topBezel);
+
+    const botBezel = new THREE.Mesh(new THREE.BoxGeometry(CONFIG.screenWidth + 0.5, 0.25, 0.1), bezelMat);
+    botBezel.position.set(0, -CONFIG.screenHeight / 2 - 0.12, -0.1);
+    screenBezelGroup.add(botBezel);
+
+    const leftBezel = new THREE.Mesh(new THREE.BoxGeometry(0.25, CONFIG.screenHeight + 0.5, 0.1), bezelMat);
+    leftBezel.position.set(-CONFIG.screenWidth / 2 - 0.12, 0, -1.8);
+    screenBezelGroup.add(leftBezel);
+
+    const rightBezel = new THREE.Mesh(new THREE.BoxGeometry(0.25, CONFIG.screenHeight + 0.5, 0.1), bezelMat);
+    rightBezel.position.set(CONFIG.screenWidth / 2 + 0.12, 0, -1.8);
+    screenBezelGroup.add(rightBezel);
+
+    scene.add(screenBezelGroup);
+
+    // Finished Architectural Stage Apron Skirting (Height 0.15m)
+    const stageGeo = new THREE.BoxGeometry(CONFIG.stageWidth, CONFIG.stageHeight, CONFIG.stageDepth);
+    const stageMat = new THREE.MeshStandardMaterial({ map: wallTexture, color: 0x07070a, roughness: 0.90 });
+    const stageMesh = new THREE.Mesh(stageGeo, stageMat);
+    stageMesh.position.copy(CONFIG.stageCenter);
+    stageMesh.receiveShadow = true;
+    scene.add(stageMesh);
+
+    // Stage Front Under-Lip Warm LED Light Strip & Top Metallic Trim
+    const stageLedMat = new THREE.MeshStandardMaterial({ color: 0xff5500, emissive: 0xff4400, emissiveIntensity: 1.8 });
+    const stageLedMesh = new THREE.Mesh(new THREE.BoxGeometry(CONFIG.stageWidth, 0.03, 0.03), stageLedMat);
+    stageLedMesh.position.set(CONFIG.stageCenter.x, CONFIG.stageCenter.y - 0.06, CONFIG.stageCenter.z + CONFIG.stageDepth / 2 + 0.015);
+    scene.add(stageLedMesh);
+
+    const stageTopTrim = new THREE.Mesh(new THREE.BoxGeometry(CONFIG.stageWidth + 0.08, 0.03, 0.04), handleMat);
+    stageTopTrim.position.set(CONFIG.stageCenter.x, CONFIG.stageCenter.y + CONFIG.stageHeight / 2 - 0.015, CONFIG.stageCenter.z + CONFIG.stageDepth / 2 + 0.015);
+    scene.add(stageTopTrim);
+
+    // Front-Stage Subwoofer / Speaker Boxes
+    const frontSpeakerGeo = new THREE.BoxGeometry(1.10, 0.45, 0.40);
+    const frontSpeakerMat = new THREE.MeshStandardMaterial({ map: wallTexture, color: 0x09090c, roughness: 0.5 });
+    const spL = new THREE.Mesh(frontSpeakerGeo, frontSpeakerMat);
+    spL.position.set(-11.5, 0.28, -12.4);
+    scene.add(spL);
+
+    const spR = new THREE.Mesh(frontSpeakerGeo, frontSpeakerMat);
+    spR.position.set(11.5, 0.28, -12.4);
+    scene.add(spR);
+
+    const platMat = new THREE.MeshStandardMaterial({ map: wallTexture, color: 0x07070a, roughness: 0.90 });
+
+    // Blue LED Step Light Materials
+    const blueLedHousingMat = new THREE.MeshStandardMaterial({ color: 0x08080d, roughness: 0.4, metalness: 0.5 });
+    const blueLedLensMat = new THREE.MeshStandardMaterial({
+      color: 0x0088ff,
+      emissive: 0x0066ff,
+      emissiveIntensity: 4.5
+    });
+
+    const leftAisleX = -4.25;
+    const rightAisleX = 4.25;
+    const aisleWidth = 1.50;
+
+    // Step Edge Safety Nosing Strip Material (Brushed Aluminum)
+    const stepNosingMat = new THREE.MeshStandardMaterial({ color: 0xd0d0d8, metalness: 0.88, roughness: 0.22 });
+
+    // Soft Blue LED Halo Bloom Ring Texture for Carpet Light Bleed
+    const haloCanvas = document.createElement('canvas');
+    haloCanvas.width = 128;
+    haloCanvas.height = 128;
+    const hCtx = haloCanvas.getContext('2d');
+    const hGrad = hCtx.createRadialGradient(64, 64, 4, 64, 64, 60);
+    hGrad.addColorStop(0, 'rgba(0, 166, 255, 0.85)');
+    hGrad.addColorStop(0.35, 'rgba(0, 102, 255, 0.45)');
+    hGrad.addColorStop(0.7, 'rgba(0, 60, 200, 0.15)');
+    hGrad.addColorStop(1.0, 'rgba(0, 0, 0, 0)');
+    hCtx.fillStyle = hGrad;
+    hCtx.beginPath(); hCtx.arc(64, 64, 60, 0, Math.PI * 2); hCtx.fill();
+
+    const blueHaloTexture = new THREE.CanvasTexture(haloCanvas);
+    const blueHaloMat = new THREE.MeshBasicMaterial({
+      map: blueHaloTexture,
+      transparent: true,
+      opacity: 0.55,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    const blueHaloGeo = new THREE.PlaneGeometry(0.42, 0.42);
+    const blueHaloGeoRotated = blueHaloGeo.clone();
+    blueHaloGeoRotated.rotateX(-Math.PI / 2);
+
+    // Pre-compute LED fixture geometry for InstancedMesh
+    const ledHousingGeo = new THREE.BoxGeometry(0.06, 0.03, 0.05);
+    const ledLensGeo = new THREE.BoxGeometry(0.04, 0.02, 0.02);
+    ledLensGeo.translate(0, 0.008, -0.015); // offset baked into geometry
+
+    const TOTAL_LED_FIXTURES = CONFIG.rows * 4; // 44
+    const instLedHousing = new THREE.InstancedMesh(ledHousingGeo, blueLedHousingMat, TOTAL_LED_FIXTURES);
+    const instLedLens = new THREE.InstancedMesh(ledLensGeo, blueLedLensMat, TOTAL_LED_FIXTURES);
+    const instLedHalo = new THREE.InstancedMesh(blueHaloGeoRotated, blueHaloMat, TOTAL_LED_FIXTURES);
+
+    const dummyLed = new THREE.Object3D();
+    let ledIdx = 0;
+
+    for (let r = 0; r < CONFIG.rows; r++) {
+      const rowZ = CONFIG.rowZStart + r * CONFIG.rowDepth;
+      const rowY = r * CONFIG.rowRise;
+      const platformHeight = rowY + 0.08;
+
+      // Base stepped stadium platform spanning wide room width (17.5m)
+      const platGeo = new THREE.BoxGeometry(17.5, platformHeight, CONFIG.rowDepth - 0.02);
+      const platMesh = new THREE.Mesh(platGeo, platMat);
+      platMesh.position.set(0, platformHeight / 2, rowZ);
+      platMesh.receiveShadow = true;
+      scene.add(platMesh);
+
+      // Brushed Aluminum Safety Nosing Strip along step riser front edge
+      const nosingMesh = new THREE.Mesh(new THREE.BoxGeometry(17.5, 0.02, 0.035), stepNosingMat);
+      nosingMesh.position.set(0, platformHeight + 0.009, rowZ - (CONFIG.rowDepth / 2) + 0.015);
+      scene.add(nosingMesh);
+
+      // Red Carpet Runner Strips along Left & Right Aisles (Pure vibrant red)
+      const runnerGeo = new THREE.BoxGeometry(aisleWidth, 0.015, CONFIG.rowDepth - 0.01);
+
+      const leftRunner = new THREE.Mesh(runnerGeo, aisleCarpetMat);
+      leftRunner.position.set(leftAisleX, platformHeight + 0.008, rowZ);
+      leftRunner.receiveShadow = true;
+      scene.add(leftRunner);
+
+      const rightRunner = new THREE.Mesh(runnerGeo, aisleCarpetMat);
+      rightRunner.position.set(rightAisleX, platformHeight + 0.008, rowZ);
+      rightRunner.receiveShadow = true;
+      scene.add(rightRunner);
+
+      // Embedded Blue LED Step Lights at edges of both aisles (Instanced)
+      const lightXOffsets = [
+        leftAisleX - aisleWidth / 2 + 0.08,
+        leftAisleX + aisleWidth / 2 - 0.08,
+        rightAisleX - aisleWidth / 2 + 0.08,
+        rightAisleX + aisleWidth / 2 - 0.08
+      ];
+
+      lightXOffsets.forEach(lx => {
+        const fx = lx;
+        const fy = platformHeight + 0.018;
+        const fz = rowZ - (CONFIG.rowDepth / 2) + 0.04;
+
+        dummyLed.position.set(fx, fy, fz);
+        dummyLed.rotation.set(0, 0, 0);
+        dummyLed.updateMatrix();
+        instLedHousing.setMatrixAt(ledIdx, dummyLed.matrix);
+        instLedLens.setMatrixAt(ledIdx, dummyLed.matrix);
+        instLedHalo.setMatrixAt(ledIdx, dummyLed.matrix);
+        ledIdx++;
       });
-      const screenMesh = new THREE.Mesh(screenGeo, screenMat);
-      screenMesh.position.copy(CONFIG.screenCenter);
-      screenMesh.rotation.x = CONFIG.screenTilt;
-      scene.add(screenMesh);
+    }
+    instLedHousing.instanceMatrix.needsUpdate = true;
+    instLedLens.instanceMatrix.needsUpdate = true;
+    instLedHalo.instanceMatrix.needsUpdate = true;
+    scene.add(instLedHousing);
+    scene.add(instLedLens);
+    scene.add(instLedHalo);
 
-      // Screen Frame Bezel
-      const frameGeo = new THREE.BoxGeometry(CONFIG.screenWidth + 0.5, CONFIG.screenHeight + 0.5, 0.25);
-      const frameMat = new THREE.MeshStandardMaterial({ color: 0x08080a, roughness: 0.4, metalness: 0.8 });
-      const frameMesh = new THREE.Mesh(frameGeo, frameMat);
-      frameMesh.position.set(CONFIG.screenCenter.x, CONFIG.screenCenter.y, CONFIG.screenCenter.z - 0.15);
-      frameMesh.rotation.x = CONFIG.screenTilt;
-      scene.add(frameMesh);
+    // Side Parapet Boundary Walls (Finished Architectural Enclosure with Dark Handrails)
+    const sideParapetMat = new THREE.MeshStandardMaterial({ map: wallTexture, color: 0x1f1f24, roughness: 0.82 });
+    const handrailMat = new THREE.MeshStandardMaterial({ color: 0x121218, roughness: 0.4, metalness: 0.4 });
 
-      // Muted Dark Warm Gray Stage Platform (0x2a2018)
-      const stageGeo = new THREE.BoxGeometry(CONFIG.stageWidth, CONFIG.stageHeight, CONFIG.stageDepth);
-      const stageMat = new THREE.MeshStandardMaterial({ color: 0x2a2018, roughness: 0.75, metalness: 0.1 });
-      const stageMesh = new THREE.Mesh(stageGeo, stageMat);
-      stageMesh.position.copy(CONFIG.stageCenter);
-      stageMesh.receiveShadow = true;
-      scene.add(stageMesh);
+    const slopeAngle = -Math.atan2(CONFIG.rows * CONFIG.rowRise, CONFIG.rows * CONFIG.rowDepth);
+    const slopeGeo = new THREE.BoxGeometry(0.32, 3.2, 11.8);
+    const handrailGeo = new THREE.BoxGeometry(0.12, 0.08, 11.82);
 
-      // Support Pillars (Pillar A & Pillar B)
-      CONFIG.pillars.forEach(p => {
-        const pillarGeo = new THREE.CylinderGeometry(p.radius, p.radius, p.height, 24);
-        const pillarMat = new THREE.MeshStandardMaterial({ color: 0x222430, roughness: 0.6, metalness: 0.2 });
-        const pillar = new THREE.Mesh(pillarGeo, pillarMat);
-        pillar.position.set(p.x, p.y, p.z);
-        pillar.castShadow = true;
-        pillar.receiveShadow = true;
-        pillar.userData = { isPillar: true, name: p.name };
-        scene.add(pillar);
-        pillarMeshes.push(pillar);
+    // Left Parapet Wall & Handrail
+    const leftSlopeMesh = new THREE.Mesh(slopeGeo, sideParapetMat);
+    leftSlopeMesh.rotation.x = slopeAngle;
+    leftSlopeMesh.position.set(-8.8, 1.4, -5.2);
+    leftSlopeMesh.receiveShadow = true;
+    scene.add(leftSlopeMesh);
+
+    const leftHandrail = new THREE.Mesh(handrailGeo, handrailMat);
+    leftHandrail.rotation.x = slopeAngle;
+    leftHandrail.position.set(-8.8, 3.02, -5.2);
+    scene.add(leftHandrail);
+
+    // Right Parapet Wall & Handrail
+    const rightSlopeMesh = new THREE.Mesh(slopeGeo, sideParapetMat);
+    rightSlopeMesh.rotation.x = slopeAngle;
+    rightSlopeMesh.position.set(8.8, 1.4, -5.2);
+    rightSlopeMesh.receiveShadow = true;
+    scene.add(rightSlopeMesh);
+
+    const rightHandrail = new THREE.Mesh(handrailGeo, handrailMat);
+    rightHandrail.rotation.x = slopeAngle;
+    rightHandrail.position.set(8.8, 3.02, -5.2);
+    scene.add(rightHandrail);
+
+
+
+    // ============================================================================
+    // 6. FORMULA-BASED VIEW QUALITY SCORER
+    // ============================================================================
+    function calculateSeatViewScore(eyePos) {
+      const screenCenter = CONFIG.screenCenter.clone();
+
+      const distanceToScreenCenter = eyePos.distanceTo(screenCenter);
+      const distanceDiff = Math.abs(distanceToScreenCenter - CONFIG.scoring.idealDistance);
+      const distanceScore = Math.max(0, Math.min(100, 100 - distanceDiff * CONFIG.scoring.distancePenaltyFactor));
+
+      const dirToSeat = eyePos.clone().sub(screenCenter);
+      const horizontalAngleRad = Math.atan2(dirToSeat.x, dirToSeat.z);
+      const horizontalAngleFromCenterLine = Math.abs(horizontalAngleRad * (180 / Math.PI));
+      const angleScore = Math.max(0, Math.min(100, 100 - horizontalAngleFromCenterLine * CONFIG.scoring.anglePenaltyFactor));
+
+      const rawScore = (distanceScore * 0.5 + angleScore * 0.5);
+      const finalScore = Math.max(0, Math.min(100, Math.round(rawScore)));
+
+      const finalPrice = Math.round(CONFIG.pricing.basePrice * (CONFIG.pricing.minMultiplier + (finalScore / 100) * CONFIG.pricing.scoreMultiplier));
+
+      let tierHex, tierName;
+      if (finalScore >= 80) {
+        tierHex = 0x2ecc71; // Green
+        tierName = "Prime Center View";
+      } else if (finalScore >= 55) {
+        tierHex = 0xf1c40f; // Yellow
+        tierName = "Standard View";
+      } else {
+        tierHex = 0xe74c3c; // Red
+        tierName = "Side-Wing View";
+      }
+
+      return {
+        distanceScore: Math.round(distanceScore),
+        angleScore: Math.round(angleScore),
+        horizontalAngleDeg: Math.round(horizontalAngleFromCenterLine * 10) / 10,
+        distanceToScreenCenter: Math.round(distanceToScreenCenter * 10) / 10,
+        isObstructed: false,
+        finalScore,
+        finalPrice,
+        tierName,
+        tierHex
+      };
+    }
+
+    // ============================================================================
+    // 7. HIGH-PRECISION SEAT GEOMETRY (CHANNEL-TUFTED STITCHING, METAL LEGS, ARMREST CAPS)
+    // ============================================================================
+    const metalLegMat = new THREE.MeshStandardMaterial({ color: 0x111116, roughness: 0.35, metalness: 0.85 });
+    const chromeTrimMat = new THREE.MeshStandardMaterial({ color: 0xd0d0d8, metalness: 0.95, roughness: 0.15 });
+    const darkShellMat = new THREE.MeshStandardMaterial({ color: 0x141419, roughness: 0.6, metalness: 0.2 });
+    const cupholderMat = new THREE.MeshStandardMaterial({ color: 0x0b0b0e, roughness: 0.3 });
+    const cupholderInnerMat = new THREE.MeshBasicMaterial({ color: 0x020204 });
+
+    // Premium Crimson Red Velvet-Leather Hybrid (#c81818, glossy sheen, deep red shadow folds)
+    const baseRedSeatMat = new THREE.MeshStandardMaterial({
+      color: 0xc81818,
+      roughness: 0.28,
+      metalness: 0.14,
+      emissive: 0x2e0404,
+      emissiveIntensity: 0.12
+    });
+
+    // Seat Metal Base Leg Geometry & Chrome Base Accent Trim Strip
+    const legBaseGeo = new THREE.BoxGeometry(0.42, 0.03, 0.36);
+    legBaseGeo.translate(0, 0.015, 0);
+
+    const chromeBaseGeo = new THREE.BoxGeometry(0.435, 0.008, 0.375);
+    chromeBaseGeo.translate(0, 0.004, 0);
+
+    const legPostGeo = new THREE.BoxGeometry(0.04, 0.14, 0.04);
+
+    // Plush Seat Bottom Cushion
+    const cushionGeo = new THREE.BoxGeometry(0.52, 0.16, 0.44);
+    cushionGeo.translate(0, 0.18, -0.04);
+
+    // Seat Seam Stitching Highlight Strip along Cushion Edges
+    const seamStitchingGeo = new THREE.BoxGeometry(0.526, 0.012, 0.446);
+    seamStitchingGeo.translate(0, 0.18, -0.04);
+    const seamStitchingMat = new THREE.MeshStandardMaterial({ color: 0x800c0c, roughness: 0.5, metalness: 0.1 });
+
+    // Seat Back Rear Frame Panel
+    const backFrameGeo = new THREE.BoxGeometry(0.52, 0.62, 0.06);
+    backFrameGeo.rotateX(0.12);
+    backFrameGeo.translate(0, 0.56, 0.18);
+
+    // Vertical Channel-Tufted Ribbed Cushion Segment (5 Ribs across backrest width)
+    const ribCount = 5;
+    const ribWidth = 0.095;
+    const ribHeight = 0.58;
+    const ribDepth = 0.06;
+    const ribGeo = new THREE.BoxGeometry(ribWidth, ribHeight, ribDepth);
+    ribGeo.rotateX(0.12);
+
+    // Protruding Headrest
+    const headrestGeo = new THREE.BoxGeometry(0.46, 0.18, 0.10);
+    headrestGeo.rotateX(0.08);
+    headrestGeo.translate(0, 0.94, 0.21);
+
+    // Armrests with Rounded Front End Caps & Shadow Gap
+    const armBarGeo = new THREE.BoxGeometry(0.06, 0.05, 0.40);
+    armBarGeo.translate(0, 0.46, -0.04);
+
+    const armCapGeo = new THREE.CylinderGeometry(0.032, 0.032, 0.06, 16);
+    armCapGeo.rotateZ(Math.PI / 2);
+    armCapGeo.translate(0, 0.46, -0.24);
+
+    const armPostGeo = new THREE.BoxGeometry(0.04, 0.24, 0.04);
+    armPostGeo.translate(0, 0.30, -0.20);
+
+    const cupholderGeo = new THREE.CylinderGeometry(0.032, 0.032, 0.07, 12);
+    cupholderGeo.translate(0, 0.46, -0.20);
+
+    const cupholderInnerGeo = new THREE.CylinderGeometry(0.024, 0.024, 0.071, 12);
+    cupholderInnerGeo.translate(0, 0.461, -0.20);
+
+    const tierDotGeo = new THREE.SphereGeometry(0.04, 12, 12);
+    tierDotGeo.translate(0, 0.95, 0.28);
+
+    // Compound Geometry Builder Helper for Ultra-High Performance InstancedMesh Rendering
+    function createCompoundGeometry(parts) {
+      let totalVerts = 0;
+      const preprocessed = parts.map(p => {
+        let g = p.geo.clone();
+        // Convert indexed geometry to non-indexed so merging works correctly
+        if (g.index) g = g.toNonIndexed();
+        if (p.rotation) {
+          if (p.rotation.x) g.rotateX(p.rotation.x);
+          if (p.rotation.y) g.rotateY(p.rotation.y);
+          if (p.rotation.z) g.rotateZ(p.rotation.z);
+        }
+        if (p.position) {
+          g.translate(p.position.x || 0, p.position.y || 0, p.position.z || 0);
+        }
+        const pos = g.attributes.position;
+        const norm = g.attributes.normal;
+        const uv = g.attributes.uv;
+
+        totalVerts += pos.count;
+        return { pos, norm, uv, count: pos.count };
       });
 
-      // ============================================================================
-      // 5. RAKED STEP RISER PLATFORMS
-      // ============================================================================
+      const mergedPos = new Float32Array(totalVerts * 3);
+      const mergedNorm = new Float32Array(totalVerts * 3);
+      const mergedUv = new Float32Array(totalVerts * 2);
+
+      let vOffset = 0;
+      preprocessed.forEach(item => {
+        const { pos, norm, uv, count } = item;
+        for (let i = 0; i < count; i++) {
+          mergedPos[(vOffset + i) * 3] = pos.getX(i);
+          mergedPos[(vOffset + i) * 3 + 1] = pos.getY(i);
+          mergedPos[(vOffset + i) * 3 + 2] = pos.getZ(i);
+
+          if (norm) {
+            mergedNorm[(vOffset + i) * 3] = norm.getX(i);
+            mergedNorm[(vOffset + i) * 3 + 1] = norm.getY(i);
+            mergedNorm[(vOffset + i) * 3 + 2] = norm.getZ(i);
+          }
+
+          if (uv) {
+            mergedUv[(vOffset + i) * 2] = uv.getX(i);
+            mergedUv[(vOffset + i) * 2 + 1] = uv.getY(i);
+          }
+        }
+        vOffset += count;
+      });
+
+      const compoundGeo = new THREE.BufferGeometry();
+      compoundGeo.setAttribute('position', new THREE.BufferAttribute(mergedPos, 3));
+      compoundGeo.setAttribute('normal', new THREE.BufferAttribute(mergedNorm, 3));
+      compoundGeo.setAttribute('uv', new THREE.BufferAttribute(mergedUv, 2));
+      return compoundGeo;
+    }
+
+    // Build Merged Compound Geometries for Instanced Rendering
+    const seatRedParts = [
+      { geo: cushionGeo, position: { x: 0, y: 0, z: 0 } },
+      { geo: seamStitchingGeo, position: { x: 0, y: 0, z: 0 } },
+      { geo: headrestGeo, position: { x: 0, y: 0, z: 0 } }
+    ];
+    const ribStartX = -((ribCount - 1) * (ribWidth + 0.005)) / 2;
+    for (let rIdx = 0; rIdx < ribCount; rIdx++) {
+      const rx = ribStartX + rIdx * (ribWidth + 0.005);
+      seatRedParts.push({ geo: ribGeo, position: { x: rx, y: 0.56, z: 0.15 } });
+    }
+    const seatRedCompoundGeo = createCompoundGeometry(seatRedParts);
+
+    const seatShellParts = [
+      { geo: backFrameGeo, position: { x: 0, y: 0, z: 0 } },
+      { geo: armBarGeo, position: { x: -0.28, y: 0, z: 0 } },
+      { geo: armCapGeo, position: { x: -0.28, y: 0, z: 0 } },
+      { geo: armPostGeo, position: { x: -0.28, y: 0, z: 0 } },
+      { geo: armBarGeo, position: { x: 0.28, y: 0, z: 0 } },
+      { geo: armCapGeo, position: { x: 0.28, y: 0, z: 0 } },
+      { geo: armPostGeo, position: { x: 0.28, y: 0, z: 0 } }
+    ];
+    const seatShellCompoundGeo = createCompoundGeometry(seatShellParts);
+
+    const seatLegParts = [
+      { geo: legBaseGeo, position: { x: 0, y: 0, z: 0 } },
+      { geo: legPostGeo, position: { x: -0.16, y: 0.08, z: -0.04 } },
+      { geo: legPostGeo, position: { x: 0.16, y: 0.08, z: -0.04 } }
+    ];
+    const seatLegCompoundGeo = createCompoundGeometry(seatLegParts);
+
+    const seatCupParts = [
+      { geo: cupholderGeo, position: { x: -0.28, y: 0, z: 0 } },
+      { geo: cupholderInnerGeo, position: { x: -0.28, y: 0, z: 0 } },
+      { geo: cupholderGeo, position: { x: 0.28, y: 0, z: 0 } },
+      { geo: cupholderInnerGeo, position: { x: 0.28, y: 0, z: 0 } }
+    ];
+    const seatCupCompoundGeo = createCompoundGeometry(seatCupParts);
+
+    const seatChromeGeo = chromeBaseGeo.clone();
+
+    const seatAoGeo = new THREE.PlaneGeometry(0.72, 0.72);
+    const seatAoMat = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.35, depthWrite: false });
+    const seatAoGeoCloned = seatAoGeo.clone();
+    seatAoGeoCloned.rotateX(-Math.PI / 2);
+    seatAoGeoCloned.translate(0, 0.003, -0.02);
+
+    const seatClickGeoCloned = new THREE.BoxGeometry(0.58, 1.15, 0.58);
+    seatClickGeoCloned.translate(0, 0.55, 0);
+
+    const TOTAL_SEATS = CONFIG.rows * CONFIG.seatsPerRow; // 176
+
+    const instancedSeatRed = new THREE.InstancedMesh(seatRedCompoundGeo, baseRedSeatMat, TOTAL_SEATS);
+    const instancedSeatShell = new THREE.InstancedMesh(seatShellCompoundGeo, darkShellMat, TOTAL_SEATS);
+    const instancedSeatLeg = new THREE.InstancedMesh(seatLegCompoundGeo, metalLegMat, TOTAL_SEATS);
+    const instancedSeatChrome = new THREE.InstancedMesh(seatChromeGeo, chromeTrimMat, TOTAL_SEATS);
+    const instancedSeatCup = new THREE.InstancedMesh(seatCupCompoundGeo, cupholderMat, TOTAL_SEATS);
+    const instancedSeatAo = new THREE.InstancedMesh(seatAoGeoCloned, seatAoMat, TOTAL_SEATS);
+    const instancedSeatClick = new THREE.InstancedMesh(seatClickGeoCloned, new THREE.MeshBasicMaterial({ visible: false }), TOTAL_SEATS);
+
+    instancedSeatRed.castShadow = true;
+    instancedSeatRed.receiveShadow = true;
+
+    const seatDataArray = [];
+    const dummySeat = new THREE.Object3D();
+
+    function generateAuditoriumSeats() {
+      const rowLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
+
+      const seatXOffsets = [
+        -7.8, -7.0, -6.2, -5.4,                                // Left Block (4 seats)
+        -3.15, -2.25, -1.35, -0.45, 0.45, 1.35, 2.25, 3.15,     // Wide Center Block (8 seats)
+        5.4, 6.2, 7.0, 7.8                                     // Right Block (4 seats)
+      ];
+
       for (let r = 0; r < CONFIG.rows; r++) {
         const rowZ = CONFIG.rowZStart + r * CONFIG.rowDepth;
         const rowY = r * CONFIG.rowRise;
-        const platformHeight = rowY + 0.12;
+        const platformHeight = rowY + 0.06;
 
-        const platGeo = new THREE.BoxGeometry(10.2, platformHeight, CONFIG.rowDepth - 0.05);
-        const platMat = new THREE.MeshStandardMaterial({ color: 0x1a1920, roughness: 0.8 });
-        const platMesh = new THREE.Mesh(platGeo, platMat);
-        platMesh.position.set(0, platformHeight / 2, rowZ);
-        platMesh.receiveShadow = true;
-        scene.add(platMesh);
+        for (let s = 0; s < CONFIG.seatsPerRow; s++) {
+          const seatIndex = r * CONFIG.seatsPerRow + s;
+          const seatNum = s + 1;
+          const seatCode = `${rowLetters[r]}${seatNum}`;
 
-        // LED Step Edge Light Strip
-        const stripGeo = new THREE.BoxGeometry(10.2, 0.03, 0.04);
-        const stripMat = new THREE.MeshStandardMaterial({ color: 0xffaa33, emissive: 0xff9900, emissiveIntensity: 1.4 });
-        const stripMesh = new THREE.Mesh(stripGeo, stripMat);
-        stripMesh.position.set(0, platformHeight, rowZ - (CONFIG.rowDepth - 0.05) / 2);
-        scene.add(stripMesh);
+          const baseX = seatXOffsets[s];
+          const radialCurve = Math.pow(baseX / 7.5, 2) * 0.18;
+          const posX = baseX;
+          const posY = platformHeight;
+          const posZ = rowZ + radialCurve;
+          // Explicit fixed numeric rotation facing forward toward screen
+          const seatRotationY = 0.0;
+
+          const eyePosition = new THREE.Vector3(posX, posY + 1.15, posZ - 0.05);
+          const viewStats = calculateSeatViewScore(eyePosition);
+
+          // Update Instance Transform Matrix
+          dummySeat.position.set(posX, posY, posZ);
+          dummySeat.rotation.set(0, seatRotationY, 0); // Fixed rotation facing forward toward screen
+          dummySeat.scale.set(1, 1, 1);
+          dummySeat.updateMatrix();
+
+          // Subtle randomized fabric color variation per seat (±3% brightness around #c81818)
+          const baseRed = new THREE.Color(0xc81818);
+          const varScalar = 0.96 + Math.random() * 0.08;
+          const varColor = baseRed.clone().multiplyScalar(varScalar);
+          instancedSeatRed.setColorAt(seatIndex, varColor);
+
+          instancedSeatRed.setMatrixAt(seatIndex, dummySeat.matrix);
+          instancedSeatShell.setMatrixAt(seatIndex, dummySeat.matrix);
+          instancedSeatLeg.setMatrixAt(seatIndex, dummySeat.matrix);
+          instancedSeatChrome.setMatrixAt(seatIndex, dummySeat.matrix);
+          instancedSeatCup.setMatrixAt(seatIndex, dummySeat.matrix);
+          instancedSeatAo.setMatrixAt(seatIndex, dummySeat.matrix);
+          instancedSeatClick.setMatrixAt(seatIndex, dummySeat.matrix);
+
+          let blockName = "Center Block";
+          if (s < 4) blockName = "Left Block";
+          else if (s < 12) blockName = "Center Block";
+          else blockName = "Right Block";
+
+          seatDataArray[seatIndex] = {
+            seatIndex: seatIndex,
+            rowName: `Row ${rowLetters[r]}`,
+            rowIndex: r + 1,
+            seatNum: seatNum,
+            seatCode: seatCode,
+            blockName: blockName,
+            worldPos: new THREE.Vector3(posX, posY, posZ),
+            eyePosition: eyePosition,
+            rotationY: seatRotationY,
+            baseColorHex: 0xc81818,
+            stats: viewStats
+          };
+        }
       }
 
-      // ============================================================================
-      // 6. FORMULA-BASED VIEW QUALITY & RAYCAST OBSTRUCTION SCORER
-      // ============================================================================
-      function calculateSeatViewScore(eyePos) {
-        const screenCenter = CONFIG.screenCenter.clone();
+      instancedSeatRed.instanceMatrix.needsUpdate = true;
+      if (instancedSeatRed.instanceColor) instancedSeatRed.instanceColor.needsUpdate = true;
+      instancedSeatShell.instanceMatrix.needsUpdate = true;
+      instancedSeatLeg.instanceMatrix.needsUpdate = true;
+      instancedSeatChrome.instanceMatrix.needsUpdate = true;
+      instancedSeatCup.instanceMatrix.needsUpdate = true;
+      instancedSeatAo.instanceMatrix.needsUpdate = true;
+      instancedSeatClick.instanceMatrix.needsUpdate = true;
 
-        const distanceToScreenCenter = eyePos.distanceTo(screenCenter);
-        const distanceDiff = Math.abs(distanceToScreenCenter - CONFIG.scoring.idealDistance);
-        const distanceScore = Math.max(0, Math.min(100, 100 - distanceDiff * CONFIG.scoring.distancePenaltyFactor));
+      scene.add(instancedSeatRed);
+      scene.add(instancedSeatShell);
+      scene.add(instancedSeatLeg);
+      scene.add(instancedSeatChrome);
+      scene.add(instancedSeatCup);
+      scene.add(instancedSeatAo);
+      scene.add(instancedSeatClick);
+    }
 
-        const dirToSeat = eyePos.clone().sub(screenCenter);
-        const horizontalAngleRad = Math.atan2(dirToSeat.x, dirToSeat.z);
-        const horizontalAngleFromCenterLine = Math.abs(horizontalAngleRad * (180 / Math.PI));
-        const angleScore = Math.max(0, Math.min(100, 100 - horizontalAngleFromCenterLine * CONFIG.scoring.anglePenaltyFactor));
+    generateAuditoriumSeats();
 
-        // Raycast check to Pillar A & Pillar B
-        const rayDirection = screenCenter.clone().sub(eyePos).normalize();
-        const ray = new THREE.Raycaster(eyePos, rayDirection, 0.1, distanceToScreenCenter);
-        const intersections = ray.intersectObjects(pillarMeshes, false);
+    // Initial texture update
+    updateScreenCanvasTexture(0);
 
-        let obstructionPenalty = 0;
-        let isObstructed = false;
-        let hitPillarName = null;
+    // ============================================================================
+    // 8. CAMERA OVERVIEW & INTERACTIVE CONTROL SYSTEM (ELEVATED 3/4 DOWNWARD ANGLE)
+    // ============================================================================
+    const overviewOrbit = {
+      pivot: new THREE.Vector3(0, 3.8, -8.0),
+      radius: 16.0,
+      minRadius: 8.0,   // Prevents zooming past front row
+      maxRadius: 22.0,  // Prevents zooming out past screen bounds
+      theta: 0.0,       // 0° symmetric front-center perspective
+      minTheta: -Math.PI / 4, // -45° max left orbit
+      maxTheta: Math.PI / 4,  // +45° max right orbit
+      phi: 0.96,        // Rule-of-thirds elevation angle
+      minPhi: Math.PI / 6,   // ~30° min elevation
+      maxPhi: Math.PI / 2.1  // ~85° max elevation
+    };
 
-        if (intersections.length > 0 && intersections[0].distance < (distanceToScreenCenter - 0.5)) {
-          isObstructed = true;
-          obstructionPenalty = CONFIG.scoring.pillarPenalty;
-          hitPillarName = intersections[0].object.userData.name || "Support Column";
-        }
+    function updateOverviewCameraPos() {
+      overviewOrbit.radius = THREE.MathUtils.clamp(overviewOrbit.radius, overviewOrbit.minRadius, overviewOrbit.maxRadius);
+      overviewOrbit.phi = THREE.MathUtils.clamp(overviewOrbit.phi, overviewOrbit.minPhi, overviewOrbit.maxPhi);
+      overviewOrbit.theta = THREE.MathUtils.clamp(overviewOrbit.theta, overviewOrbit.minTheta, overviewOrbit.maxTheta);
 
-        const rawScore = (distanceScore * 0.5 + angleScore * 0.5) - obstructionPenalty;
-        const finalScore = Math.max(0, Math.min(100, Math.round(rawScore)));
+      camera.position.x = overviewOrbit.pivot.x + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.sin(overviewOrbit.theta);
+      camera.position.y = overviewOrbit.pivot.y + overviewOrbit.radius * Math.cos(overviewOrbit.phi);
+      camera.position.z = overviewOrbit.pivot.z + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.cos(overviewOrbit.theta);
+      camera.lookAt(0, 3.8, -12.5); // Fixed lock on screen center
+    }
+    updateOverviewCameraPos();
 
-        const finalPrice = Math.round(CONFIG.pricing.basePrice * (CONFIG.pricing.minMultiplier + (finalScore / 100) * CONFIG.pricing.scoreMultiplier));
+    const seatLook = {
+      baseQuaternion: new THREE.Quaternion(),
+      yaw: 0.0,
+      pitch: 0.0,
+      maxYaw: 70 * (Math.PI / 180),
+      maxPitch: 25 * (Math.PI / 180)
+    };
 
-        let tierHex, tierName;
-        if (finalScore >= 80) {
-          tierHex = 0x2ecc71; // Green
-          tierName = "Prime View";
-        } else if (finalScore >= 55) {
-          tierHex = 0xf1c40f; // Yellow
-          tierName = "Standard View";
-        } else {
-          tierHex = 0xe74c3c; // Red
-          tierName = "Obstructed / Side View";
-        }
+    function updateSeatCameraRotation() {
+      const euler = new THREE.Euler(seatLook.pitch, seatLook.yaw, 0, 'YXZ');
+      const offsetQuat = new THREE.Quaternion().setFromEuler(euler);
+      camera.quaternion.copy(seatLook.baseQuaternion).multiply(offsetQuat);
+    }
 
-        return {
-          distanceScore: Math.round(distanceScore),
-          angleScore: Math.round(angleScore),
-          horizontalAngleDeg: Math.round(horizontalAngleFromCenterLine * 10) / 10,
-          distanceToScreenCenter: Math.round(distanceToScreenCenter * 10) / 10,
-          isObstructed,
-          hitPillarName,
-          obstructionPenalty,
-          finalScore,
-          finalPrice,
-          tierName,
-          tierHex
-        };
+    let isCameraAnimating = false;
+    let animStartTime = 0;
+    const animDuration = 850;
+    const animStartPos = new THREE.Vector3();
+    const animEndPos = new THREE.Vector3();
+    const animStartQuat = new THREE.Quaternion();
+    const animEndQuat = new THREE.Quaternion();
+    let onAnimCompleteCallback = null;
+
+    function animateCameraTo(targetPos, targetQuat, onComplete) {
+      isCameraAnimating = true;
+      animStartTime = performance.now();
+      animStartPos.copy(camera.position);
+      animEndPos.copy(targetPos);
+      animStartQuat.copy(camera.quaternion);
+      animEndQuat.copy(targetQuat);
+      onAnimCompleteCallback = onComplete || null;
+    }
+
+    function stepCameraAnimation(now) {
+      if (!isCameraAnimating) return;
+      const elapsed = now - animStartTime;
+      let progress = Math.min(1.0, elapsed / animDuration);
+
+      const ease = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      camera.position.lerpVectors(animStartPos, animEndPos, ease);
+      camera.quaternion.slerpQuaternions(animStartQuat, animEndQuat, ease);
+
+      if (progress >= 1.0) {
+        isCameraAnimating = false;
+        if (onAnimCompleteCallback) onAnimCompleteCallback();
       }
+    }
 
-      // ============================================================================
-      // 7. PLUSH RED CINEMA SEAT ASSEMBLY (SCREEN-FACING GEOMETRY LOCK)
-      // ============================================================================
-      const pedestalGeo = new THREE.CylinderGeometry(0.05, 0.07, 0.12, 12);
-      pedestalGeo.translate(0, 0.06, 0);
+    function findParentSeatData(hitObject) {
+      let curr = hitObject;
+      while (curr) {
+        if (seatDataMap.has(curr.uuid)) {
+          return seatDataMap.get(curr.uuid);
+        }
+        if (curr.parent && seatDataMap.has(curr.parent.uuid)) {
+          return seatDataMap.get(curr.parent.uuid);
+        }
+        curr = curr.parent;
+      }
+      return null;
+    }
 
-      // Cushion: Open front edge facing local -Z (toward screen), back edge toward local +Z
-      const cushionGeo = new THREE.BoxGeometry(0.55, 0.18, 0.48);
-      cushionGeo.translate(0, 0.18, -0.05);
+    // ============================================================================
+    // 9. UI ENGINE & INTERACTION (UI Overlays Kept in Web Layer, Not Baked into 3D)
+    // ============================================================================
+    const panel = document.getElementById('seat-panel');
+    const panelSeatCode = document.getElementById('panel-seat-code');
+    const panelSeatDesc = document.getElementById('panel-seat-desc');
+    const panelScoreBadge = document.getElementById('panel-score-badge');
+    const panelScoreNum = document.getElementById('panel-score-num');
+    const panelDistVal = document.getElementById('panel-dist-val');
+    const barDist = document.getElementById('bar-dist');
+    const panelAngleVal = document.getElementById('panel-angle-val');
+    const barAngle = document.getElementById('bar-angle');
+    const panelObstructionBanner = document.getElementById('panel-obstruction-banner');
+    const obstructionIcon = document.getElementById('obstruction-icon');
+    const obstructionText = document.getElementById('obstruction-text');
+    const panelPrice = document.getElementById('panel-price');
+    const panelPriceBreakdown = document.getElementById('panel-price-breakdown');
+    const modeText = document.getElementById('mode-text');
+    const tooltip = document.getElementById('tooltip');
+    const ttCode = document.getElementById('tt-code');
+    const ttScore = document.getElementById('tt-score');
 
-      // Backrest: Positioned at local +Z (facing AWAY from screen / toward back of auditorium)
-      // Tilted backward (+Y tilts toward +Z, away from screen) using rotateX(+0.14)
-      const backGeo = new THREE.BoxGeometry(0.55, 0.62, 0.12);
-      backGeo.rotateX(0.14);
-      backGeo.translate(0, 0.58, 0.19);
+    function populateSeatPanel(data) {
+      const s = data.stats;
+      panelSeatCode.textContent = `${data.rowName} · Seat ${data.seatNum} (${data.seatCode})`;
+      panelSeatDesc.textContent = `${data.blockName} (${s.tierName})`;
+      panelScoreNum.textContent = s.finalScore;
 
-      // Headrest: Top of backrest at local +Z
-      const headrestGeo = new THREE.BoxGeometry(0.46, 0.18, 0.10);
-      headrestGeo.translate(0, 0.94, 0.23);
+      panelScoreBadge.className = 'score-badge ' + (s.finalScore >= 80 ? 'tier-green' : (s.finalScore >= 55 ? 'tier-yellow' : 'tier-red'));
 
-      // L-Shaped Armrests
-      // Horizontal rest bar running along Z
-      const armBarGeo = new THREE.BoxGeometry(0.05, 0.05, 0.45);
-      armBarGeo.translate(0, 0.46, -0.05);
+      panelDistVal.textContent = `${s.distanceScore}%`;
+      barDist.style.width = `${s.distanceScore}%`;
+      barDist.style.background = s.distanceScore >= 80 ? '#2ecc71' : (s.distanceScore >= 55 ? '#f1c40f' : '#e74c3c');
 
-      // Front vertical support post at local -Z side (where knees/cushion front extend, facing screen)
-      const armPostGeo = new THREE.BoxGeometry(0.05, 0.25, 0.05);
-      armPostGeo.translate(0, 0.30, -0.22);
+      panelAngleVal.textContent = `${s.angleScore}%`;
+      barAngle.style.width = `${s.angleScore}%`;
+      barAngle.style.background = s.angleScore >= 80 ? '#2ecc71' : (s.angleScore >= 55 ? '#f1c40f' : '#e74c3c');
 
-      // Cupholder at local -Z side (front of armrest near knees, facing screen)
-      const cupholderGeo = new THREE.CylinderGeometry(0.035, 0.035, 0.08, 12);
-      cupholderGeo.translate(0, 0.46, -0.22);
+      panelObstructionBanner.className = 'obstruction-banner clear';
+      obstructionIcon.textContent = '✓';
+      obstructionText.textContent = 'Unobstructed Line of Sight';
 
-      // Tier LED indicator dot facing overview camera on back of headrest/backrest (+Z)
-      const tierDotGeo = new THREE.SphereGeometry(0.04, 12, 12);
-      tierDotGeo.translate(0, 0.94, 0.29);
+      panelPrice.textContent = `₹${s.finalPrice}`;
+      panelPriceBreakdown.textContent = `Base ₹350 × (0.7 + ${s.finalScore}% × 0.6) = ₹${s.finalPrice}`;
 
-      const armCapMat = new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.65, metalness: 0.15 });
-      const cupholderMat = new THREE.MeshStandardMaterial({ color: 0x141418, roughness: 0.3 });
+      panel.classList.add('visible');
+    }
 
-      // Rich Velvet Red Multiplex Seat Fabric Material Base (Deep Crimson Cinema Red)
-      const baseRedSeatMat = new THREE.MeshStandardMaterial({
-        color: 0xb91c1c,        // Vibrant plush cinema red velvet fabric
-        roughness: 0.45,
-        metalness: 0.1,
-        emissive: 0x7f1d1d,
-        emissiveIntensity: 0.15
+    function hideSeatPanel() {
+      panel.classList.remove('visible');
+    }
+
+    function switchToOverviewMode() {
+      currentMode = 'OVERVIEW';
+      selectedSeatData = null;
+      hideSeatPanel();
+      modeText.textContent = 'Front-Center Wide View (Entrance Perspective)';
+
+      overviewOrbit.theta = 0.0;
+      overviewOrbit.phi = 0.96;
+
+      const dummyCam = new THREE.PerspectiveCamera(68, window.innerWidth / window.innerHeight, 0.1, 140.0);
+      dummyCam.position.x = overviewOrbit.pivot.x + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.sin(overviewOrbit.theta);
+      dummyCam.position.y = overviewOrbit.pivot.y + overviewOrbit.radius * Math.cos(overviewOrbit.phi);
+      dummyCam.position.z = overviewOrbit.pivot.z + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.cos(overviewOrbit.theta);
+      dummyCam.lookAt(0, 2.4, -12.5);
+
+      animateCameraTo(dummyCam.position, dummyCam.quaternion);
+    }
+
+    function switchToSeatPreviewMode(seatData) {
+      currentMode = 'SEAT_PREVIEW';
+      selectedSeatData = seatData;
+      populateSeatPanel(seatData);
+      modeText.textContent = `Seat POV Preview — ${seatData.seatCode}`;
+
+      const targetPos = seatData.eyePosition.clone();
+      const dummyCam = new THREE.PerspectiveCamera(54, window.innerWidth / window.innerHeight, 0.1, 140.0);
+      dummyCam.position.copy(targetPos);
+      dummyCam.lookAt(CONFIG.screenCenter);
+
+      seatLook.baseQuaternion.copy(dummyCam.quaternion);
+      seatLook.yaw = 0.0;
+      seatLook.pitch = 0.0;
+
+      animateCameraTo(targetPos, dummyCam.quaternion);
+    }
+
+    document.getElementById('btn-back-overview').addEventListener('click', switchToOverviewMode);
+    const hintBtn = document.getElementById('hint-close-btn');
+    if (hintBtn) {
+      hintBtn.addEventListener('click', () => {
+        const hintPill = document.getElementById('hint-pill');
+        if (hintPill) hintPill.style.display = 'none';
       });
-
-      const seatBoundingBox = new THREE.Box3();
-      const seatDataArray = [];
-
-      function generateAuditoriumSeats() {
-        const rowNames = ["Row A", "Row B", "Row C", "Row D", "Row E", "Row F"];
-
-        for (let r = 0; r < CONFIG.rows; r++) {
-          const rowZ = CONFIG.rowZStart + r * CONFIG.rowDepth;
-          const rowY = r * CONFIG.rowRise;
-          const platformHeight = rowY + 0.12;
-
-          for (let s = 0; s < CONFIG.seatsPerRow; s++) {
-            const seatNum = s + 1;
-            const seatCode = `${rowNames[r].split(' ')[1]}${seatNum}`;
-
-            let xOffset = (s - (CONFIG.seatsPerRow - 1) / 2) * (CONFIG.seatWidth + 0.12);
-            if (s >= CONFIG.aisleAfter) xOffset += 0.5; // aisle gap
-
-            const curveFactor = Math.pow(xOffset / 4.0, 2) * 0.18; // Subtle concave curve
-            const posX = xOffset;
-            const posY = platformHeight;
-            const posZ = rowZ + curveFactor;
-
-            const eyePosition = new THREE.Vector3(posX, posY + 1.15, posZ);
-            const viewStats = calculateSeatViewScore(eyePosition);
-
-            const seatGroup = new THREE.Group();
-            seatGroup.position.set(posX, posY, posZ);
-
-            // Seat rotation stays 0 (facing -Z directly at screen by construction)
-            seatGroup.rotation.set(0, 0, 0);
-
-            // Seat Fabric: Rich Crimson Cinema Red Velvet
-            const seatMat = baseRedSeatMat.clone();
-
-            // Tier LED Badge Indicator (Green for Prime, Yellow for Standard, Red for Obstructed)
-            const dotMat = new THREE.MeshStandardMaterial({
-              color: viewStats.tierHex,
-              emissive: viewStats.tierHex,
-              emissiveIntensity: 1.6
-            });
-
-            const pedMesh = new THREE.Mesh(pedestalGeo, armCapMat);
-            const cushionMesh = new THREE.Mesh(cushionGeo, seatMat);
-            const backMesh = new THREE.Mesh(backGeo, seatMat);
-            const headrestMesh = new THREE.Mesh(headrestGeo, seatMat);
-
-            const armBarL = new THREE.Mesh(armBarGeo, armCapMat);
-            armBarL.position.set(-0.29, 0, 0);
-            const armPostL = new THREE.Mesh(armPostGeo, armCapMat);
-            armPostL.position.set(-0.29, 0, 0);
-
-            const armBarR = new THREE.Mesh(armBarGeo, armCapMat);
-            armBarR.position.set(0.29, 0, 0);
-            const armPostR = new THREE.Mesh(armPostGeo, armCapMat);
-            armPostR.position.set(0.29, 0, 0);
-
-            const cupLMesh = new THREE.Mesh(cupholderGeo, cupholderMat);
-            cupLMesh.position.set(-0.29, 0, 0);
-            const cupRMesh = new THREE.Mesh(cupholderGeo, cupholderMat);
-            cupRMesh.position.set(0.29, 0, 0);
-
-            const dotMesh = new THREE.Mesh(tierDotGeo, dotMat);
-
-            cushionMesh.castShadow = true;
-            cushionMesh.receiveShadow = true;
-            backMesh.castShadow = true;
-
-            seatGroup.add(pedMesh);
-            seatGroup.add(cushionMesh);
-            seatGroup.add(backMesh);
-            seatGroup.add(headrestMesh);
-            seatGroup.add(armBarL);
-            seatGroup.add(armPostL);
-            seatGroup.add(armBarR);
-            seatGroup.add(armPostR);
-            seatGroup.add(cupLMesh);
-            seatGroup.add(cupRMesh);
-            seatGroup.add(dotMesh);
-
-            scene.add(seatGroup);
-
-            const clickBoxGeo = new THREE.BoxGeometry(0.65, 1.1, 0.65);
-            clickBoxGeo.translate(0, 0.55, 0);
-            const clickMesh = new THREE.Mesh(clickBoxGeo, new THREE.MeshBasicMaterial({ visible: false }));
-            seatGroup.add(clickMesh);
-
-            const seatData = {
-              rowName: rowNames[r],
-              rowIndex: r + 1,
-              seatNum: seatNum,
-              seatCode: seatCode,
-              worldPos: new THREE.Vector3(posX, posY, posZ),
-              eyePosition: eyePosition,
-              rotationY: seatGroup.rotation.y,
-              meshGroup: seatGroup,
-              cushionMat: seatMat,
-              baseColorHex: 0xb91c1c,
-              stats: viewStats
-            };
-
-            seatMeshes.push(clickMesh);
-            seatDataMap.set(clickMesh.uuid, seatData);
-            seatDataMap.set(seatGroup.uuid, seatData);
-            seatDataArray.push(seatData);
-
-            seatBoundingBox.expandByObject(seatGroup);
-          }
-        }
-      }
-
-      generateAuditoriumSeats();
-
-      // ============================================================================
-      // 8. DYNAMIC CAMERA OVERVIEW FRAMING
-      // ============================================================================
-      const seatsCenter = seatBoundingBox.getCenter(new THREE.Vector3());
-      const seatsSize = seatBoundingBox.getSize(new THREE.Vector3());
-
-      const overviewOrbit = {
-        pivot: new THREE.Vector3(seatsCenter.x, seatsCenter.y + 0.6, seatsCenter.z - 2.2),
-        radius: Math.max(seatsSize.x, seatsSize.z) * 1.55,
-        minRadius: 6.0,
-        maxRadius: 30.0,
-        theta: 0.0,
-        phi: 0.85,
-        minPhi: 0.15,
-        maxPhi: 1.35
-      };
-
-      function updateOverviewCameraPos() {
-        camera.position.x = overviewOrbit.pivot.x + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.sin(overviewOrbit.theta);
-        camera.position.y = overviewOrbit.pivot.y + overviewOrbit.radius * Math.cos(overviewOrbit.phi);
-        camera.position.z = overviewOrbit.pivot.z + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.cos(overviewOrbit.theta);
-        camera.lookAt(overviewOrbit.pivot);
-      }
-      updateOverviewCameraPos();
-
-      const seatLook = {
-        baseQuaternion: new THREE.Quaternion(),
-        yaw: 0.0,
-        pitch: 0.0,
-        maxYaw: 70 * (Math.PI / 180),
-        maxPitch: 25 * (Math.PI / 180)
-      };
-
-      function updateSeatCameraRotation() {
-        const euler = new THREE.Euler(seatLook.pitch, seatLook.yaw, 0, 'YXZ');
-        const offsetQuat = new THREE.Quaternion().setFromEuler(euler);
-        camera.quaternion.copy(seatLook.baseQuaternion).multiply(offsetQuat);
-      }
-
-      let isCameraAnimating = false;
-      let animStartTime = 0;
-      const animDuration = 800;
-      const animStartPos = new THREE.Vector3();
-      const animEndPos = new THREE.Vector3();
-      const animStartQuat = new THREE.Quaternion();
-      const animEndQuat = new THREE.Quaternion();
-      let onAnimCompleteCallback = null;
-
-      function animateCameraTo(targetPos, targetQuat, onComplete) {
-        isCameraAnimating = true;
-        animStartTime = performance.now();
-        animStartPos.copy(camera.position);
-        animEndPos.copy(targetPos);
-        animStartQuat.copy(camera.quaternion);
-        animEndQuat.copy(targetQuat);
-        onAnimCompleteCallback = onComplete || null;
-      }
-
-      function stepCameraAnimation(now) {
-        if (!isCameraAnimating) return;
-        const elapsed = now - animStartTime;
-        let progress = Math.min(1.0, elapsed / animDuration);
-
-        const ease = progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-        camera.position.lerpVectors(animStartPos, animEndPos, ease);
-        camera.quaternion.slerpQuaternions(animStartQuat, animEndQuat, ease);
-
-        if (progress >= 1.0) {
-          isCameraAnimating = false;
-          if (onAnimCompleteCallback) onAnimCompleteCallback();
-        }
-      }
-
-      function findParentSeatData(hitObject) {
-        let curr = hitObject;
-        while (curr) {
-          if (seatDataMap.has(curr.uuid)) {
-            return seatDataMap.get(curr.uuid);
-          }
-          if (curr.parent && seatDataMap.has(curr.parent.uuid)) {
-            return seatDataMap.get(curr.parent.uuid);
-          }
-          curr = curr.parent;
-        }
-        return null;
-      }
-
-      // ============================================================================
-      // 9. UI ENGINE & INTERACTION
-      // ============================================================================
-      const panel = document.getElementById('seat-panel');
-      const panelSeatCode = document.getElementById('panel-seat-code');
-      const panelSeatDesc = document.getElementById('panel-seat-desc');
-      const panelScoreBadge = document.getElementById('panel-score-badge');
-      const panelScoreNum = document.getElementById('panel-score-num');
-      const panelDistVal = document.getElementById('panel-dist-val');
-      const barDist = document.getElementById('bar-dist');
-      const panelAngleVal = document.getElementById('panel-angle-val');
-      const barAngle = document.getElementById('bar-angle');
-      const panelObstructionBanner = document.getElementById('panel-obstruction-banner');
-      const obstructionIcon = document.getElementById('obstruction-icon');
-      const obstructionText = document.getElementById('obstruction-text');
-      const panelPrice = document.getElementById('panel-price');
-      const panelPriceBreakdown = document.getElementById('panel-price-breakdown');
-      const modeText = document.getElementById('mode-text');
-      const tooltip = document.getElementById('tooltip');
-      const ttCode = document.getElementById('tt-code');
-      const ttScore = document.getElementById('tt-score');
-
-      function populateSeatPanel(data) {
-        const s = data.stats;
-        panelSeatCode.textContent = `${data.rowName} · Seat ${data.seatNum} (${data.seatCode})`;
-        panelSeatDesc.textContent = `${s.tierName} — Elevation +${(data.rowIndex * 0.14).toFixed(2)}m`;
-        panelScoreNum.textContent = s.finalScore;
-
-        panelScoreBadge.className = 'score-badge ' + (s.finalScore >= 80 ? 'tier-green' : (s.finalScore >= 55 ? 'tier-yellow' : 'tier-red'));
-
-        panelDistVal.textContent = `${s.distanceScore}%`;
-        barDist.style.width = `${s.distanceScore}%`;
-        barDist.style.background = s.distanceScore >= 80 ? '#2ecc71' : (s.distanceScore >= 55 ? '#f1c40f' : '#e74c3c');
-
-        panelAngleVal.textContent = `${s.angleScore}%`;
-        barAngle.style.width = `${s.angleScore}%`;
-        barAngle.style.background = s.angleScore >= 80 ? '#2ecc71' : (s.angleScore >= 55 ? '#f1c40f' : '#e74c3c');
-
-        if (s.isObstructed) {
-          panelObstructionBanner.className = 'obstruction-banner obstructed';
-          obstructionIcon.textContent = '⚠';
-          obstructionText.textContent = `Obstructed by ${s.hitPillarName} (-${s.obstructionPenalty} pts)`;
-        } else {
-          panelObstructionBanner.className = 'obstruction-banner clear';
-          obstructionIcon.textContent = '✓';
-          obstructionText.textContent = 'Clear Line of Sight to Screen';
-        }
-
-        panelPrice.textContent = `₹${s.finalPrice}`;
-        panelPriceBreakdown.textContent = `Base ₹300 × (0.7 + ${s.finalScore}% × 0.6) = ₹${s.finalPrice}`;
-
-        panel.classList.add('visible');
-      }
-
-      function hideSeatPanel() {
-        panel.classList.remove('visible');
-      }
-
-      function switchToOverviewMode() {
-        currentMode = 'OVERVIEW';
-        selectedSeatData = null;
-        hideSeatPanel();
-        modeText.textContent = 'Overview Mode (Orbit View)';
-
-        const dummyCam = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 120.0);
-        dummyCam.position.x = overviewOrbit.pivot.x + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.sin(overviewOrbit.theta);
-        dummyCam.position.y = overviewOrbit.pivot.y + overviewOrbit.radius * Math.cos(overviewOrbit.phi);
-        dummyCam.position.z = overviewOrbit.pivot.z + overviewOrbit.radius * Math.sin(overviewOrbit.phi) * Math.cos(overviewOrbit.theta);
-        dummyCam.lookAt(overviewOrbit.pivot);
-
-        animateCameraTo(dummyCam.position, dummyCam.quaternion);
-      }
-
-      function switchToSeatPreviewMode(seatData) {
-        currentMode = 'SEAT_PREVIEW';
-        selectedSeatData = seatData;
-        populateSeatPanel(seatData);
-        modeText.textContent = `Seat POV Preview — ${seatData.seatCode}`;
-
-        const targetPos = seatData.eyePosition.clone();
-        const dummyCam = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 120.0);
-        dummyCam.position.copy(targetPos);
-        dummyCam.lookAt(CONFIG.screenCenter);
-
-        seatLook.baseQuaternion.copy(dummyCam.quaternion);
-        seatLook.yaw = 0.0;
-        seatLook.pitch = 0.0;
-
-        animateCameraTo(targetPos, dummyCam.quaternion);
-      }
-
-      document.getElementById('btn-back-overview').addEventListener('click', switchToOverviewMode);
-      const hintBtn = document.getElementById('hint-close-btn');
-      if (hintBtn) {
-        hintBtn.addEventListener('click', () => {
-          const hintPill = document.getElementById('hint-pill');
-          if (hintPill) hintPill.style.display = 'none';
-        });
-      }
-
-      // Mouse & Touch Controls
-      let isMouseDown = false;
-      let previousMousePosition = { x: 0, y: 0 };
-      let dragDistance = 0;
-
-      window.addEventListener('mousemove', (e) => {
-        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-
-        tooltip.style.left = `${e.clientX}px`;
-        tooltip.style.top = `${e.clientY}px`;
-
-        if (isMouseDown && !isCameraAnimating) {
-          const deltaX = e.clientX - previousMousePosition.x;
-          const deltaY = e.clientY - previousMousePosition.y;
-          dragDistance += Math.abs(deltaX) + Math.abs(deltaY);
-
-          if (currentMode === 'OVERVIEW') {
-            overviewOrbit.theta -= deltaX * 0.006;
-            overviewOrbit.phi = THREE.MathUtils.clamp(overviewOrbit.phi - deltaY * 0.006, overviewOrbit.minPhi, overviewOrbit.maxPhi);
-            updateOverviewCameraPos();
-          } else if (currentMode === 'SEAT_PREVIEW') {
-            seatLook.yaw = THREE.MathUtils.clamp(seatLook.yaw - deltaX * 0.004, -seatLook.maxYaw, seatLook.maxYaw);
-            seatLook.pitch = THREE.MathUtils.clamp(seatLook.pitch - deltaY * 0.004, -seatLook.maxPitch, seatLook.maxPitch);
-            updateSeatCameraRotation();
-          }
-        }
-
-        previousMousePosition = { x: e.clientX, y: e.clientY };
-      });
-
-      window.addEventListener('mousedown', (e) => {
-        if (e.target.closest('.interactive')) return;
-        isMouseDown = true;
-        dragDistance = 0;
-        previousMousePosition = { x: e.clientX, y: e.clientY };
-      });
-
-      window.addEventListener('mouseup', (e) => {
-        if (e.target.closest('.interactive')) return;
-        isMouseDown = false;
-
-        if (dragDistance < 5 && !isCameraAnimating) {
-          raycaster.setFromCamera(mouse, camera);
-          const intersects = raycaster.intersectObjects(seatMeshes, true);
-
-          if (intersects.length > 0) {
-            const seatData = findParentSeatData(intersects[0].object);
-            if (seatData) {
-              switchToSeatPreviewMode(seatData);
-            }
-          }
-        }
-      });
-
-      window.addEventListener('wheel', (e) => {
-        if (currentMode === 'OVERVIEW' && !isCameraAnimating) {
-          overviewOrbit.radius = THREE.MathUtils.clamp(overviewOrbit.radius + e.deltaY * 0.015, overviewOrbit.minRadius, overviewOrbit.maxRadius);
+    }
+
+    // Mouse & Touch Controls
+    let isMouseDown = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    let dragDistance = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+      tooltip.style.left = `${e.clientX}px`;
+      tooltip.style.top = `${e.clientY}px`;
+
+      if (isMouseDown && !isCameraAnimating) {
+        const deltaX = e.clientX - previousMousePosition.x;
+        const deltaY = e.clientY - previousMousePosition.y;
+        dragDistance += Math.abs(deltaX) + Math.abs(deltaY);
+
+        if (currentMode === 'OVERVIEW') {
+          overviewOrbit.theta = THREE.MathUtils.clamp(overviewOrbit.theta - deltaX * 0.004, overviewOrbit.minTheta, overviewOrbit.maxTheta);
+          overviewOrbit.phi = THREE.MathUtils.clamp(overviewOrbit.phi - deltaY * 0.004, overviewOrbit.minPhi, overviewOrbit.maxPhi);
           updateOverviewCameraPos();
+        } else if (currentMode === 'SEAT_PREVIEW') {
+          seatLook.yaw = THREE.MathUtils.clamp(seatLook.yaw - deltaX * 0.004, -seatLook.maxYaw, seatLook.maxYaw);
+          seatLook.pitch = THREE.MathUtils.clamp(seatLook.pitch - deltaY * 0.004, -seatLook.maxPitch, seatLook.maxPitch);
+          updateSeatCameraRotation();
         }
-      });
+      }
 
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
+      previousMousePosition = { x: e.clientX, y: e.clientY };
+    });
 
-      // Hover Raycasting for tooltip & plush highlight
-      function handleHoverRaycast() {
-        if (isMouseDown || isCameraAnimating) {
-          tooltip.classList.remove('visible');
-          return;
-        }
+    window.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.interactive')) return;
+      isMouseDown = true;
+      dragDistance = 0;
+      previousMousePosition = { x: e.clientX, y: e.clientY };
+    });
 
+    window.addEventListener('mouseup', (e) => {
+      if (e.target.closest('.interactive')) return;
+      isMouseDown = false;
+
+      if (dragDistance < 5 && !isCameraAnimating) {
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(seatMeshes, true);
+        const intersects = raycaster.intersectObject(instancedSeatClick);
 
         if (intersects.length > 0) {
-          const seatData = findParentSeatData(intersects[0].object);
-          if (seatData) {
-            if (hoveredSeatMesh && hoveredSeatMesh !== seatData.meshGroup) {
-              hoveredSeatMesh.traverse(child => {
-                if (child.material && child.material.emissive && child.material !== baseRedSeatMat) {
-                  child.material.emissiveIntensity = 1.6;
-                }
-              });
-            }
-            hoveredSeatMesh = seatData.meshGroup;
-            hoveredSeatMesh.traverse(child => {
-              if (child.material && child.material.emissive && child.material !== baseRedSeatMat) {
-                child.material.emissiveIntensity = 2.5;
-              }
-            });
-
-            ttCode.textContent = `${seatData.rowName} · Seat ${seatData.seatNum}`;
-            ttScore.textContent = seatData.stats.finalScore;
-            tooltip.classList.add('visible');
-            return;
+          const instanceId = intersects[0].instanceId;
+          if (instanceId !== undefined && seatDataArray[instanceId]) {
+            switchToSeatPreviewMode(seatDataArray[instanceId]);
           }
         }
+      }
+    });
 
-        if (hoveredSeatMesh) {
-          hoveredSeatMesh.traverse(child => {
-            if (child.material && child.material.emissive && child.material !== baseRedSeatMat) {
-              child.material.emissiveIntensity = 1.6;
-            }
-          });
-          hoveredSeatMesh = null;
-        }
+    window.addEventListener('wheel', (e) => {
+      if (currentMode === 'OVERVIEW' && !isCameraAnimating) {
+        overviewOrbit.radius = THREE.MathUtils.clamp(overviewOrbit.radius + e.deltaY * 0.015, overviewOrbit.minRadius, overviewOrbit.maxRadius);
+        updateOverviewCameraPos();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Hover Raycasting for tooltip & seat highlight
+    function handleHoverRaycast() {
+      if (isMouseDown || isCameraAnimating) {
         tooltip.classList.remove('visible');
+        return;
       }
 
-      // ============================================================================
-      // 10. ANIMATION & RENDER LOOP
-      // ============================================================================
-      function animate(time) {
-        requestAnimationFrame(animate);
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObject(instancedSeatClick);
 
-        updateScreenCanvasTexture(time);
-        stepCameraAnimation(time);
-        handleHoverRaycast();
-
-        renderer.render(scene, camera);
+      if (intersects.length > 0) {
+        const instanceId = intersects[0].instanceId;
+        if (instanceId !== undefined && seatDataArray[instanceId]) {
+          const seatData = seatDataArray[instanceId];
+          ttCode.textContent = `${seatData.rowName} · Seat ${seatData.seatNum}`;
+          ttScore.textContent = seatData.stats.finalScore;
+          tooltip.classList.add('visible');
+          return;
+        }
       }
 
+      tooltip.classList.remove('visible');
+    }
+
+    // ============================================================================
+    // 10. ANIMATION & RENDER LOOP
+    // ============================================================================
+    function animate(time) {
       requestAnimationFrame(animate);
-    </script>
+
+      updateScreenCanvasTexture(time);
+      stepCameraAnimation(time);
+      handleHoverRaycast();
+
+      renderer.render(scene, camera);
+    }
+
+    // Force initial render pass immediately
+    updateScreenCanvasTexture(0);
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(animate);
+  </script>
 </body>
 
 </html>
