@@ -1,0 +1,77 @@
+/* ======= CAROUSEL RING ======= */
+.showcase { position: absolute; left: 0; top: 0; width: 1172px; height: 0; }
+
+.ring {
+  position: absolute; left: 0; top: 0; width: 1172px; height: 657px; z-index: 5;
+  perspective: 891px; perspective-origin: 586px 918px;
+  transform-style: preserve-3d; pointer-events: none;
+}
+
+.card {
+  position: absolute; left: 586px; top: 616px; width: 130px; height: 300px;
+  margin: -150px 0 0 -65px; border-radius: 12px; overflow: hidden;
+  background: #0d1117;
+  box-shadow: 0 24px 46px rgba(0,0,0,.6), 0 3px 8px rgba(0,0,0,.5);
+  backface-visibility: hidden; will-change: transform;
+}
+
+.card img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+
+.card .edge {
+  position: absolute; inset: 0; border-radius: 12px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.15),
+              inset 0 16px 30px rgba(255,255,255,.05);
+}
+
+.card.broken img { display: none; }
+
+/* Shared creative sub-classes */
+.cv { position: absolute; left: 0; right: 0; padding: 0 10px; }
+.fill { position: absolute; inset: 0; }
+
+.ph {
+  position: absolute; left: 0; right: 0; overflow: hidden;
+  background: linear-gradient(155deg, #2b3b50, #131c28 60%, #1d1526);
+}
+.phf { top: 0; bottom: 0; }
+.ph img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+
+.dot {
+  display: inline-block; width: 4.5px; height: 4.5px; background: #e5202f;
+  margin-right: 4px; transform: rotate(45deg) translateY(-1px);
+}
+.dot.sq { transform: none; width: 6.5px; height: 4.5px; border-radius: 1px; }
+
+.t-big {
+  font-family: Poppins; font-weight: 900; text-transform: uppercase;
+  line-height: .96; letter-spacing: -.015em; white-space: nowrap;
+  transform: scaleX(.875); transform-origin: left center;
+}
+
+.t-serif {
+  font-family: "Playfair Display", serif; line-height: 1.02;
+  letter-spacing: .01em; white-space: nowrap;
+}
+
+/* ======= TABLET ======= */
+@media (max-width: 1080px) {
+  .showcase { transform: translateY(var(--sshift, 0px)); }
+  .ring { transform: scale(var(--rs, 1)); transform-origin: 586px 595px; }
+}
+
+/* ======= PHONE ======= */
+@media (max-width: 700px) {
+  .showcase {
+    position: relative; left: auto; top: auto;
+    flex: 1 1 auto; width: 100%; height: auto; min-height: 224px;
+  }
+  .ring {
+    position: absolute; left: 50%; margin-left: -586px; top: -446px;
+    bottom: auto; width: 1172px; height: 657px;
+    transform-origin: 586px 466px; transform: scale(1.02);
+  }
+}

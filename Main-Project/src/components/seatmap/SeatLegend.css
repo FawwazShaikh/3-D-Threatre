@@ -1,0 +1,47 @@
+/* ======= SEAT LEGEND ======= */
+.seat-legend {
+  margin-top: 24px; padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.legend-section { margin-bottom: 10px; }
+.legend-items {
+  display: flex; flex-wrap: wrap; gap: 14px;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+}
+.legend-dot {
+  width: 14px; height: 14px; border-radius: 4px 4px 2px 2px;
+  border: 1px solid rgba(255,255,255,.1);
+  flex-shrink: 0;
+}
+.legend-label {
+  font-size: 12px; color: rgba(255,255,255,.55);
+}
+
+.legend-toggle {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border: none; border-radius: 8px;
+  background: rgba(255,255,255,.05);
+  color: rgba(255,255,255,.55);
+  font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: all .2s;
+}
+.legend-toggle:hover { background: rgba(255,255,255,.08); color: rgba(255,255,255,.8); }
+.legend-toggle.active {
+  background: rgba(120,225,255,.08);
+  color: rgba(120,225,255,.8);
+}
+.legend-toggle svg { width: 14px; height: 14px; }
+
+.legend-tiers {
+  display: flex; gap: 14px; margin-top: 10px;
+}
+
+@media (max-width: 700px) {
+  .seat-legend { padding: 10px 12px; }
+  .legend-items { gap: 10px; }
+  .legend-label { font-size: 11px; }
+}

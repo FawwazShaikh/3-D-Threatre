@@ -1,0 +1,124 @@
+/* ======= CONFIRMATION PAGE ======= */
+.conf-page { min-height: 100vh; background: linear-gradient(180deg, #020204, #060a14); }
+.conf-loading { display: grid; place-items: center; min-height: 100vh; }
+.conf-spinner {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.08);
+  border-top-color: rgba(120,225,255,.6);
+  animation: spin .7s linear infinite;
+}
+
+.conf-body {
+  max-width: 480px; margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+.conf-success { text-align: center; margin-bottom: 28px; }
+.conf-check {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  display: grid; place-items: center;
+  font-size: 32px; font-weight: 800; color: #fff;
+  margin: 0 auto 16px;
+  box-shadow: 0 8px 32px rgba(46,204,113,.3);
+}
+.conf-success h1 {
+  font-family: Poppins, sans-serif; font-size: 24px; font-weight: 800; color: #fff;
+}
+.conf-booking-id {
+  font-size: 13px; color: rgba(255,255,255,.4); margin-top: 6px;
+  font-family: monospace; letter-spacing: .04em;
+}
+
+/* Ticket card */
+.conf-ticket {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px; overflow: hidden;
+}
+.ticket-header {
+  display: flex; gap: 14px; padding: 20px;
+}
+.ticket-poster {
+  width: 56px; height: 84px; border-radius: 10px; object-fit: cover; flex-shrink: 0;
+}
+.ticket-title {
+  font-family: Poppins, sans-serif; font-size: 17px; font-weight: 700; color: #fff;
+}
+.ticket-meta { font-size: 13px; color: rgba(255,255,255,.6); margin-top: 3px; }
+.ticket-venue { font-size: 12px; color: rgba(255,255,255,.35); margin-top: 1px; }
+
+/* Divider with notches */
+.ticket-divider {
+  display: flex; align-items: center; position: relative;
+  height: 24px;
+}
+.ticket-notch {
+  width: 12px; height: 24px; border-radius: 50%;
+  background: #020204; flex-shrink: 0;
+}
+.ticket-notch.left { margin-left: -6px; }
+.ticket-notch.right { margin-right: -6px; }
+.ticket-dash {
+  flex: 1; height: 1px;
+  border-top: 2px dashed rgba(255,255,255,.08);
+}
+
+/* Seats */
+.ticket-seats { padding: 16px 20px; }
+.ticket-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .14em;
+  color: rgba(255,255,255,.35); margin-bottom: 10px;
+}
+.ticket-seat-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ticket-chip {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 10px 16px; border-radius: 12px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.ticket-chip.tier-prime { border-color: rgba(46,204,113,.2); }
+.ticket-chip.tier-standard { border-color: rgba(241,196,15,.2); }
+.ticket-chip.tier-side { border-color: rgba(231,76,60,.2); }
+.ticket-chip-code { font-size: 16px; font-weight: 800; color: #fff; }
+.ticket-chip-tier { font-size: 10px; color: rgba(255,255,255,.5); margin-top: 2px; }
+.ticket-chip-score { font-size: 9px; color: rgba(255,255,255,.3); }
+
+/* Footer */
+.ticket-footer {
+  display: flex; justify-content: space-between;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,.04);
+}
+.ticket-total {
+  font-family: Poppins, sans-serif; font-size: 16px; font-weight: 700; color: #fff;
+  margin-top: 2px;
+}
+
+/* View section */
+.ticket-view-section { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.04); }
+.ticket-view-placeholder {
+  height: 120px; border-radius: 12px;
+  background: rgba(255,255,255,.02);
+  border: 1px dashed rgba(255,255,255,.08);
+  display: grid; place-items: center;
+  font-size: 13px; color: rgba(255,255,255,.25);
+}
+
+/* Actions */
+.conf-actions { display: flex; gap: 10px; margin-top: 24px; }
+.conf-action-btn {
+  flex: 1; padding: 14px; border-radius: 12px;
+  text-align: center; font-family: Poppins, sans-serif;
+  font-size: 14px; font-weight: 600; transition: all .2s;
+}
+.conf-action-btn.primary {
+  background: linear-gradient(135deg, #0ea5e9, #0586c7);
+  color: #fff; box-shadow: 0 4px 16px rgba(14,165,233,.2);
+}
+.conf-action-btn.secondary {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  color: rgba(255,255,255,.7);
+}
+.conf-action-btn:hover { transform: translateY(-1px); }

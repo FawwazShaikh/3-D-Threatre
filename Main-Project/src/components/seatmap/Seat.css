@@ -1,0 +1,115 @@
+/* ======= INDIVIDUAL SEAT ======= */
+.seat {
+  width: 32px; height: 32px; border-radius: 6px 6px 3px 3px;
+  border: 1.5px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.5);
+  font-size: 9px; font-weight: 600;
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: background .2s, border-color .2s, transform .2s, box-shadow .2s;
+  position: relative;
+  outline: none;
+}
+.seat:hover:not(:disabled) {
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.2);
+  transform: scale(1.08);
+  z-index: 1;
+}
+.seat:focus-visible {
+  outline: 2px solid rgba(120,225,255,.7);
+  outline-offset: 1px;
+  z-index: 2;
+}
+
+/* Aisle gap */
+.seat[data-aisle] {
+  margin-left: 10px;
+}
+
+/* ======= SEAT STATES ======= */
+
+/* Available (default) — already styled above */
+
+/* Mine — cyan highlight */
+.seat.mine {
+  background: rgba(14,165,233,.25);
+  border-color: rgba(14,165,233,.6);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(14,165,233,.2);
+  animation: seat-pulse .4s ease-out;
+}
+
+/* Friend pick — uses --friend-color */
+.seat.friend-pick {
+  background: color-mix(in srgb, var(--friend-color, #888) 25%, transparent);
+  border-color: var(--friend-color, #888);
+  color: #fff;
+  animation: seat-pulse .35s ease-out;
+}
+
+/* Friend hover (considering) — faint */
+.seat.friend-hover {
+  background: color-mix(in srgb, var(--friend-color, #888) 12%, transparent);
+  border-color: color-mix(in srgb, var(--friend-color, #888) 40%, transparent);
+  color: rgba(255,255,255,.6);
+}
+
+/* Held (by someone, not selectable) */
+.seat.held {
+  background: rgba(255,255,255,.03);
+  border-color: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.15);
+  cursor: not-allowed;
+}
+
+/* Booked (permanent) */
+.seat.booked {
+  background: rgba(255,255,255,.02);
+  border-color: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.10);
+  cursor: not-allowed;
+}
+.seat.booked .seat-num { visibility: hidden; }
+.seat.booked::after {
+  content: '×'; font-size: 14px; color: rgba(255,255,255,.15);
+  position: absolute; inset: 0; display: grid; place-items: center;
+}
+
+/* ======= SCORE OVERLAY TIERS ======= */
+.seat.tier-prime {
+  background: rgba(46,204,113,.15);
+  border-color: rgba(46,204,113,.35);
+}
+.seat.tier-standard {
+  background: rgba(241,196,15,.12);
+  border-color: rgba(241,196,15,.30);
+}
+.seat.tier-side {
+  background: rgba(231,76,60,.12);
+  border-color: rgba(231,76,60,.28);
+}
+
+/* ======= PULSE ANIMATION ======= */
+@keyframes seat-pulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seat { transition-duration: 0s !important; }
+  .seat.mine, .seat.friend-pick { animation: none; }
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 700px) {
+  .seat { width: 26px; height: 26px; font-size: 8px; border-radius: 5px 5px 2px 2px; }
+  .seat[data-aisle] { margin-left: 6px; }
+}
+@media (max-width: 420px) {
+  .seat { width: 20px; height: 20px; font-size: 7px; }
+  .seat[data-aisle] { margin-left: 4px; }
+  .seat-num { display: none; }
+}

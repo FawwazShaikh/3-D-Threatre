@@ -1,0 +1,38 @@
+/* ======= SUPPORT BUBBLE ======= */
+.wa {
+  position: absolute; right: 16px; bottom: 24px;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #25d366; display: grid; place-items: center; z-index: 300;
+  box-shadow: 0 8px 20px rgba(0,0,0,.5);
+}
+.wa svg { width: 31px; height: 31px; }
+
+.wa::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid rgba(37,211,102,.5);
+  animation: pulse 2.8s ease-out infinite;
+}
+
+.wa.no-pulse::after { animation: none; }
+
+@keyframes pulse {
+  0%   { transform: scale(1); opacity: .75; }
+  70%  { transform: scale(1.4); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa::after { animation: none; }
+}
+
+/* ======= TABLET ======= */
+@media (max-width: 1080px) {
+  .wa { width: 58px; height: 58px; right: 22px; bottom: 26px; }
+  .wa svg { width: 32px; height: 32px; }
+}
+
+/* ======= PHONE ======= */
+@media (max-width: 700px) {
+  .wa { width: 54px; height: 54px; right: 14px; bottom: 16px; }
+  .wa svg { width: 29px; height: 29px; }
+}

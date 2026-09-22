@@ -1,0 +1,118 @@
+/* ======= NAV PILL ======= */
+.nav {
+  left: 247px; top: 3px; width: 678px; height: 64px; border-radius: 32px; z-index: 400;
+  background: rgba(255,255,255,.008);
+  border: 1px solid rgba(255,255,255,.105);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.mark {
+  position: absolute; left: 21px; top: 19px; width: 24px; height: 24px;
+}
+.mark svg {
+  width: 24px; height: 24px;
+  filter: drop-shadow(0 0 6px rgba(60,224,255,.75));
+}
+
+.wm {
+  position: absolute; left: 50px; top: 0; white-space: nowrap;
+}
+.wm .kick {
+  position: absolute; left: 3px; top: 20px;
+  font-size: 4.4px; font-weight: 600; letter-spacing: .10em;
+  color: #fff; opacity: .92; line-height: 1;
+}
+.wm .name {
+  position: absolute; left: 0; top: 26px; transform-origin: 0 50%;
+  font-family: Poppins; font-weight: 900; font-size: 22px; line-height: 1;
+  letter-spacing: -.01em; color: #fff;
+}
+
+.links {
+  position: absolute; left: 156px; top: 0; height: 62px; transform-origin: 0 50%;
+  display: flex; align-items: center; gap: 24px;
+}
+.links a {
+  font-size: 12.5px; font-weight: 400; color: rgba(255,255,255,.92);
+  white-space: nowrap; transition: opacity .25s;
+}
+.links a:hover { opacity: .65; }
+
+/* ======= SHARED NARROW-VIEWPORT NAV ======= */
+@media (max-width: 1080px) {
+  .nav { left: 286px; width: 620px; }
+
+  .burger {
+    display: grid; place-content: center; gap: 4px;
+    position: absolute; right: 12px; top: 11px;
+    width: 42px; height: 42px; padding: 0; border: 0; border-radius: 14px;
+    background: transparent; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .burger span {
+    display: block; width: 19px; height: 1.6px; border-radius: 2px;
+    background: rgba(255,255,255,.92);
+    transition: transform .28s cubic-bezier(.4,0,.2,1), opacity .18s;
+  }
+  .burger:focus-visible {
+    outline: 2px solid rgba(120,225,255,.7); outline-offset: 2px;
+  }
+  .nav.open .burger span:nth-child(1) { transform: translateY(5.6px) rotate(45deg); }
+  .nav.open .burger span:nth-child(2) { opacity: 0; }
+  .nav.open .burger span:nth-child(3) { transform: translateY(-5.6px) rotate(-45deg); }
+
+  .navmenu {
+    display: block; position: absolute; left: 0; right: 0; top: 74px; padding: 12px;
+    border-radius: 22px; border: 1px solid rgba(255,255,255,.10);
+    background: linear-gradient(180deg, rgba(11,15,22,.985), rgba(7,10,16,.99));
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 26px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.05);
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity .24s ease, transform .28s cubic-bezier(.4,0,.2,1), visibility .28s;
+  }
+  .nav.open .navmenu { opacity: 1; visibility: visible; transform: none; }
+
+  .links {
+    position: static; display: flex; flex-direction: column; align-items: stretch;
+    height: auto; gap: 2px; transform: none !important;
+  }
+  .links a {
+    font-size: 15px; padding: 11px 14px; border-radius: 12px;
+    color: rgba(255,255,255,.9); transition: background .2s, color .2s;
+  }
+  .nav .btn {
+    position: static; width: 100%; height: 46px; margin-top: 10px; font-size: 15px;
+  }
+  .nav .btn span { margin-top: 3px; }
+}
+
+@media (hover: hover) and (max-width: 1080px) {
+  .burger:hover span { background: #fff; }
+  .links a:hover { background: rgba(255,255,255,.055); color: #fff; opacity: 1; }
+}
+
+/* ======= PHONE ======= */
+@media (max-width: 700px) {
+  .nav {
+    position: relative; left: auto; top: auto; width: 100%; max-width: 500px;
+    height: 58px; margin-top: clamp(10px,1.5vh,15px); flex: 0 0 auto;
+  }
+  .mark { left: 16px; top: calc(50% - 13px); width: 26px; height: 26px; }
+  .wm { left: 49px; top: 0; height: 100%; }
+  .wm .kick { top: calc(50% - 15px); font-size: 5px; letter-spacing: .2em; }
+  .wm .name {
+    top: calc(50% - 9px); font-size: 18px;
+    transform: scaleX(.88); transform-origin: left center;
+  }
+  .burger { right: 8px; top: 7px; width: 44px; height: 44px; }
+  .navmenu { top: 68px; padding: 12px; }
+  .links a { font-size: 16px; padding: 12px 15px; border-radius: 12px; }
+  .nav .btn { height: 48px; margin-top: 10px; font-size: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navmenu, .burger span { transition: none; }
+}

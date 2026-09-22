@@ -1,0 +1,38 @@
+{
+  "aud-grand": {
+    "id": "aud-grand",
+    "name": "Grand Luxury Auditorium",
+    "venue": "Marquee Cinemas, Lower Parel",
+    "city": "Mumbai",
+    "screenFormat": "2.35:1",
+    "rows": 11,
+    "seatsPerRow": 16,
+    "totalSeats": 176,
+    "seatWidth": 0.58,
+    "rowDepth": 0.92,
+    "rowRise": 0.24,
+    "rowZStart": -10.2,
+    "rowLetters": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
+    "seatXOffsets": [
+      -6.39, -5.69, -4.99, -4.29,
+      -2.45, -1.75, -1.05, -0.35, 0.35, 1.05, 1.75, 2.45,
+      4.29, 4.99, 5.69, 6.39
+    ],
+    "blocks": [
+      { "name": "Left Block", "start": 0, "end": 3 },
+      { "name": "Center Block", "start": 4, "end": 11 },
+      { "name": "Right Block", "start": 12, "end": 15 }
+    ],
+    "screenCenter": { "x": 0, "y": 4.8, "z": -13.2 },
+    "scoring": {
+      "idealDistance": 13.0,
+      "distancePenaltyFactor": 3.2,
+      "anglePenaltyFactor": 1.1
+    },
+    "pricing": {
+      "basePrice": 350,
+      "minMultiplier": 0.7,
+      "scoreMultiplier": 0.6
+    }
+  }
+}

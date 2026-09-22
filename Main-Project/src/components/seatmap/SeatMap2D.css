@@ -1,0 +1,58 @@
+/* ======= SEATMAP 2D ======= */
+.seatmap-2d {
+  width: 100%; max-width: 800px; margin: 0 auto;
+  padding: 20px;
+}
+
+/* Screen indicator */
+.screen-indicator {
+  text-align: center; margin-bottom: 28px;
+}
+.screen-bar {
+  height: 4px; width: 65%; max-width: 360px; margin: 0 auto 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,.02) 0%,
+    rgba(120,225,255,.3) 20%,
+    rgba(120,225,255,.5) 50%,
+    rgba(120,225,255,.3) 80%,
+    rgba(255,255,255,.02) 100%
+  );
+  box-shadow: 0 0 20px rgba(120,225,255,.15), 0 4px 12px rgba(120,225,255,.08);
+}
+.screen-label {
+  font-size: 10px; font-weight: 600; letter-spacing: .2em;
+  color: rgba(255,255,255,.3); text-transform: uppercase;
+}
+
+/* Grid */
+.seat-grid {
+  display: flex; flex-direction: column; gap: 4px;
+  align-items: center;
+}
+.seat-row {
+  display: flex; align-items: center; gap: 0;
+}
+.row-label {
+  width: 22px; font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,.3); text-align: center;
+  flex-shrink: 0;
+}
+.row-label.right { text-align: center; }
+.row-seats {
+  display: flex; gap: 3px;
+}
+
+/* ======= ARIA LIVE ======= */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 700px) {
+  .seatmap-2d { padding: 12px 8px; }
+  .row-label { width: 18px; font-size: 10px; }
+  .row-seats { gap: 2px; }
+}

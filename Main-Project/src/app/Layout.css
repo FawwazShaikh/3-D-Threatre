@@ -1,0 +1,8 @@
+.app-root {
+  min-height: 100vh;
+  background: #020204;
+  color: #fff;
+}
+.page-wrapper {
+  min-height: 100vh;
+}

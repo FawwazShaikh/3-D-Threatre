@@ -1,0 +1,212 @@
+[
+  {
+    "id": "northlight",
+    "title": "Northlight",
+    "category": "movies",
+    "genre": "Thriller · Mystery",
+    "language": "Hindi, English",
+    "duration": "2h 18m",
+    "rating": "8.2",
+    "certificate": "UA",
+    "releaseDate": "2026-09-12",
+    "synopsis": "When a seasoned detective follows a trail of encrypted messages to an abandoned lighthouse on the northern coast, she discovers a conspiracy that connects three unsolved disappearances spanning two decades. As the fog rolls in and communications fail, she realizes the lighthouse keeper knows far more than he lets on.",
+    "cast": ["Priya Menon", "Arjun Iyer", "Kavya Sharma"],
+    "director": "Rohit Kapoor",
+    "poster": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=600&fit=crop",
+    "backdrop": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1200&h=500&fit=crop",
+    "showtimes": [
+      { "id": "st-nl-1", "time": "10:30 AM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-nl-2", "time": "1:45 PM", "format": "IMAX 2D", "auditoriumId": "aud-grand" },
+      { "id": "st-nl-3", "time": "4:30 PM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-nl-4", "time": "7:15 PM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-nl-5", "time": "10:00 PM", "format": "2D", "auditoriumId": "aud-grand" }
+    ]
+  },
+  {
+    "id": "sunset-renewal",
+    "title": "Sunset Renewal",
+    "category": "movies",
+    "genre": "Drama · Romance",
+    "language": "Hindi",
+    "duration": "2h 10m",
+    "rating": "7.9",
+    "certificate": "U",
+    "releaseDate": "2026-09-05",
+    "synopsis": "Two estranged siblings return to their childhood home in Goa for their mother's 70th birthday, only to confront buried resentments and rediscover the bond that once made them inseparable. Set against golden-hour coastlines and a crumbling Portuguese villa.",
+    "cast": ["Meera Desai", "Vikram Nair", "Anjali Bhatt"],
+    "director": "Sneha Verma",
+    "poster": "https://images.unsplash.com/photo-1518676590747-1e3dcb1b3818?w=400&h=600&fit=crop",
+    "backdrop": "https://images.unsplash.com/photo-1518676590747-1e3dcb1b3818?w=1200&h=500&fit=crop",
+    "showtimes": [
+      { "id": "st-sr-1", "time": "11:00 AM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-sr-2", "time": "2:30 PM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-sr-3", "time": "6:00 PM", "format": "2D", "auditoriumId": "aud-grand" }
+    ]
+  },
+  {
+    "id": "afterglow",
+    "title": "Afterglow",
+    "category": "movies",
+    "genre": "Comedy · Sci-Fi",
+    "language": "English, Hindi",
+    "duration": "1h 58m",
+    "rating": "8.5",
+    "certificate": "UA",
+    "releaseDate": "2026-09-19",
+    "synopsis": "A burnt-out software engineer accidentally swaps consciousness with her AI assistant during a power surge. Now she's stuck inside the cloud while the AI navigates her Mumbai social life — badly. A sharp comedy about who we really are when nobody's watching.",
+    "cast": ["Zara Khan", "Dev Patel", "Radhika Madan"],
+    "director": "Ayan Mukherjee",
+    "poster": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=600&fit=crop",
+    "backdrop": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&h=500&fit=crop",
+    "showtimes": [
+      { "id": "st-ag-1", "time": "9:00 AM", "format": "3D", "auditoriumId": "aud-grand" },
+      { "id": "st-ag-2", "time": "12:15 PM", "format": "3D", "auditoriumId": "aud-grand" },
+      { "id": "st-ag-3", "time": "3:30 PM", "format": "IMAX 3D", "auditoriumId": "aud-grand" },
+      { "id": "st-ag-4", "time": "6:45 PM", "format": "3D", "auditoriumId": "aud-grand" },
+      { "id": "st-ag-5", "time": "9:30 PM", "format": "3D", "auditoriumId": "aud-grand" }
+    ]
+  },
+  {
+    "id": "the-long-take",
+    "title": "The Long Take",
+    "category": "movies",
+    "genre": "Documentary",
+    "language": "English",
+    "duration": "1h 42m",
+    "rating": "8.0",
+    "certificate": "U",
+    "releaseDate": "2026-08-28",
+    "synopsis": "Shot in a single continuous take across 102 minutes, this documentary follows a street photographer through 14 neighbourhoods of Old Delhi during the festival of Diwali — from the first lamp at dusk to the last firecracker at dawn.",
+    "cast": [],
+    "director": "Thomas Keller",
+    "poster": "https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?w=400&h=600&fit=crop",
+    "backdrop": "https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?w=1200&h=500&fit=crop",
+    "showtimes": [
+      { "id": "st-lt-1", "time": "11:30 AM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-lt-2", "time": "5:00 PM", "format": "2D", "auditoriumId": "aud-grand" }
+    ]
+  },
+  {
+    "id": "resonance-live",
+    "title": "Resonance Live",
+    "category": "events",
+    "genre": "Concert · EDM",
+    "language": "",
+    "duration": "4h",
+    "rating": "9.1",
+    "certificate": "",
+    "releaseDate": "2026-10-05",
+    "synopsis": "India's biggest electronic music festival returns to Mumbai with headliners from Berlin, Tokyo, and São Paulo. Three stages, 18 artists, one unforgettable night under the stars at Mahalaxmi Racecourse.",
+    "cast": ["DJ Kenzo", "Priya Wave", "Subsonic Collective"],
+    "director": "",
+    "poster": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&h=600&fit=crop",
+    "backdrop": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&h=500&fit=crop",
+    "showtimes": [
+      { "id": "st-rl-1", "time": "6:00 PM", "format": "General", "auditoriumId": "aud-grand" }
+    ]
+  },
+  {
+    "id": "hamlet-reimagined",
+    "title": "Hamlet — Reimagined",
+    "category": "plays",
+    "genre": "Theatre · Drama",
+    "language": "English",
+    "duration": "2h 45m",
+    "rating": "8.8",
+    "certificate": "",
+    "releaseDate": "2026-09-25",
+    "synopsis": "Shakespeare's masterwork set in a crumbling 1990s Mumbai corporate empire. The prince is a disillusioned MBA, the court is a boardroom, and 'To be or not to be' is delivered during a hostile takeover call. Directed by the National Award-winning Naseeruddin Shah.",
+    "cast": ["Naseeruddin Shah", "Ratna Pathak Shah", "Jim Sarbh"],
+    "director": "Naseeruddin Shah",
+    "poster": "https://images.unsplash.com/photo-1503095396549-807759245b35?w=400&h=600&fit=crop",
+    "backdrop": "https://images.unsplash.com/photo-1503095396549-807759245b35?w=1200&h=500&fit=crop",
+    "showtimes": [
+      { "id": "st-hr-1", "time": "3:00 PM", "format": "Live", "auditoriumId": "aud-grand" },
+      { "id": "st-hr-2", "time": "7:30 PM", "format": "Live", "auditoriumId": "aud-grand" }
+    ]
+  },
+  {
+    "id": "ipl-finals",
+    "title": "IPL Finals 2026 — Live Screening",
+    "category": "sports",
+    "genre": "Cricket · Live",
+    "language": "",
+    "duration": "4h+",
+    "rating": "9.5",
+    "certificate": "",
+    "releaseDate": "2026-10-12",
+    "synopsis": "Watch the IPL Finals on the biggest screen in town with 176 of your closest friends. Stadium sound, premium recliners, and real-time Seat Sync so your group locks in the best block together.",
+    "cast": [],
+    "director": "",
+    "poster": "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=400&h=600&fit=crop",
+    "backdrop": "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1200&h=500&fit=crop",
+    "showtimes": [
+      { "id": "st-ipl-1", "time": "7:00 PM", "format": "Live Screening", "auditoriumId": "aud-grand" }
+    ]
+  },
+  {
+    "id": "midnight-protocol",
+    "title": "Midnight Protocol",
+    "category": "movies",
+    "genre": "Action · Espionage",
+    "language": "Hindi, English",
+    "duration": "2h 32m",
+    "rating": "7.6",
+    "certificate": "A",
+    "releaseDate": "2026-09-15",
+    "synopsis": "A former RAW agent living in quiet retirement in Pondicherry is pulled back into the field when a coded message — one only she can decode — surfaces on the dark web. She has 48 hours before an old enemy makes the message public and rewrites history.",
+    "cast": ["Tabu", "Nawazuddin Siddiqui", "Pankaj Tripathi"],
+    "director": "Vishal Bhardwaj",
+    "poster": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400&h=600&fit=crop",
+    "backdrop": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1200&h=500&fit=crop",
+    "showtimes": [
+      { "id": "st-mp-1", "time": "10:00 AM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-mp-2", "time": "1:00 PM", "format": "IMAX", "auditoriumId": "aud-grand" },
+      { "id": "st-mp-3", "time": "4:00 PM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-mp-4", "time": "7:00 PM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-mp-5", "time": "10:30 PM", "format": "2D", "auditoriumId": "aud-grand" }
+    ]
+  },
+  {
+    "id": "paper-boats",
+    "title": "Paper Boats",
+    "category": "movies",
+    "genre": "Animation · Family",
+    "language": "Hindi, English",
+    "duration": "1h 48m",
+    "rating": "8.7",
+    "certificate": "U",
+    "releaseDate": "2026-09-20",
+    "synopsis": "When the monsoon rains sweep through a Kolkata neighbourhood, a young girl's paper boat carries her imagination into a watercolour world where every fold hides a memory. India's first hand-drawn animated feature in two decades.",
+    "cast": ["Deepika Padukone (voice)", "Irrfan Khan Jr (voice)"],
+    "director": "Gitanjali Rao",
+    "poster": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400&h=600&fit=crop",
+    "backdrop": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&h=500&fit=crop",
+    "showtimes": [
+      { "id": "st-pb-1", "time": "9:30 AM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-pb-2", "time": "12:00 PM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-pb-3", "time": "3:00 PM", "format": "2D", "auditoriumId": "aud-grand" },
+      { "id": "st-pb-4", "time": "5:30 PM", "format": "2D", "auditoriumId": "aud-grand" }
+    ]
+  },
+  {
+    "id": "comedy-nights",
+    "title": "Comedy Nights with Vir & Biswa",
+    "category": "events",
+    "genre": "Stand-up Comedy",
+    "language": "Hindi, English",
+    "duration": "2h 30m",
+    "rating": "8.3",
+    "certificate": "",
+    "releaseDate": "2026-10-01",
+    "synopsis": "Two of India's sharpest stand-up comedians share one stage for the first time. Vir Das brings the global perspective, Biswa Kalyan Rath brings the relatable chaos. An evening of unscripted, unfiltered laughs.",
+    "cast": ["Vir Das", "Biswa Kalyan Rath"],
+    "director": "",
+    "poster": "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?w=400&h=600&fit=crop",
+    "backdrop": "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?w=1200&h=500&fit=crop",
+    "showtimes": [
+      { "id": "st-cn-1", "time": "7:00 PM", "format": "Live", "auditoriumId": "aud-grand" },
+      { "id": "st-cn-2", "time": "9:30 PM", "format": "Live", "auditoriumId": "aud-grand" }
+    ]
+  }
+]

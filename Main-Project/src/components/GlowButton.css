@@ -1,0 +1,105 @@
+/* ======= PIXEL CONTRACT B — GLOW BUTTON ======= */
+.btn {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden; /* MANDATORY — clips the cyan bank */
+  background: linear-gradient(to top,
+    #9ad9ec 1px, #89dff0 2px, #79e0f1 3px, #61daef 4px, #3ec8e4 5px,
+    #14a8c6 6px, #0596b3 7px, #038aa8 8px, #047796 9px, #006180 10px,
+    #025066 12px, #0a4f5e 13px, #04465a 14px, #073746 16px,
+    #0a2a37 18px, #0d212e 20px, #0f1824 24px, #0a121e 30px,
+    #0a111d 34px, #0a111d 100%);
+  box-shadow:
+    inset 0 3px 3px -2px rgba(180,228,255,.10),
+    inset 1px 0 0 rgba(255,255,255,.09),
+    inset -1px 0 0 rgba(255,255,255,.09),
+    var(--hair, 0 1px 0 rgba(152,218,234,.38)),
+    1px 0 0 rgba(152,218,234,.17), -1px 0 0 rgba(152,218,234,.17),
+    0 0 8px rgba(60,190,235,.10),
+    0 2px 5px -3px rgba(90,220,255,.45);
+  transition: transform .25s, box-shadow .25s, filter .25s;
+}
+
+/* Top streak — nav button only (hero .cta2 hides this) */
+.btn::before {
+  content: "";
+  position: absolute;
+  left: 22%;
+  right: 38%;
+  top: 0.8px;
+  height: 1.9px;
+  z-index: 1;
+  filter: blur(.55px);
+  background: linear-gradient(90deg,
+    rgba(120,225,255,0) 0%, rgba(120,225,255,.58) 34%,
+    rgba(160,240,255,.74) 50%, rgba(120,225,255,.58) 66%,
+    rgba(120,225,255,0) 100%);
+}
+
+/* Side edge-light, masked to fade upward */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(200,245,255,.70), rgba(200,245,255,0) 13px),
+    linear-gradient(270deg, rgba(200,245,255,.70), rgba(200,245,255,0) 13px);
+  -webkit-mask: linear-gradient(to top, #000 0, #000 6px, rgba(0,0,0,.40) 12px,
+    rgba(0,0,0,.15) 18px, rgba(0,0,0,.09) 24px, rgba(0,0,0,.02) 30px, rgba(0,0,0,.02) 100%);
+  mask: linear-gradient(to top, #000 0, #000 6px, rgba(0,0,0,.40) 12px,
+    rgba(0,0,0,.15) 18px, rgba(0,0,0,.09) 24px, rgba(0,0,0,.02) 30px, rgba(0,0,0,.02) 100%);
+}
+
+.btn span {
+  position: relative;
+  z-index: 2;
+  display: block;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0,20,30,.5);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.12);
+  box-shadow:
+    inset 0 1px 0 rgba(200,245,255,.6),
+    inset 1px 0 0 rgba(170,225,255,.35),
+    inset -1px 0 0 rgba(170,225,255,.35),
+    0 6px 22px rgba(20,180,225,.55);
+}
+
+/* Instance A — nav CTA */
+.nav .btn {
+  position: absolute;
+  left: 530.7px;
+  top: 10.5px;
+  width: 125.5px;
+  height: 39.5px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.005em;
+}
+.nav .btn span { margin-top: 0; }
+
+/* Instance B — hero CTA */
+.cta2 {
+  position: absolute;
+  left: 526px;
+  top: 349px;
+  width: 121px;
+  height: 54.5px;
+  --hair: 0 0 0 transparent;
+  border-radius: 13px;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  z-index: 300;
+}
+.cta2::before { display: none; } /* Hero button has NO top streak */
+.cta2 span { margin-top: 0; }

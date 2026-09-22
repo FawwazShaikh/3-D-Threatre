@@ -1,0 +1,37 @@
+/* ======= HERO TYPE ======= */
+.h1 {
+  left: 586px; transform: translateX(-50%); white-space: nowrap; line-height: 1;
+  font-family: Poppins; font-weight: 900; font-size: 54px; letter-spacing: -.004em;
+  word-spacing: .175em; text-transform: uppercase; color: #fff;
+  text-shadow: 0 0 34px rgba(130,180,255,.22); z-index: 300;
+}
+.sub {
+  left: 586px; transform: translateX(-50%); white-space: nowrap; line-height: 1;
+  font-size: 13.2px; color: #a9aeb5; z-index: 300;
+}
+.sub b { font-weight: 600; color: #fff; }
+.nb { white-space: nowrap; }
+
+/* ======= PHONE ======= */
+@media (max-width: 700px) {
+  .h1 {
+    position: relative; left: auto; top: auto; transform: none;
+    white-space: normal; text-align: center;
+    font-size: clamp(29px, 8.4vw, 36px); line-height: 1.06;
+    letter-spacing: -.01em; max-width: 7.4em;
+    z-index: auto;
+  }
+  .h1.l1 { margin-top: clamp(12px, 2.2vh, 20px); }
+  .sub {
+    position: relative; left: auto; top: auto; transform: none;
+    white-space: normal; text-align: center;
+    font-size: clamp(14px, 3.9vw, 15.5px); line-height: 1.5; max-width: 340px;
+    z-index: auto;
+  }
+  .sub.s1 { margin-top: clamp(10px, 1.8vh, 16px); }
+  .cta2 {
+    position: relative; left: auto; top: auto;
+    margin-top: clamp(16px, 2.6vh, 26px); flex: 0 0 auto;
+    width: auto; min-width: 158px; height: 52px; padding: 0 26px; font-size: 16px;
+  }
+}

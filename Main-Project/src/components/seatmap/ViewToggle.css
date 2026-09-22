@@ -1,0 +1,35 @@
+/* ======= VIEW TOGGLE ======= */
+.view-toggle {
+  display: flex; gap: 2px;
+  padding: 3px; border-radius: 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.vt-btn {
+  position: relative; padding: 7px 18px;
+  border: none; border-radius: 10px;
+  background: transparent;
+  color: rgba(255,255,255,.5);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: color .2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.vt-btn:hover:not(:disabled) { color: rgba(255,255,255,.8); }
+.vt-btn.active { color: #fff; }
+.vt-btn.disabled { opacity: .35; cursor: not-allowed; }
+
+.vt-pill {
+  position: absolute; inset: 0; border-radius: 10px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.10);
+  z-index: 0;
+}
+.vt-label { position: relative; z-index: 1; }
+
+.vt-badge {
+  position: relative; z-index: 1;
+  font-size: 8px; font-weight: 700; letter-spacing: .06em;
+  padding: 2px 5px; border-radius: 4px;
+  background: rgba(14,165,233,.15);
+  color: rgba(14,165,233,.8);
+}
