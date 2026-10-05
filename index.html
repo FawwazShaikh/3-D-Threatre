@@ -535,6 +535,232 @@
       font-family: monospace;
       pointer-events: none;
     }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #fff;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .action-btn-primary {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.35);
+    }
+
+    .action-btn-primary:hover {
+      background: linear-gradient(135deg, #0369a1, #0ea5e9);
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.55);
+    }
+
+    /* About Modal */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: rgba(18, 18, 24, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 620px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.15);
+      color: #e2e8f0;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 14px;
+    }
+
+    .modal-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+
+    .modal-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: #94a3b8;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .modal-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+    }
+
+    .modal-section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #94a3b8;
+      margin: 18px 0 10px 0;
+    }
+
+    .modal-versions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .version-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .version-card p {
+      font-size: 11px;
+      line-height: 1.4;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+
+    .v-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .v-tag.v1 { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .v-tag.v11 { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+    .v-tag.v20 { background: rgba(234, 179, 8, 0.2); color: #facc15; }
+
+    .controls-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .controls-list li {
+      display: flex;
+      gap: 8px;
+      color: #cbd5e1;
+    }
+
+    .controls-list li strong {
+      color: #38bdf8;
+      min-width: 140px;
+    }
+
+    .modal-app-note {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .modal-btn-row {
+      margin-top: 14px;
+    }
+
+    .modal-primary-btn {
+      display: block;
+      text-align: center;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border: 1px solid #38bdf8;
+      color: #fff;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(14, 165, 233, 0.35);
+      transition: all 0.2s;
+    }
+
+    .modal-primary-btn:hover {
+      background: linear-gradient(135deg, #0369a1, #0ea5e9);
+      box-shadow: 0 6px 25px rgba(14, 165, 233, 0.55);
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 
@@ -576,12 +802,20 @@
         </div>
         <div class="stat-pill">
           <span>Auditorium Capacity:</span>
-          <span class="stat-value">176 Seats (11 Rows)</span>
+          <span class="stat-value">224 Seats (14 Rows)</span>
         </div>
         <div class="stat-pill">
           <span>Base Ticket:</span>
           <span class="stat-value">₹350</span>
         </div>
+      </div>
+      <div class="header-actions">
+        <button id="btn-about" class="action-btn" title="About CinemaView 3D & SCM Versions">
+          ℹ️ About
+        </button>
+        <a href="./app/" class="action-btn action-btn-primary" title="Open Marquee Movie Ticketing App">
+          🎟️ Movie Booking App →
+        </a>
       </div>
     </header>
 
@@ -669,8 +903,59 @@
       </div>
 
       <div id="hint-pill">
-        <span>💡 Click any seat for POV preview | Drag to Orbit Camera</span>
+        <span>💡 Click any seat for POV preview | Drag to Orbit Camera | W/A/S/D to Walk</span>
         <span class="hint-close" id="hint-close-btn">✕</span>
+      </div>
+    </div>
+
+    <!-- About Modal Dialog -->
+    <div id="about-modal" class="modal-backdrop interactive">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-badge">3D THEATRE v2.0</div>
+            <h2>About CinemaView 3D</h2>
+          </div>
+          <button id="modal-close" class="modal-close-btn" aria-label="Close modal">✕</button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="modal-desc">
+            An interactive 3D cinema auditorium simulator built with Three.js. Experience real-time stadium seating view perspectives, dynamic ticket pricing calculations, and cinematic atmosphere controls.
+          </div>
+
+          <div class="modal-section-title">SCM Lab Experiment — Version Evolution</div>
+          <div class="modal-versions-grid">
+            <div class="version-card">
+              <span class="v-tag v1">v1.0 Baseline</span>
+              <p>11 rows (176 red seats), 2 aisles, maroon curtains, basic ambient lights, fixed overview orbit.</p>
+            </div>
+            <div class="version-card">
+              <span class="v-tag v11">v1.1 Structure</span>
+              <p>Expanded to 14 rows (224 blue seats), centre aisle gap, enlarged 22m raised stage, light grey background.</p>
+            </div>
+            <div class="version-card">
+              <span class="v-tag v20">v2.0 Merged</span>
+              <p>Gold velvet curtains, 3 stage spotlights, midnight sky background, full orbit + WASD walkthrough, 70mm movie screen.</p>
+            </div>
+          </div>
+
+          <div class="modal-section-title">Interactive Controls</div>
+          <ul class="controls-list">
+            <li><strong>Mouse Drag:</strong> Orbit camera around the hall or look around in POV mode</li>
+            <li><strong>Scroll Wheel:</strong> Zoom in / out</li>
+            <li><strong>W / A / S / D or Arrow Keys:</strong> Walk through & orbit around the theatre</li>
+            <li><strong>Click Any Seat:</strong> Enter first-person eye-level seat preview with quality score</li>
+          </ul>
+
+          <div class="modal-section-title">Ticketing App Pages</div>
+          <p class="modal-app-note">
+            This 3D theatre is connected to the full <strong>Marquee Ticketing Web App</strong> featuring Movie Listings, Plays, Events, Sports, Seat Booking & Checkout.
+          </p>
+          <div class="modal-btn-row">
+            <a href="./app/" class="modal-primary-btn">🎟️ Explore All Pages in Marquee App</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2781,6 +3066,28 @@
     }
 
     document.getElementById('btn-back-overview').addEventListener('click', switchToOverviewMode);
+    
+    // About Modal Listeners
+    const aboutBtn = document.getElementById('btn-about');
+    const aboutModal = document.getElementById('about-modal');
+    const modalClose = document.getElementById('modal-close');
+
+    if (aboutBtn && aboutModal) {
+      aboutBtn.addEventListener('click', () => {
+        aboutModal.classList.add('active');
+      });
+      if (modalClose) {
+        modalClose.addEventListener('click', () => {
+          aboutModal.classList.remove('active');
+        });
+      }
+      aboutModal.addEventListener('click', (e) => {
+        if (e.target === aboutModal) {
+          aboutModal.classList.remove('active');
+        }
+      });
+    }
+
     const hintBtn = document.getElementById('hint-close-btn');
     if (hintBtn) {
       hintBtn.addEventListener('click', () => {
