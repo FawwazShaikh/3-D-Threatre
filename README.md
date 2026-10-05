@@ -5,6 +5,10 @@ auditorium in the browser with a stage, curved screen, proscenium curtains,
 stadium seating and atmospheric lighting. You can orbit around the hall and
 click any seat to preview the view from that position.
 
+## Live Demo
+
+**GitHub Pages Live Site:** [https://fawwazshaikh.github.io/3-D-Threatre/](https://fawwazshaikh.github.io/3-D-Threatre/)
+
 ## Features
 
 - 176 stadium-raked seats across 11 rows with colour-coded view quality scoring
