@@ -2363,10 +2363,11 @@
     function generateAuditoriumSeats() {
       const rowLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
 
-      // 16 seats across 3 blocks (4 Left, 8 Center, 4 Right) with fixed 1.20m aisle gaps
+      // 16 seats across 4 blocks (4 Left, 4 Center-Left, 4 Center-Right, 4 Right) with aisle gaps
       const seatXOffsets = [
         -6.39, -5.69, -4.99, -4.29,                           // Left Block (4 seats)
-        -2.45, -1.75, -1.05, -0.35, 0.35, 1.05, 1.75, 2.45,   // Center Block (8 seats)
+        -2.45, -1.75, -1.05, -0.35,                           // Center-Left Block (4 seats)
+        0.35, 1.05, 1.75, 2.45,                               // Center-Right Block (4 seats)
         4.29, 4.99, 5.69, 6.39                                // Right Block (4 seats)
       ];
 
