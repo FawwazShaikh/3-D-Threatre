@@ -703,7 +703,7 @@
       backgroundColor: 0x030a16,
 
       // Camera Controls (true = orbit controls enabled)
-      controls: false,
+      controls: true,
 
       // Movie Screen (true = screen visible)
       screen: true,
@@ -2595,6 +2595,15 @@
       targetRadius: 14.0
     };
 
+    if (CONFIG.controls) {
+      overviewOrbit.minTheta = -Math.PI;
+      overviewOrbit.maxTheta = Math.PI;
+      overviewOrbit.minPhi = 0.2;
+      overviewOrbit.maxPhi = 1.55;
+      overviewOrbit.minRadius = 4.0;
+      overviewOrbit.maxRadius = 26.0;
+    }
+
     function updateOverviewCameraPos() {
       overviewOrbit.radius = THREE.MathUtils.clamp(overviewOrbit.radius, overviewOrbit.minRadius, overviewOrbit.maxRadius);
       overviewOrbit.phi = THREE.MathUtils.clamp(overviewOrbit.phi, overviewOrbit.minPhi, overviewOrbit.maxPhi);
@@ -2836,6 +2845,25 @@
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (!CONFIG.controls || isCameraAnimating) return;
+      const step = 0.6;
+      const rotStep = 0.05;
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        overviewOrbit.theta -= rotStep;
+        updateOverviewCameraPos();
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        overviewOrbit.theta += rotStep;
+        updateOverviewCameraPos();
+      } else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+        overviewOrbit.radius = Math.max(overviewOrbit.minRadius, overviewOrbit.radius - step);
+        updateOverviewCameraPos();
+      } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+        overviewOrbit.radius = Math.min(overviewOrbit.maxRadius, overviewOrbit.radius + step);
+        updateOverviewCameraPos();
+      }
     });
 
     // Hover Raycasting for tooltip & seat highlight
