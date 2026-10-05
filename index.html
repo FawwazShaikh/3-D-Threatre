@@ -721,8 +721,8 @@
       stageDepth: 1.0,
       stageHeight: 0.15,
 
-      // Auditorium Layout (11 Rows x 16 Seats = 176 Seats total, 11 Distinct Stadium-Raked Rows)
-      rows: 11,
+      // Auditorium Layout (14 Rows x 16 Seats = 224 Seats total, 14 Distinct Stadium-Raked Rows)
+      rows: 14,
       seatsPerRow: 16,
       seatWidth: 0.58,
       rowDepth: 0.92, // Row depth spacing
@@ -1313,7 +1313,7 @@
     scene.add(screenIdMesh);
 
     // Row Letter Markers (Backlit Placards at Aisle-End Seats)
-    const rowLetterLabels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
+    const rowLetterLabels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
     const rowMarkerMat = new THREE.MeshStandardMaterial({
       color: 0xffd700,
       emissive: 0xffa500,
@@ -2361,7 +2361,7 @@
     const dummySeat = new THREE.Object3D();
 
     function generateAuditoriumSeats() {
-      const rowLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
+      const rowLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
 
       // 16 seats across 3 blocks (4 Left, 8 Center, 4 Right) with fixed 1.20m aisle gaps
       const seatXOffsets = [
