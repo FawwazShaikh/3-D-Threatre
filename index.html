@@ -675,6 +675,27 @@
     // 1. CONFIGURATION & LAYOUT (176 SEATS: 11 ROWS x 16 SEATS, MASSIVE SCREEN SCALE)
     // ============================================================================
     const CONFIG = {
+      // Theatre Version
+      version: "1.0",
+
+      // Seat Appearance
+      seatColor: 0xc81818,
+
+      // Curtain Appearance
+      curtainColor: 0x1a0505,
+
+      // Lighting Mode ("basic" or "spot")
+      lightsMode: "basic",
+
+      // Scene Background Color
+      backgroundColor: 0x060608,
+
+      // Camera Controls (true = orbit controls enabled)
+      controls: false,
+
+      // Movie Screen (true = screen visible)
+      screen: true,
+
       // Screen Position & Size (2.35:1 Anamorphic Cinema Screen)
       screenCenter: new THREE.Vector3(0, 4.8, -12.5),
       screenWidth: 18.0,
@@ -725,7 +746,7 @@
 
     const scene = new THREE.Scene();
     // Neutral dark charcoal-black ceiling and background, zero brown/violet tint
-    scene.background = new THREE.Color(0x060608);
+    scene.background = new THREE.Color(CONFIG.backgroundColor);
     scene.fog = new THREE.FogExp2(0x0a0604, 0.015);
 
     // Wide-Angle Front-Center Perspective Camera (FOV 68° positioned near entrance)
@@ -1809,7 +1830,7 @@
 
     // Proscenium Curtain Folds (Soft draped geometry at screen left/right edges)
     const curtainMat = new THREE.MeshStandardMaterial({
-      color: 0x1a0505,
+      color: CONFIG.curtainColor,
       roughness: 0.88,
       metalness: 0.0
     });
@@ -2117,7 +2138,7 @@
 
     // Velvet Seat Cushion & Backrest Material (MeshPhysicalMaterial with Velvet Sheen Clearcoat)
     const baseRedSeatMat = new THREE.MeshPhysicalMaterial({
-      color: 0xc81818,
+      color: CONFIG.seatColor,
       roughness: 0.82,
       metalness: 0.0,
       clearcoat: 0.22,
@@ -2363,7 +2384,7 @@
           dummySeat.scale.set(1.05, 1.05, 1.05);
           dummySeat.updateMatrix();
 
-          const baseRed = new THREE.Color(0xc81818);
+          const baseRed = new THREE.Color(CONFIG.seatColor);
           const varScalar = 0.92 + Math.random() * 0.16;
           const varColor = baseRed.clone().multiplyScalar(varScalar);
           const rowHueShift = (r % 3) * 0.012;
@@ -2394,7 +2415,7 @@
             worldPos: new THREE.Vector3(posX, posY, posZ),
             eyePosition: eyePosition,
             rotationY: seatRotationY,
-            baseColorHex: 0xc81818,
+            baseColorHex: CONFIG.seatColor,
             stats: viewStats
           };
         }
