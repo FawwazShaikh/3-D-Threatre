@@ -1,15 +1,45 @@
-# 3D Theatre
+# 3D Theatre & Marquee Cinema Platform
 
-An interactive 3D theatre hall built with Three.js. It renders a full cinema
-auditorium in the browser with a stage, curved screen, proscenium curtains,
-stadium seating and atmospheric lighting. You can orbit around the hall and
-click any seat to preview the view from that position.
+An interactive 3D theatre simulation and companion cinema ticketing web application built with Three.js, React, and Vite. The platform delivers an end-to-end movie discovery and auditorium experience in the browser: browse current blockbusters and live shows, inspect seat maps, and launch a photorealistic 3D cinema hall to preview exact eye-level sightlines, viewing angles, and dynamic pricing before booking.
+
+This repository serves as a case study for a college Software Configuration Management (SCM) lab experiment, demonstrating structured feature branching, specification changes, tag versioning, and merge conflict resolution using Git.
 
 ## Live Demo
 
 - **Marquee Booking App (Landing Page):** [https://fawwazshaikh.github.io/3-D-Threatre/](https://fawwazshaikh.github.io/3-D-Threatre/)
 - **3D CinemaView Theatre Simulator:** [https://fawwazshaikh.github.io/3-D-Threatre/theatre.html](https://fawwazshaikh.github.io/3-D-Threatre/theatre.html)
-- **About SCM & Platform:** [https://fawwazshaikh.github.io/3-D-Threatre/#/about](https://fawwazshaikh.github.io/3-D-Threatre/#/about)
+- **About SCM & Architecture Page:** [https://fawwazshaikh.github.io/3-D-Threatre/#/about](https://fawwazshaikh.github.io/3-D-Threatre/#/about)
+- **Movie & Event Listings:** [https://fawwazshaikh.github.io/3-D-Threatre/#/listings](https://fawwazshaikh.github.io/3-D-Threatre/#/listings)
+
+## Platform Overview
+
+The project comprises two tightly integrated components:
+
+### 1. Marquee Ticketing Web App
+- Modern, high-conversion movie discovery interface with 3D card carousel.
+- Categorized showtime listings for Movies, Theatrical Plays, Live Events, and Sports.
+- Real-time "Seat Sync" concept allowing group seat selection.
+- Multi-step checkout flow (Event Selection → Seat Map → Checkout → Booking Confirmation).
+
+### 2. CinemaView 3D Auditorium Simulator
+- Fully interactive Three.js 3D auditorium modeled to realistic commercial multiplex scale.
+- 224 stadium-raked seats across 14 rows (A through N) with dual side aisles and centre aisle division.
+- Curved 2.35:1 anamorphic cinema screen (18.0m wide × 7.66m high) with live animated feature presentation canvas.
+- Deep proscenium stage flanked by warm gold velvet acoustic curtains.
+- Cinematic lighting rig: directional key light, ambient fill, warm amber wall wash sconces, and 3 focused stage spotlights.
+- Floating dust mote particle simulation for authentic projector beam atmosphere.
+
+## Interactive Controls & Navigation
+
+| Control | Action |
+|---|---|
+| **Mouse Left-Click + Drag** | Orbit camera around the auditorium (Overview) or look around 360° (Seat POV) |
+| **Mouse Scroll Wheel** | Smooth zoom in / zoom out |
+| **W / A / S / D or Arrow Keys** | Walk through and rotate viewpoint dynamically |
+| **Click Any Seat Cushion** | Smoothly flies camera to exact eye-level perspective of that seat |
+| **"← Back to Grand Overview"** | Animates camera back to elevated entrance angle |
+| **"ℹ️ About" Header Button** | Opens detailed modal explaining version evolution & seat score factors |
+| **"🎟️ Movie Booking App →"** | Switches to the Marquee ticket booking application |
 
 ## Features
 
