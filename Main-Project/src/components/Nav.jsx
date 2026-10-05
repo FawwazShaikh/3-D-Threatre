@@ -84,11 +84,12 @@ export default function Nav() {
       {/* Nav menu — same nodes for desktop links and mobile panel */}
       <div className="navmenu" id="navmenu" role="menu">
         <div className="links" id="links">
-          <a href="/listings?cat=movies" onClick={(e)=>{e.preventDefault();closeMenu();navigate('/listings?cat=movies');}}>Movies</a>
-          <a href="/listings?cat=plays" onClick={(e)=>{e.preventDefault();closeMenu();navigate('/listings?cat=plays');}}>Plays</a>
-          <a href="/listings?cat=events" onClick={(e)=>{e.preventDefault();closeMenu();navigate('/listings?cat=events');}}>Events</a>
-          <a href="/listings?cat=sports" onClick={(e)=>{e.preventDefault();closeMenu();navigate('/listings?cat=sports');}}>Sports</a>
-          <a href="/listings" onClick={(e)=>{e.preventDefault();closeMenu();navigate('/listings');}}>Offers</a>
+          <a href="#/listings?cat=movies" onClick={(e)=>{e.preventDefault();closeMenu();navigate('/listings?cat=movies');}}>Movies</a>
+          <a href="#/listings?cat=plays" onClick={(e)=>{e.preventDefault();closeMenu();navigate('/listings?cat=plays');}}>Plays</a>
+          <a href="#/listings?cat=events" onClick={(e)=>{e.preventDefault();closeMenu();navigate('/listings?cat=events');}}>Events</a>
+          <a href="#/listings?cat=sports" onClick={(e)=>{e.preventDefault();closeMenu();navigate('/listings?cat=sports');}}>Sports</a>
+          <a href="#/about" onClick={(e)=>{e.preventDefault();closeMenu();navigate('/about');}}>About</a>
+          <a href="../" title="Return to 3D Cinema Hall" style={{ color: '#38bdf8', fontWeight: 600 }}>🏛️ 3D Theatre</a>
         </div>
         <a className="btn" onClick={(e)=>{e.preventDefault();navigate('/listings');}}><span id="ctaLabel">Book now</span></a>
       </div>
