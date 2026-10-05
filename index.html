@@ -524,6 +524,17 @@
     .tooltip-score {
       color: #2ecc71;
     }
+
+    #version-label {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      z-index: 15;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.35);
+      font-family: monospace;
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -533,6 +544,7 @@
   <canvas id="webgl-canvas"></canvas>
   <div id="vignette-overlay"></div>
   <div id="grain-overlay"></div>
+  <div id="version-label"></div>
 
   <!-- Error Alert Fallback -->
   <div id="error-alert">
@@ -731,6 +743,10 @@
         scoreMultiplier: 0.6
       }
     };
+
+    // Set page title and version label
+    document.title = '3D Theatre v' + CONFIG.version;
+    document.getElementById('version-label').textContent = '3D Theatre v' + CONFIG.version;
 
     // ============================================================================
     // 2. SCENE & RENDERER INITIALIZATION (HIGH-CONTRAST CINEMATIC PHOTOREAL)
