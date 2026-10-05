@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import Layout from './app/Layout';
 import Home from './app/Home';
@@ -9,10 +9,11 @@ import TitleDetail from './app/TitleDetail';
 import SeatSelect from './app/SeatSelect';
 import Checkout from './app/Checkout';
 import Confirmation from './app/Confirmation';
+import About from './app/About';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
@@ -21,8 +22,9 @@ createRoot(document.getElementById('root')).render(
           <Route path="seats/:titleId/:showtimeId" element={<SeatSelect />} />
           <Route path="checkout/:titleId/:showtimeId" element={<Checkout />} />
           <Route path="confirmation/:titleId/:showtimeId" element={<Confirmation />} />
+          <Route path="about" element={<About />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 );

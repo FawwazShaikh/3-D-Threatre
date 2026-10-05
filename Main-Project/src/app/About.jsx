@@ -8,7 +8,7 @@ export default function About() {
         {/* Navigation Bar */}
         <div className="about-nav-bar">
           <Link to="/">← Back to Marquee Home</Link>
-          <a href="../" title="Open 3D Theatre Simulator">🏛️ Launch 3D Theatre</a>
+          <a href="./theatre.html" title="Open 3D Theatre Simulator">🏛️ Launch 3D Theatre</a>
         </div>
 
         {/* Hero */}
@@ -85,7 +85,7 @@ export default function About() {
 
         {/* Section 3: Navigation CTAs */}
         <div className="about-cta-bar">
-          <a href="../" className="btn-primary-about">🏛️ Open 3D Cinema Hall</a>
+          <a href="./theatre.html" className="btn-primary-about">🏛️ Open 3D Cinema Hall</a>
           <Link to="/listings" className="btn-secondary-about">🎟️ Browse All Shows & Movies</Link>
         </div>
       </div>
