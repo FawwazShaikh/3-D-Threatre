@@ -7,24 +7,28 @@ click any seat to preview the view from that position.
 
 ## Live Demo
 
-**GitHub Pages Live Site:** [https://fawwazshaikh.github.io/3-D-Threatre/](https://fawwazshaikh.github.io/3-D-Threatre/)
+- **3D Theatre Simulator:** [https://fawwazshaikh.github.io/3-D-Threatre/](https://fawwazshaikh.github.io/3-D-Threatre/)
+- **Marquee Ticketing App:** [https://fawwazshaikh.github.io/3-D-Threatre/app/](https://fawwazshaikh.github.io/3-D-Threatre/app/)
+- **About SCM & Platform:** [https://fawwazshaikh.github.io/3-D-Threatre/app/#/about](https://fawwazshaikh.github.io/3-D-Threatre/app/#/about)
 
 ## Features
 
-- 176 stadium-raked seats across 11 rows with colour-coded view quality scoring
+- 224 stadium-raked seats across 14 rows with colour-coded view quality scoring
 - Curved 2.35:1 anamorphic cinema screen with animated visuals
-- Proscenium curtain folds flanking the screen
-- Atmospheric lighting with warm amber wall wash and ceiling downlights
+- Proscenium curtain folds flanking the screen (gold velvet)
+- Atmospheric lighting with warm amber wall wash, ceiling downlights, and stage spotlights
 - Seat click POV preview with distance and angle scoring
 - Dynamic ticket pricing based on seat view quality
 - Dust mote particle system for projector haze effect
 - Detailed auditorium architecture (walls, doors, speakers, EXIT signs)
+- Orbit camera controls and WASD/Arrow keys walkthrough navigation
+- Integrated About modal and companion movie ticketing web app
 
 ## Tech Stack
 
-- HTML
-- JavaScript
+- HTML5, CSS3, Vanilla JavaScript
 - Three.js (r128)
+- React 18, React Router, Vite
 
 ## How to Run
 
@@ -34,9 +38,11 @@ Open `index.html` in a browser or use a local server such as VS Code Live Server
 
 ```
 3-D-Threatre/
-├── index.html        # Main 3D theatre page
+├── index.html        # Main 3D theatre simulation page
 ├── three.min.js      # Three.js library (r128)
-├── Main-Project/     # Companion React app
+├── app/              # Deployed companion ticketing web app (Marquee)
+├── Main-Project/     # Companion React source code
+├── CHANGELOG.md      # Version specifications changelog
 └── README.md
 ```
 
