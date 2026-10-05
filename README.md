@@ -54,28 +54,59 @@ The project comprises two tightly integrated components:
 - Orbit camera controls and WASD/Arrow keys walkthrough navigation
 - Integrated About modal and companion movie ticketing web app
 
+## Technical Architecture & Optimization
+
+- **Instanced Mesh Pipeline (`THREE.InstancedMesh`)**: Rather than creating individual meshes for every seat, the scene merges seat geometries into 7 distinct instanced parts (cushion, back shell, legs, chrome trim, cupholders, contact shadow, and raycast hitbox). The full 224-seat hall renders in ~36 draw calls at a steady 60 FPS.
+- **Seat View Quality Scoring Algorithm**:
+  - **Distance Score**: Evaluates viewer distance relative to the acoustic and visual focus sweet spot (13.0m).
+  - **Angle Score**: Calculates the horizontal viewing angle deviation from the screen center normal.
+  - Overall quality score (0–100) is colour-coded across tiers: **Prime View** (green, 80–100), **Standard View** (yellow, 55–79), and **Side View** (red, 0–54).
+- **Dynamic Pricing Engine**:
+  $$\text{Calculated Price} = \text{Base Price (₹350)} \times (0.7 + \text{Quality Score} \times 0.6)$$
+- **SPA Routing & Assets**: Built with Vite and React Router (`HashRouter`) using relative base `./` paths for zero-configuration hosting on static web servers and GitHub Pages.
+
 ## Tech Stack
 
-- HTML5, CSS3, Vanilla JavaScript
-- Three.js (r128)
-- React 18, React Router, Vite
+- **3D Graphics & Engine**: Three.js (r128), WebGL, HTML5 Canvas API
+- **Frontend Application**: React 18, Vite, Framer Motion, Vanilla CSS (Dark Multiplex theme)
+- **SCM & Deployment**: Git, GitHub Pages
 
-## How to Run
+## How to Run Locally
 
-Open `index.html` in a browser or use a local server such as VS Code Live Server.
+### 1. Run the Entire Project (Static / Zero-Install)
+Open `index.html` (Marquee landing) or `theatre.html` (3D Theatre) directly in any modern browser, or launch with Python:
+```bash
+python -m http.server 8000
+```
+Then visit `http://localhost:8000/` or `http://localhost:8000/theatre.html`.
+
+### 2. Run the React Development Server
+```bash
+cd Main-Project
+npm install
+npm run dev
+```
+
+### 3. Build Production Assets
+```bash
+npm --prefix Main-Project run build
+```
 
 ## Folder Structure
 
 ```
 3-D-Threatre/
-├── index.html        # Main landing page (Marquee ticketing app)
+├── index.html        # Main landing page (Marquee movie ticketing app)
 ├── theatre.html      # Interactive 3D cinema auditorium simulator
 ├── three.min.js      # Three.js library (r128)
 ├── assets/           # Bundled web app scripts and stylesheets
 ├── app/              # Companion ticketing web app build
 ├── Main-Project/     # Companion React source code
+│   ├── src/          # React components, hooks, routes, data
+│   ├── package.json  # Dependencies and build scripts
+│   └── vite.config.js# Vite configuration (base: './')
 ├── CHANGELOG.md      # Version specifications changelog
-└── README.md
+└── README.md         # Project documentation
 ```
 
 ## SCM Experiment
