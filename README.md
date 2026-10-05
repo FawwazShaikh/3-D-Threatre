@@ -7,9 +7,9 @@ click any seat to preview the view from that position.
 
 ## Live Demo
 
-- **3D Theatre Simulator:** [https://fawwazshaikh.github.io/3-D-Threatre/](https://fawwazshaikh.github.io/3-D-Threatre/)
-- **Marquee Ticketing App:** [https://fawwazshaikh.github.io/3-D-Threatre/app/](https://fawwazshaikh.github.io/3-D-Threatre/app/)
-- **About SCM & Platform:** [https://fawwazshaikh.github.io/3-D-Threatre/app/#/about](https://fawwazshaikh.github.io/3-D-Threatre/app/#/about)
+- **Marquee Booking App (Landing Page):** [https://fawwazshaikh.github.io/3-D-Threatre/](https://fawwazshaikh.github.io/3-D-Threatre/)
+- **3D CinemaView Theatre Simulator:** [https://fawwazshaikh.github.io/3-D-Threatre/theatre.html](https://fawwazshaikh.github.io/3-D-Threatre/theatre.html)
+- **About SCM & Platform:** [https://fawwazshaikh.github.io/3-D-Threatre/#/about](https://fawwazshaikh.github.io/3-D-Threatre/#/about)
 
 ## Features
 
@@ -38,9 +38,11 @@ Open `index.html` in a browser or use a local server such as VS Code Live Server
 
 ```
 3-D-Threatre/
-├── index.html        # Main 3D theatre simulation page
+├── index.html        # Main landing page (Marquee ticketing app)
+├── theatre.html      # Interactive 3D cinema auditorium simulator
 ├── three.min.js      # Three.js library (r128)
-├── app/              # Deployed companion ticketing web app (Marquee)
+├── assets/           # Bundled web app scripts and stylesheets
+├── app/              # Companion ticketing web app build
 ├── Main-Project/     # Companion React source code
 ├── CHANGELOG.md      # Version specifications changelog
 └── README.md
