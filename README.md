@@ -45,6 +45,20 @@ The project is versioned with Git using feature branches and tags. Each version
 introduces different spec changes (seating, lighting, colours, controls) and
 the branches are merged back into master to demonstrate conflict resolution.
 
+### Branches
+
+- `master` — baseline and final merged code
+- `version1` — structure changes (seats, stage, background)
+- `version2` — atmosphere changes (lighting, curtains, controls, screen)
+
+### Tags
+
+- `v1.0` — original theatre baseline
+- `v1.1` — version 1 with seating and stage changes
+- `v2.0` — version 2 with lighting and controls
+- `v1.1-merged` — after merging version1 into master
+- `v2.0-merged` — after merging version2 into master
+
 ## Version History
 
 | Item | v1.0 | v1.1 | v2.0 |
