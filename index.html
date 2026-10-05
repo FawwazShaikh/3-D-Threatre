@@ -1732,6 +1732,14 @@
         ctx.fillStyle = edgeGrad;
         ctx.fillRect(0, 0, w, h);
 
+        // Feature Movie Presentation Banner
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+        ctx.fillRect(0, h - 60, w, 60);
+        ctx.fillStyle = '#f5c518';
+        ctx.font = 'bold 28px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('FEATURE PRESENTATION • 3D THEATRE', cx, h - 22);
+
         ctx.restore();
       } catch (err) {
         console.error("Screen canvas update error:", err);
@@ -1759,6 +1767,7 @@
     const screenMesh = new THREE.Mesh(screenGeo, screenMat);
     screenMesh.position.copy(CONFIG.screenCenter);
     screenMesh.rotation.x = CONFIG.screenTilt;
+    screenMesh.visible = CONFIG.screen;
     scene.add(screenMesh);
 
     // Screen Atmospheric Halo Bloom Mesh (Hero Presentation Polish)
