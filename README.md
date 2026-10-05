@@ -67,11 +67,13 @@ the branches are merged back into master to demonstrate conflict resolution.
 
 | Item | v1.0 | v1.1 | v2.0 |
 |------|------|------|------|
-| Seat Rows | 11 | — | — |
-| Seat Colour | Red | — | — |
-| Stage Size | 18.5 × 1.0 | — | — |
-| Background | Dark (#060608) | — | — |
-| Curtain Colour | Dark Maroon | — | — |
-| Lights | Basic | — | — |
-| Controls | Mouse drag | — | — |
-| Screen | Yes | — | — |
+| Seat Rows | 11 (176 seats) | 14 (224 seats) | 14 (224 seats) |
+| Aisle Layout | 2 side aisles | 2 side aisles + centre gap | 2 side aisles + centre gap |
+| Seat Colour | Red (`#c81818`) | Blue (`#1848b8`) | Blue (`#1848b8`) |
+| Stage Size | 18.5 × 1.0 (h: 0.15) | 22.0 × 2.5 (h: 0.40) | 22.0 × 2.5 (h: 0.40) |
+| Curtain Colour | Dark Maroon (`#1a0505`) | Dark Maroon (`#1a0505`) | Gold (`#b8860b`) |
+| Lighting | Basic ambient + key light | Basic ambient + key light | Dark ambience + 3 stage spotlights |
+| Background | Dark (`#060608`) | Light grey (`#cccccc`) | Dark night (`#030a16`) |
+| Controls | Fixed overview drag | Fixed overview drag | Orbit controls + keyboard walk-through |
+| Movie Screen | Default visual | Default visual | Feature presentation banner overlay |
+| Version Label | v1.0 | v1.1 | v2.0 |
