@@ -697,7 +697,7 @@
       curtainColor: 0xb8860b,
 
       // Lighting Mode ("basic" or "spot")
-      lightsMode: "basic",
+      lightsMode: "spot",
 
       // Scene Background Color
       backgroundColor: 0x060608,
@@ -838,6 +838,16 @@
     stageSpot2.target.position.copy(CONFIG.stageCenter);
     scene.add(stageSpot2);
     scene.add(stageSpot2.target);
+
+    if (CONFIG.lightsMode === "spot") {
+      ambientLight.intensity = 0.05;
+      hemiLight.intensity = 0.08;
+      const stageSpot3 = new THREE.SpotLight(0xfff0dd, 2.2, 35, Math.PI / 5, 0.4);
+      stageSpot3.position.set(0, 11.5, -4.5);
+      stageSpot3.target.position.copy(CONFIG.stageCenter);
+      scene.add(stageSpot3);
+      scene.add(stageSpot3.target);
+    }
 
     // Dynamic Ceiling Panel Texture with Fine Seam Joints (Neutral Dark Charcoal-Black)
     const ceilingCanvas = document.createElement('canvas');
