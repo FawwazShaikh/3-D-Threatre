@@ -1,0 +1,59 @@
+# 3D Theatre
+
+An interactive 3D theatre hall built with Three.js. It renders a full cinema
+auditorium in the browser with a stage, curved screen, proscenium curtains,
+stadium seating and atmospheric lighting. You can orbit around the hall and
+click any seat to preview the view from that position.
+
+## Features
+
+- 176 stadium-raked seats across 11 rows with colour-coded view quality scoring
+- Curved 2.35:1 anamorphic cinema screen with animated visuals
+- Proscenium curtain folds flanking the screen
+- Atmospheric lighting with warm amber wall wash and ceiling downlights
+- Seat click POV preview with distance and angle scoring
+- Dynamic ticket pricing based on seat view quality
+- Dust mote particle system for projector haze effect
+- Detailed auditorium architecture (walls, doors, speakers, EXIT signs)
+
+## Tech Stack
+
+- HTML
+- JavaScript
+- Three.js (r128)
+
+## How to Run
+
+Open `index.html` in a browser or use a local server such as VS Code Live Server.
+
+## Folder Structure
+
+```
+3-D-Threatre/
+├── index.html        # Main 3D theatre page
+├── three.min.js      # Three.js library (r128)
+├── Main-Project/     # Companion React app
+└── README.md
+```
+
+## SCM Experiment
+
+**Aim:** Change specifications and make different versions of the project using
+Git as an SCM tool.
+
+The project is versioned with Git using feature branches and tags. Each version
+introduces different spec changes (seating, lighting, colours, controls) and
+the branches are merged back into master to demonstrate conflict resolution.
+
+## Version History
+
+| Item | v1.0 | v1.1 | v2.0 |
+|------|------|------|------|
+| Seat Rows | 11 | — | — |
+| Seat Colour | Red | — | — |
+| Stage Size | 18.5 × 1.0 | — | — |
+| Background | Dark (#060608) | — | — |
+| Curtain Colour | Dark Maroon | — | — |
+| Lights | Basic | — | — |
+| Controls | Mouse drag | — | — |
+| Screen | Yes | — | — |
